@@ -1,6 +1,6 @@
 # Rebuilds the predictions and publishes the phone app to GitHub Pages.
 # Runs every morning, again on Sunday late morning (after inactives for the 1pm games),
-# and whenever you press "Run workflow" on the Actions tab.
+# whenever you press "Run workflow" on the Actions tab, and when new code is pushed.
 name: Update predictions
 
 on:
@@ -8,6 +8,9 @@ on:
     - cron: "0 11 * * *"     # daily, ~6am Eastern
     - cron: "30 16 * * 0"    # Sunday ~11:30am Eastern
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["app/**", "code/**", "requirements.txt", ".github/workflows/**"]
 
 permissions:
   contents: write   # only used for the keep-alive commit below
