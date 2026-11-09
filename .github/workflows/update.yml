@@ -1,0 +1,80 @@
+# Rebuilds the predictions and publishes the phone app to GitHub Pages.
+# Runs every morning, again on Sunday late morning (after inactives for the 1pm games),
+# and whenever you press "Run workflow" on the Actions tab.
+name: Update predictions
+
+on:
+  schedule:
+    - cron: "0 11 * * *"     # daily, ~6am Eastern
+    - cron: "30 16 * * 0"    # Sunday ~11:30am Eastern
+  workflow_dispatch:
+
+permissions:
+  contents: write   # only used for the keep-alive commit below
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # finished seasons are downloaded once and reused
+      - uses: actions/cache@v4
+        with:
+          path: data
+          key: nfl-data-${{ github.run_id }}
+          restore-keys: nfl-data-
+
+      - name: Download latest NFL data
+        run: python code/update_data.py
+
+      - name: Build predictions for the app (encrypted)
+        env:
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+        run: |
+          if [ -z "$APP_PASSWORD" ]; then
+            echo "::error::Add a repository secret named APP_PASSWORD (Settings > Secrets and variables > Actions) before publishing."
+            exit 1
+          fi
+          python code/export_app.py
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app
+
+      # GitHub pauses scheduled jobs in repos with no activity for 60 days; an empty
+      # commit every ~50 days keeps the daily updates running.
+      - name: Keep schedule alive
+        run: |
+          last=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last )) -gt $(( 50 * 86400 )) ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit --allow-empty -m "Keep scheduled updates running"
+            git push
+          fi
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

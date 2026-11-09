@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sports Algo</title>
+<meta name="description" content="Sports Algo: weekly NFL game predictions, QB switches, power rankings and player ratings.">
+<meta name="theme-color" content="#0b1017">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sports Algo">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: phone app shell. Top bar, one scrolling view, bottom tab bar; game/player open as full-screen sheets. */
+:root {
+  --bg: #0b1017; --panel: #121a24; --panel-2: #18222f; --line: #233142;
+  --fg: #e8eef5; --muted: #8a9ab0; --dim: #5d6d82;
+  --accent: #f5d742; --accent-ink: #1a1500; --vegas: #9fb3cc;
+  --good: #45c46e; --bad: #f06a5f; --warn: #f0a83c;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Barlow", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --top: env(safe-area-inset-top, 0px); --bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.45 var(--body); height: 100%; }
+body { overscroll-behavior-y: none; }
+button, select, input { font: inherit; color: inherit; }
+.num { font-variant-numeric: tabular-nums; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- shell */
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 20; background: var(--bg);
+  padding: calc(var(--top) + 10px) 16px 8px; border-bottom: 1px solid var(--line); }
+.top-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; max-width: 760px; margin: 0 auto; }
+.brand { font: 700 22px/1 var(--display); letter-spacing: .05em; }
+.brand b { color: var(--accent); }
+.league { font: 700 11px var(--display); letter-spacing: .1em; color: var(--accent-ink); background: var(--accent); border-radius: 4px; padding: 2px 5px; margin-left: 8px; vertical-align: 4px; }
+.fresh { font-size: 12px; color: var(--muted); text-align: right; }
+main { padding: calc(var(--top) + 58px) 16px calc(var(--bottom) + 84px); max-width: 760px; margin: 0 auto; }
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: grid; grid-template-columns: repeat(4, 1fr);
+  background: color-mix(in srgb, var(--panel) 96%, transparent); border-top: 1px solid var(--line);
+  padding: 6px 8px calc(var(--bottom) + 6px); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.tab { background: none; border: 0; display: grid; justify-items: center; gap: 2px; padding: 6px 0; color: var(--muted);
+  font: 600 12px var(--display); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.tab svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.tab[aria-selected="true"] { color: var(--accent); }
+
+h2 { font: 700 30px/1.05 var(--display); margin: 6px 0 4px; letter-spacing: .02em; }
+.sub { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+.note { font-size: 12.5px; color: var(--muted); }
+.note.warn { color: var(--warn); }
+.empty { text-align: center; color: var(--muted); padding: 40px 10px; }
+
+/* ---------- week strip */
+.weeks { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 10px; margin: 0 -16px; padding-left: 16px; padding-right: 16px;
+  scrollbar-width: none; scroll-snap-type: x proximity; }
+.weeks::-webkit-scrollbar { display: none; }
+.wk { flex: none; scroll-snap-align: center; min-width: 46px; height: 38px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--panel); color: var(--muted); font: 700 15px var(--display); cursor: pointer; }
+.wk.played { color: var(--fg); }
+.wk.cur { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.summary { display: flex; gap: 8px; margin-bottom: 12px; overflow-x: auto; scrollbar-width: none; }
+#rec-sum { flex-wrap: wrap; overflow: visible; }
+.summary::-webkit-scrollbar { display: none; }
+.sb { flex: none; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 6px 12px; }
+.sb .k { font: 600 10.5px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sb .v { font: 700 20px/1.1 var(--display); }
+.sb .v small { font: 500 12px var(--body); color: var(--muted); margin-left: 3px; }
+.sb.m .v { color: var(--accent); }
+
+/* ---------- game cards */
+.games { display: grid; gap: 8px; }
+.day { font: 700 13px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 8px 2px 0; }
+.card { display: grid; gap: 8px; width: 100%; text-align: left; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 14px; padding: 12px 14px; cursor: pointer; }
+.card:active { background: var(--panel-2); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tm { display: flex; align-items: baseline; gap: 7px; min-width: 0; }
+.ab { font: 700 24px/1 var(--display); letter-spacing: .03em; }
+.ab.lose { color: var(--dim); }
+.qb { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.score { font: 700 22px/1 var(--display); }
+.badge { font: 700 10px var(--display); letter-spacing: .08em; border-radius: 3px; padding: 1px 4px; flex: none; }
+.badge.new { background: var(--warn); color: #241400; }
+.badge.ret { background: var(--vegas); color: #0b1017; }
+.badge.you { background: var(--accent); color: var(--accent-ink); }
+.pct { font: 700 18px var(--display); flex: none; }
+.pct.fav { color: var(--accent); }
+.track { position: relative; height: 16px; }
+.rail { position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--line); }
+.mid { position: absolute; left: 50%; top: 1px; width: 1px; height: 14px; background: var(--dim); }
+.fill { position: absolute; top: 6px; height: 4px; background: var(--accent); opacity: .35; border-radius: 2px; }
+.mk { position: absolute; top: 2px; width: 12px; height: 12px; border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 0 2px var(--panel); }
+.mk.m { background: var(--accent); z-index: 2; }
+.mk.v { background: var(--vegas); width: 10px; height: 10px; top: 3px; }
+.foot { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--muted); }
+.foot b { color: var(--accent); font-weight: 600; } .foot em { color: var(--vegas); font-style: normal; font-weight: 600; }
+.ok { color: var(--good); } .no { color: var(--bad); }
+.edge.hot { color: var(--warn); font-weight: 600; }
+
+/* ---------- sheets */
+.sheet { position: fixed; inset: 0; z-index: 40; background: var(--bg); overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: calc(var(--top) + 8px) 16px calc(var(--bottom) + 28px); animation: up .18s ease-out; }
+@keyframes up { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+.sheet-in { max-width: 760px; margin: 0 auto; display: grid; gap: 16px; }
+.back { background: none; border: 0; color: var(--accent); font: 600 16px var(--body); padding: 8px 0; cursor: pointer; justify-self: start; }
+.hd { font: 700 34px/1 var(--display); letter-spacing: .02em; }
+.hd span { color: var(--dim); font-size: 22px; margin: 0 6px; }
+.duel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.duel > div { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.k { font: 600 11px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.duel .v { font: 700 28px/1.1 var(--display); }
+.duel .model .v { color: var(--accent); } .duel .vegas .v { color: var(--vegas); }
+.h3 { font: 700 13px var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.qbs { display: grid; gap: 10px; }
+.qbs label { display: grid; gap: 4px; }
+select { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 15px;
+  -webkit-appearance: none; appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%; background-size: 6px 6px; background-repeat: no-repeat; }
+.reset { background: none; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; color: var(--muted); font-size: 13px; cursor: pointer; justify-self: start; }
+.miss { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.miss ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 4px; font-size: 13px; }
+.miss li { display: flex; justify-content: space-between; gap: 6px; min-width: 0; }
+.miss li .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.miss .why { color: var(--muted); }
+.wf { display: grid; gap: 7px; }
+.wfr { display: grid; grid-template-columns: 128px minmax(0, 1fr) 44px; gap: 8px; align-items: center; font-size: 13px; }
+.wfr .lab { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wfr .pts { text-align: right; font-weight: 600; }
+.bar { position: relative; height: 14px; }
+.bar .ax { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.bar .b { position: absolute; top: 2px; height: 10px; border-radius: 2px; }
+.wfr.tot { border-top: 1px solid var(--line); padding-top: 8px; font-weight: 600; }
+.wfr.tot .lab { color: var(--fg); }
+
+/* ---------- lists (power, players, record) */
+.list { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.li { display: grid; align-items: center; gap: 10px; background: var(--panel); padding: 10px 12px; width: 100%; text-align: left; border: 0; }
+button.li { cursor: pointer; } button.li:active { background: var(--panel-2); }
+.pw { grid-template-columns: 26px 48px minmax(0, 1fr) 54px; }
+.rk { color: var(--muted); font: 600 15px var(--display); text-align: right; }
+.pbar { height: 6px; border-radius: 3px; margin-top: 4px; }
+.small { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chips { display: flex; gap: 6px; overflow-x: auto; margin: 0 -16px 10px; padding: 2px 16px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; cursor: pointer;
+  font: 600 13px var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.search { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; font-size: 16px; }
+.pl { grid-template-columns: minmax(0, 1fr) 64px 56px; }
+.pl .nm { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.big { font: 700 18px var(--display); text-align: right; }
+.movers { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; margin-bottom: 12px; }
+.mv { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; min-width: 0; }
+.mv button { display: flex; justify-content: space-between; gap: 6px; width: 100%; background: none; border: 0; padding: 4px 0; font-size: 13px; cursor: pointer; text-align: left; }
+.mv button span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.kv > div { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; }
+.kv .v { font: 700 22px/1.15 var(--display); }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { fill: var(--muted); font: 11px var(--body); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { font: 600 11px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: right; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+td { padding: 8px 6px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+.lock { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: grid; place-items: center; padding: calc(var(--top) + 16px) 24px calc(var(--bottom) + 16px); }
+.lock-in { display: grid; gap: 12px; justify-items: center; text-align: center; width: 100%; max-width: 340px; }
+.lock-in img { border-radius: 16px; }
+.lock-in input { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; font-size: 17px; }
+.lock-in button { width: 100%; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 12px; padding: 13px; font: 700 17px var(--display); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.install { display: flex; gap: 10px; align-items: flex-start; background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; }
+.install button { background: none; border: 0; color: var(--muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 0 2px; }
+</style>
+</head>
+<body>
+<header class="top"><div class="top-row"><div class="brand">SPORTS <b>ALGO</b><span class="league">NFL</span></div><div class="fresh" id="fresh">Loading…</div></div></header>
+
+<main>
+  <div class="install" id="install" hidden><div id="install-text"></div><button id="install-x" aria-label="Dismiss">×</button></div>
+
+  <section id="v-games">
+    <div class="weeks" id="weeks" role="tablist" aria-label="Week"></div>
+    <div class="summary" id="summary"></div>
+    <div class="games" id="games"><div class="empty">Loading games…</div></div>
+  </section>
+
+  <section id="v-power" hidden>
+    <h2 id="power-title">Power rankings</h2>
+    <p class="sub">Points better than an average team on a neutral field, with each team's projected QB.</p>
+    <div class="list" id="power"></div>
+  </section>
+
+  <section id="v-players" hidden>
+    <h2>Players</h2>
+    <p class="sub"><b>Impact</b>: points per game a player adds to his unit at full snaps vs. an average player, refit weekly. <b>Prod</b>: his own EPA per dropback, carry or target (QB/RB/WR/TE).</p>
+    <div class="chips" id="pgroups"></div>
+    <div class="chips" id="psort"></div>
+    <input class="search" id="psearch" type="search" placeholder="Search player or team" aria-label="Search players">
+    <div class="movers" id="movers"></div>
+    <div class="list" id="plist"></div>
+  </section>
+
+  <section id="v-record" hidden>
+    <h2>Season record</h2>
+    <p class="sub">Each week predicted by a model trained only on earlier games. Not betting advice.</p>
+    <div class="summary" id="rec-sum"></div>
+    <div class="panel"><table id="rec-table"></table></div>
+    <p class="note" style="margin-top:12px">Log loss scores the probabilities themselves (lower is better; a coin flip is 0.693). The model never sees the Vegas line. Vegas is shown only for comparison.</p>
+  </section>
+</main>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" data-v="games" aria-selected="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9.5" ry="6" transform="rotate(-35 12 12)"/><path d="M9 15l6-6M10.5 10.5l1 1M12.5 8.5l1 1M8.5 12.5l1 1"/></svg>Games</button>
+  <button class="tab" data-v="power" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Power</button>
+  <button class="tab" data-v="players" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>Players</button>
+  <button class="tab" data-v="record" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 18l5-5 4 3 7-8"/><path d="M15 8h5v5"/></svg>Record</button>
+</nav>
+
+<div id="sheet" class="sheet" hidden></div>
+
+<div id="lock" class="lock" hidden>
+  <form id="lock-form" class="lock-in" autocomplete="on">
+    <img src="icons/icon-192.png" alt="" width="72" height="72">
+    <div class="brand" style="font-size:30px">SPORTS <b>ALGO</b></div>
+    <p class="note" style="font-size:14px">Private app. Enter the password you were given.</p>
+    <input id="lock-pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" required>
+    <button type="submit" id="lock-go">Unlock</button>
+    <div class="note warn" id="lock-err" role="alert"></div>
+  </form>
+</div>
+
+<script src="model.js"></script>
+<script>
+const $ = (s) => document.querySelector(s);
+const S = { meta: null, weeks: {}, week: null, view: "games", power: null, players: null, hist: null, pgroup: "QB", pq: "", ov: {} };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("nflalgo." + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("nflalgo." + k, JSON.stringify(v)); } catch (e) {} },
+};
+S.ov = store.get("qb", {});
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (p) => p == null ? "—" : Math.round(p * 100) + "%";
+const sgn = (x, d = 1) => x == null ? "—" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x).toFixed(d);
+const fav = (h, a, m) => m == null ? "—" : Math.abs(m) < 0.05 ? "Pick'em" : `${m > 0 ? h : a} by ${Math.abs(m).toFixed(1)}`;
+const line = (h, a, s) => s == null ? "no line" : s === 0 ? "Pick'em" : `${s > 0 ? h : a} −${Math.abs(s).toFixed(1)}`;
+/* Password protection: the hosted data files are AES-GCM encrypted; data/lock.json holds the
+   salt and a check value. The password stays on this phone (never sent anywhere). */
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+let KEY = null;
+async function deriveKey(pw, lock) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(lock.salt), iterations: lock.iter, hash: "SHA-256" },
+    base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+}
+async function decrypt(obj, key) {
+  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(obj.iv) }, key || KEY, b64(obj.ct));
+  return new TextDecoder().decode(pt);
+}
+async function get(path) {
+  const r = await fetch(path, { cache: "no-cache" });
+  if (!r.ok) throw new Error(`Couldn't load ${path} (${r.status})`);
+  const j = await r.json();
+  return KEY && j && j.ct && j.iv ? JSON.parse(await decrypt(j)) : j;
+}
+async function tryUnlock(pw, lock) {
+  try { const k = await deriveKey(pw, lock); if ((await decrypt(lock.check, k)) === "nflalgo-ok") return k; } catch (e) {}
+  return null;
+}
+async function unlock() {
+  let lock = null;
+  try { const r = await fetch("data/lock.json", { cache: "no-cache" }); if (r.ok) lock = await r.json(); } catch (e) {}
+  if (!lock) return true;                      // unencrypted (local) build
+  const saved = store.get("pw", null);
+  if (saved) { KEY = await tryUnlock(saved, lock); if (KEY) return true; }
+  const el = $("#lock"); el.hidden = false;
+  return new Promise((resolve) => {
+    $("#lock-form").onsubmit = async (e) => {
+      e.preventDefault();
+      const pw = $("#lock-pw").value; $("#lock-err").textContent = "Checking…";
+      const k = await tryUnlock(pw, lock);
+      if (!k) { $("#lock-err").textContent = "That password didn't work. Check with whoever sent you the link."; return; }
+      KEY = k; store.set("pw", pw); el.hidden = true; resolve(true);
+    };
+    setTimeout(() => $("#lock-pw").focus(), 50);
+  });
+}
+function ago(iso) {
+  const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (m < 60) return `${Math.max(m, 1)} min ago`;
+  const h = Math.round(m / 60); if (h < 36) return `${h} h ago`;
+  return `${Math.round(h / 24)} days ago`;
+}
+
+/* ---------------- games */
+function ovFor(g) {
+  const out = {};
+  for (const side of ["home", "away"]) {
+    const team = g[side], pfr = S.ov[`${g.game_id}:${team}`];
+    const opts = g[side + "_qb"].options || [];
+    const o = pfr && opts.find((x) => x.pfr === pfr);
+    if (o && !g.played) out[side] = o;
+  }
+  return out;
+}
+function view(g, model) {
+  const ov = ovFor(g);
+  if (!ov.home && !ov.away) return { ...g, ov, prob: g.model_prob, margin: g.model_margin };
+  const r = NFLModel.predict(g, model, ov);
+  return { ...g, ov, prob: r.prob, margin: r.margin, parts: r.parts, edge: g.vegas_prob == null ? null : r.prob - g.vegas_prob,
+    pick: r.prob >= 0.5 ? g.home : g.away };
+}
+async function loadWeek(w) {
+  if (!S.weeks[w]) {
+    const info = S.meta.weeks.find((x) => x.week === w);
+    S.weeks[w] = await get("data/" + info.file);
+  }
+  return S.weeks[w];
+}
+async function selectWeek(w) {
+  S.week = w; store.set("week", { season: S.meta.season, week: w });
+  renderWeeks();
+  $("#games").innerHTML = `<div class="empty">Loading…</div>`;
+  try {
+    const d = await loadWeek(w);
+    if (S.week !== w) return;
+    renderGames(d);
+  } catch (e) { $("#games").innerHTML = `<div class="empty">${esc(e.message)}<br>Check your connection and reopen the app.</div>`; }
+}
+function renderWeeks() {
+  const el = $("#weeks");
+  el.innerHTML = S.meta.weeks.map((w) => `<button class="wk ${w.played ? "played" : ""} ${w.week === S.week ? "cur" : ""}" data-w="${w.week}" role="tab" aria-selected="${w.week === S.week}" title="${esc(w.label)}">${w.week}</button>`).join("");
+  el.querySelectorAll(".wk").forEach((b) => b.onclick = () => selectWeek(+b.dataset.w));
+  const cur = el.querySelector(".cur"); if (cur) cur.scrollIntoView({ inline: "center", block: "nearest" });
+}
+function qbLine(q, ov) {
+  const name = ov ? ov.name : q.name;
+  let s = `<span class="qb">${esc(name || "")}</span>`;
+  if (ov) s += `<span class="badge you">YOUR PICK</span>`;
+  else {
+    if (q.new) s += `<span class="badge new">NEW QB</span>`;
+    if (q.return_flag) s += `<span class="badge ret">QB?</span>`;
+  }
+  return s;
+}
+function renderGames(d) {
+  const el = $("#games");
+  if (!d.games.length) { el.innerHTML = `<div class="empty">No games this week.</div>`; return; }
+  const gs = d.games.map((g) => view(g, d.model));
+  let html = "", lastDay = "";
+  for (const g of gs) {
+    if (g.gameday !== lastDay) { html += `<div class="day">${esc(g.gameday)}</div>`; lastDay = g.gameday; }
+    const pm = g.prob, pv = g.vegas_prob;
+    const homeFav = pm >= 0.5;
+    const res = g.played
+      ? `<span><span class="${g.model_correct ? "ok" : "no"}">Model ${g.model_correct ? "✓" : "✗"}</span>${g.vegas_correct == null ? "" : ` · <span class="${g.vegas_correct ? "ok" : "no"}">Vegas ${g.vegas_correct ? "✓" : "✗"}</span>`}</span>`
+      : `<span class="edge ${g.edge != null && Math.abs(g.edge) >= 0.08 ? "hot" : ""}">Edge ${g.edge == null ? "—" : sgn(g.edge * 100, 0)}</span>`;
+    html += `<button class="card" data-id="${esc(g.game_id)}">
+      <div class="row"><div class="tm"><span class="ab ${g.played && g.winner !== g.away ? "lose" : ""}">${esc(g.away)}</span>${g.played ? `<span class="score num">${g.away_score ?? ""}</span>` : ""}${qbLine(g.away_qb, g.ov.away)}</div>
+        <span class="pct num ${!homeFav ? "fav" : ""}">${pct(1 - pm)}</span></div>
+      <div class="row"><div class="tm"><span class="ab ${g.played && g.winner !== g.home ? "lose" : ""}">${esc(g.home)}</span>${g.played ? `<span class="score num">${g.home_score ?? ""}</span>` : ""}${qbLine(g.home_qb, g.ov.home)}</div>
+        <span class="pct num ${homeFav ? "fav" : ""}">${pct(pm)}</span></div>
+      <div class="track" aria-label="Home win chance: model ${pct(pm)}, Vegas ${pct(pv)}"><div class="rail"></div><div class="mid"></div>
+        <div class="fill" style="left:${Math.min(50, pm * 100)}%;width:${Math.abs(pm * 100 - 50)}%"></div>
+        ${pv == null ? "" : `<div class="mk v" style="left:${pv * 100}%"></div>`}<div class="mk m" style="left:${pm * 100}%"></div></div>
+      <div class="foot num"><span>Model <b>${esc(fav(g.home, g.away, g.margin))}</b> · Vegas <em>${esc(line(g.home, g.away, g.spread))}</em></span>${res}</div>
+    </button>`;
+  }
+  el.innerHTML = html;
+  el.querySelectorAll(".card").forEach((c) => c.onclick = () => openGame(c.dataset.id));
+  renderSummary(gs);
+}
+function renderSummary(gs) {
+  const r = S.meta.record && S.meta.record.total;
+  const played = gs.filter((g) => g.played && g.model_correct != null);
+  let h = "";
+  if (played.length) {
+    const m = played.filter((g) => g.model_correct).length, v = played.filter((g) => g.vegas_correct).length;
+    h += `<div class="sb m"><div class="k">Model this week</div><div class="v num">${m}-${played.length - m}</div></div><div class="sb"><div class="k">Vegas this week</div><div class="v num">${v}-${played.length - v}</div></div>`;
+  } else {
+    const dis = gs.filter((g) => g.vegas_prob != null && (g.prob >= 0.5) !== (g.vegas_prob >= 0.5)).length;
+    h += `<div class="sb"><div class="k">Picks vs Vegas</div><div class="v num">${dis}<small>disagree</small></div></div>`;
+  }
+  if (r && r.n) h += `<div class="sb m"><div class="k">Model ${S.meta.season}</div><div class="v num">${r.model_right}-${r.n - r.model_right}<small>${Math.round(r.model_right / r.n * 100)}%</small></div></div>
+    <div class="sb"><div class="k">Vegas ${S.meta.season}</div><div class="v num">${r.vegas_right}-${r.n - r.vegas_right}<small>${Math.round(r.vegas_right / r.n * 100)}%</small></div></div>`;
+  $("#summary").innerHTML = h;
+}
+
+/* ---------------- sheets (game / player) with back-button support */
+function openSheet(html, key) {
+  const el = $("#sheet");
+  el.innerHTML = `<div class="sheet-in"><button class="back" id="back">‹ Back</button>${html}</div>`;
+  el.hidden = false; el.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  if (!history.state || history.state.sheet !== key) history.pushState({ sheet: key }, "");
+  $("#back").onclick = () => history.back();
+}
+function closeSheet() { $("#sheet").hidden = true; document.body.style.overflow = ""; }
+window.addEventListener("popstate", () => { if (!$("#sheet").hidden) { closeSheet(); if (S.view === "games" && S.weeks[S.week]) renderGames(S.weeks[S.week]); } });
+
+function openGame(id, keepScroll) {
+  const d = S.weeks[S.week]; const g0 = d.games.find((x) => x.game_id === id); if (!g0) return;
+  const g = view(g0, d.model);
+  const parts = g.parts || g.contributions;
+  const pickP = g.pick === g.home ? g.prob : 1 - g.prob;
+  const vPick = g.vegas_prob == null ? null : (g.vegas_prob >= 0.5 ? g.home : g.away);
+  const vP = g.vegas_prob == null ? null : Math.max(g.vegas_prob, 1 - g.vegas_prob);
+  const rows = [{ label: g.neutral ? "Baseline" : "Home baseline", points: g.base_points }].concat(
+    parts.filter((c) => Math.abs(c.points) >= 0.05).sort((a, b) => Math.abs(b.points) - Math.abs(a.points)));
+  const mx = Math.max(3, ...rows.map((r) => Math.abs(r.points)), Math.abs(g.margin));
+  const bar = (p) => { const w = Math.abs(p) / mx * 50; return `<div class="bar"><div class="ax"></div><div class="b" style="${p >= 0 ? "left:50%" : `left:${50 - w}%`};width:${w}%;background:${p >= 0 ? "var(--accent)" : "var(--vegas)"}"></div></div>`; };
+  const qbSel = (side) => {
+    const q = g[side + "_qb"], team = g[side];
+    if (g.played || !q.options) return `<div class="note">${esc(team)}: ${esc(q.name || "?")}${q.rating == null ? "" : ` (${sgn(q.rating)} pts/g)`}</div>`;
+    const cur = g.ov[side] ? g.ov[side].pfr : (q.options.find((o) => o.selected) || {}).pfr;
+    return `<label><span class="k">${esc(team)} QB${g.ov[side] ? " · your pick" : ""}</span><select data-team="${esc(team)}" data-side="${side}">
+      ${q.options.map((o) => `<option value="${esc(o.pfr)}" ${o.pfr === cur ? "selected" : ""} ${o.available ? "" : "disabled"}>${esc(o.name)} · ${o.rating == null ? "no rating" : sgn(o.rating) + " pts/g"}${!o.available ? ` (${esc(o.status)})` : o.note ? ` (${esc(o.note)})` : o.status ? ` (${esc(o.status)})` : ""}</option>`).join("")}</select></label>`;
+  };
+  const missCol = (side) => {
+    const lu = g[side + "_lineup"], cost = g[side + "_injury"];
+    if (!lu) return "<div></div>";
+    const items = lu.absences.length ? lu.absences.map((a) => `<li><span class="nm">${esc(a.name)} <span class="why">${esc(a.pos || "")} · ${esc(a.why || "out")}</span></span><span class="num">${sgn(a.impact)}</span></li>`).join("") : `<li><span class="why">No regulars out${g.played ? "" : " so far"}</span></li>`;
+    return `<div><div class="note"><b style="color:var(--fg)">${esc(g[side])}</b> · cost ${cost == null ? "—" : (cost > 0 ? "−" : "") + Math.abs(cost).toFixed(1) + " pts"}</div><ul>${items}</ul></div>`;
+  };
+  const warn = [];
+  for (const side of ["away", "home"]) {
+    const q = g[side + "_qb"];
+    if (!g.ov[side] && q.return_flag) warn.push(`${q.return_flag} (${g[side]}) may return from injury. Vegas often assumes he plays. Switch QB above to compare.`);
+  }
+  if (g.edge != null && Math.abs(g.edge) >= 0.12) warn.push("Big disagreement with Vegas. The market usually knows something (injuries, weather) the model doesn't.");
+  const injWk = S.meta.injury_report_week;
+  const anyOv = g.ov.home || g.ov.away;
+  openSheet(`
+    <div><div class="hd">${esc(g.away)}<span>@</span>${esc(g.home)}</div><div class="note">${esc(g.gameday)}${g.neutral ? " · neutral site" : ""}${g.final_week ? " · final regular-season week" : ""}</div></div>
+    <div class="duel">
+      <div class="model"><div class="k">Model</div><div class="v num">${esc(g.pick)} ${pct(pickP)}</div><div class="note">${esc(fav(g.home, g.away, g.margin))}</div></div>
+      <div class="vegas"><div class="k">Vegas</div><div class="v num">${vPick ? esc(vPick) + " " + pct(vP) : "—"}</div><div class="note">${esc(line(g.home, g.away, g.spread))}</div></div>
+    </div>
+    ${g.played ? `<div class="note">Final: ${esc(g.away)} ${g.away_score} – ${esc(g.home)} ${g.home_score}. Model ${g.model_correct ? "called it" : "missed"}${g.vegas_correct == null ? "" : `, Vegas ${g.vegas_correct ? "called it" : "missed"}`}.</div>` : ""}
+    <div><div class="h3">Starting QBs</div><div class="qbs">${qbSel("away")}${qbSel("home")}</div>
+      ${anyOv ? `<button class="reset" id="reset">Reset to projected starters</button>` : `<div class="note" style="margin-top:6px">Defaults to last game's starter. Change it if you know who's playing; the prediction updates instantly.</div>`}</div>
+    ${warn.map((w) => `<div class="note warn">${esc(w)}</div>`).join("")}
+    <div><div class="h3">Missing regulars (pts/g)</div><div class="miss">${missCol("away")}${missCol("home")}</div>
+      ${!g.played && injWk != null && injWk < S.week ? `<div class="note warn" style="margin-top:6px">This week's injury report isn't out yet (Wed–Fri). Only IR and roster moves are counted so far.</div>` : ""}</div>
+    <div><div class="h3">Why: points of ${esc(g.home)} margin</div><div class="wf">
+      ${rows.map((r) => `<div class="wfr"><span class="lab">${esc(r.label)}</span>${bar(r.points)}<span class="pts num">${sgn(r.points)}</span></div>`).join("")}
+      <div class="wfr tot"><span class="lab">${esc(g.home)} margin</span>${bar(g.margin)}<span class="pts num">${sgn(g.margin)}</span></div></div>
+      <div class="note" style="margin-top:8px">Yellow pushes toward ${esc(g.home)}, blue toward ${esc(g.away)}.</div></div>`, "game:" + id);
+  $("#sheet").querySelectorAll("select[data-team]").forEach((s) => s.onchange = () => {
+    const sel = s.value, side = s.dataset.side, team = s.dataset.team;
+    const proj = (g0[side + "_qb"].options.find((o) => o.selected) || {}).pfr;
+    const key = `${id}:${team}`;
+    if (sel === proj) delete S.ov[key]; else S.ov[key] = sel;
+    store.set("qb", S.ov);
+    const y = $("#sheet").scrollTop; openGame(id, true); $("#sheet").scrollTop = y;
+  });
+  const rb = $("#reset"); if (rb) rb.onclick = () => { delete S.ov[`${id}:${g.home}`]; delete S.ov[`${id}:${g.away}`]; store.set("qb", S.ov); openGame(id, true); };
+}
+
+/* ---------------- power */
+async function loadPower() {
+  const el = $("#power");
+  if (!S.power) { el.innerHTML = `<div class="li">Loading…</div>`; try { S.power = await get("data/power.json"); } catch (e) { el.innerHTML = `<div class="li">${esc(e.message)}</div>`; return; } }
+  const d = S.power; $("#power-title").textContent = `Power rankings`;
+  const mx = Math.max(...d.teams.map((t) => Math.abs(t.power)));
+  el.innerHTML = d.teams.map((t) => `<div class="li pw"><span class="rk">${t.rank}</span><span class="ab" style="font-size:22px">${esc(t.team)}</span>
+    <div style="min-width:0"><div class="small">${esc(t.record)} · ${esc(t.qb || "QB ?")} ${t.qb_rating == null ? "" : `(${sgn(t.qb_rating)})`}</div>
+      <div class="pbar" style="width:${Math.abs(t.power) / mx * 100}%;background:${t.power >= 0 ? "var(--accent)" : "var(--vegas)"};opacity:${t.power >= 0 ? 1 : .6}"></div></div>
+    <span class="big num">${sgn(t.power)}</span></div>`).join("");
+}
+
+/* ---------------- players */
+const GROUPS = ["QB", "RB", "WR", "TE", "OL", "DL", "LB", "DB", "ALL"];
+const PROD_GROUPS = ["QB", "RB", "WR", "TE"];
+const sortFor = (g) => store.get("psort." + g, PROD_GROUPS.includes(g) ? "prod" : "imp");
+function spark(v, w = 56, h = 22) {
+  if (!v || v.length < 2) return "";
+  const lo = Math.min(...v, 0), hi = Math.max(...v, 0), rg = hi - lo || 1;
+  const x = (i) => (i / (v.length - 1)) * (w - 4) + 2, y = (q) => h - 3 - ((q - lo) / rg) * (h - 6);
+  const last = v[v.length - 1];
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><line x1="2" x2="${w - 2}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)"/><polyline points="${v.map((q, i) => `${x(i).toFixed(1)},${y(q).toFixed(1)}`).join(" ")}" fill="none" stroke="var(--vegas)" stroke-width="1.5"/><circle cx="${x(v.length - 1)}" cy="${y(last)}" r="2.5" fill="${last >= v[0] ? "var(--good)" : "var(--bad)"}"/></svg>`;
+}
+async function loadPlayers() {
+  if (!S.players) { $("#plist").innerHTML = `<div class="li">Loading…</div>`; try { S.players = await get("data/players.json"); } catch (e) { $("#plist").innerHTML = `<div class="li">${esc(e.message)}</div>`; return; } }
+  S.pgroup = store.get("pgroup", "QB");
+  renderPlayers();
+}
+function renderPlayers() {
+  const d = S.players, g = S.pgroup, q = S.pq.toLowerCase();
+  $("#pgroups").innerHTML = GROUPS.map((x) => `<button class="chip" aria-pressed="${x === g}" data-g="${x}">${x === "ALL" ? "All" : x}</button>`).join("");
+  $("#pgroups").querySelectorAll(".chip").forEach((b) => b.onclick = () => { S.pgroup = b.dataset.g; store.set("pgroup", S.pgroup); renderPlayers(); });
+  const byId = new Map(d.players.map((p) => [p.pid, p]));
+  const mv = d.movers[g] || d.movers.ALL;
+  const mvCol = (title, ids, cls) => `<div class="mv"><div class="k">${title}</div>${ids.map((id) => byId.get(id)).filter(Boolean).map((p) => `<button data-pid="${esc(p.pid)}"><span>${esc(p.name)} <span class="small">${esc(p.team || "")}</span></span><span class="num ${cls}">${sgn(p.tr, 1)}</span></button>`).join("")}</div>`;
+  $("#movers").innerHTML = q ? "" : mvCol("Rising · 4 wks", mv.up, "ok") + mvCol("Falling · 4 wks", mv.down, "no");
+  const srt = sortFor(g);
+  const sorts = [["imp", "Impact"]].concat(PROD_GROUPS.includes(g) ? [["prod", "Production"]] : []).concat([["tr", "Rising"]]);
+  $("#psort").innerHTML = sorts.map(([k, l]) => `<button class="chip" aria-pressed="${k === srt}" data-s="${k}">Sort: ${l}</button>`).join("");
+  $("#psort").querySelectorAll(".chip").forEach((b) => b.onclick = () => { store.set("psort." + g, b.dataset.s); renderPlayers(); });
+  let rows = d.players.filter((p) => g === "ALL" || p.g === g);
+  if (q) rows = d.players.filter((p) => (p.name || "").toLowerCase().includes(q) || (p.team || "").toLowerCase() === q);
+  const val = (p) => srt === "prod" ? (p.prod == null ? -99 : p.prod) : srt === "tr" ? (p.tr == null ? -99 : p.tr) : p.imp;
+  rows = rows.slice().sort((a, b) => val(b) - val(a)).slice(0, 80);
+  const main = (p) => srt === "prod" ? p.prod : srt === "tr" ? p.tr : p.imp;
+  $("#plist").innerHTML = rows.length ? rows.map((p) => `<button class="li pl" data-pid="${esc(p.pid)}"><div style="min-width:0"><div class="nm">${esc(p.name)}</div>
+      <div class="small">${esc(p.pos)} · ${esc(p.team || "")} · ${Math.round(p.snap * 100)}% snaps · ${srt === "imp" ? (p.prod != null ? `prod ${sgn(p.prod)}` : `trend ${sgn(p.tr)}`) : `impact ${sgn(p.imp)}`}</div></div>
+      <span>${spark(p.sp)}</span><span class="big num ${srt === "tr" ? (p.tr > 0 ? "ok" : p.tr < 0 ? "no" : "") : ""}">${sgn(main(p))}</span></button>`).join("") : `<div class="li">No players match.</div>`;
+  document.querySelectorAll("#plist [data-pid], #movers [data-pid]").forEach((b) => b.onclick = () => openPlayer(b.dataset.pid));
+}
+$("#psearch").oninput = (e) => { S.pq = e.target.value.trim(); renderPlayers(); };
+function chart(series, keys) {
+  const W = 360, H = 160, L = 32, R = 8, T = 8, B = 22;
+  const all = series.flatMap((s) => s.pts.map((p) => p.v)).concat([0]);
+  let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.1 || 0.5; lo -= pad; hi += pad;
+  const idx = new Map(keys.map((k, i) => [k, i]));
+  const x = (i) => L + (keys.length < 2 ? 0 : i / (keys.length - 1) * (W - L - R)), y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Rating history">`;
+  [lo + pad, (lo + hi) / 2, hi - pad].forEach((t) => s += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${L - 4}" y="${y(t) + 4}" text-anchor="end">${sgn(t, 1)}</text>`);
+  s += `<line x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--dim)" stroke-dasharray="3 3"/>`;
+  let prev = null; keys.forEach((k, i) => { const yr = k.slice(0, 4); if (yr !== prev) { if (prev) s += `<line x1="${x(i)}" x2="${x(i)}" y1="${T}" y2="${H - B}" stroke="var(--line)"/>`; s += `<text x="${x(i) + 3}" y="${H - 6}">${yr}</text>`; prev = yr; } });
+  for (const se of series) {
+    const p = se.pts.filter((q) => idx.has(q.k));
+    s += `<polyline points="${p.map((q) => `${x(idx.get(q.k)).toFixed(1)},${y(q.v).toFixed(1)}`).join(" ")}" fill="none" stroke="${se.c}" stroke-width="2" stroke-linejoin="round"/>`;
+    const lp = p[p.length - 1]; if (lp) s += `<circle cx="${x(idx.get(lp.k))}" cy="${y(lp.v)}" r="3.5" fill="${se.c}"/>`;
+  }
+  return s + "</svg>";
+}
+async function openPlayer(pid) {
+  const p = S.players.players.find((x) => x.pid === pid); if (!p) return;
+  openSheet(`<div class="hd" style="font-size:28px">${esc(p.name)}</div><div class="note">Loading history…</div>`, "player:" + pid);
+  if (!S.hist) { try { S.hist = await get("data/history.json"); } catch (e) { S.hist = {}; } }
+  const h = S.hist[pid] || {};
+  const key = (r) => `${r[0]}-${String(r[1]).padStart(2, "0")}`;
+  const imp = (h.imp || []).map((r) => ({ k: key(r), v: r[2] })), prod = (h.prod || []).map((r) => ({ k: key(r), v: r[2] }));
+  const keys = [...new Set(imp.map((r) => r.k).concat(prod.map((r) => r.k)))].sort();
+  const cur = imp.filter((r) => r.k.startsWith(String(S.players.season)));
+  const ytd = cur.length ? cur[cur.length - 1].v - cur[0].v : null;
+  const label = p.pk ? S.players.prod_labels[p.pk] : null;
+  openSheet(`<div><div class="hd" style="font-size:28px">${esc(p.name)}</div><div class="note">${esc(p.pos)} · ${esc(p.team || "")} · ${p.gp} games · ${Math.round(p.snap * 100)}% of snaps lately</div></div>
+    <div class="kv"><div><div class="k">Impact</div><div class="v num" style="color:var(--accent)">${sgn(p.imp, 2)}</div></div>
+      <div><div class="k">Prod</div><div class="v num">${p.prod == null ? "—" : sgn(p.prod, 2)}</div></div>
+      <div><div class="k">This season</div><div class="v num ${ytd > 0 ? "ok" : ytd < 0 ? "no" : ""}">${ytd == null ? "—" : sgn(ytd, 2)}</div></div></div>
+    <div><div class="h3">Rating over time (pts/game)</div>${keys.length > 1 ? chart([{ c: "var(--accent)", pts: imp }].concat(prod.length ? [{ c: "var(--vegas)", pts: prod }] : []), keys) : `<div class="note">Not enough history yet.</div>`}
+      <div class="legend" style="margin-top:6px"><span><i style="background:var(--accent)"></i>Impact (weekly)</span>${prod.length ? `<span><i style="background:var(--vegas)"></i>Prod: ${esc(label || "")}</span>` : ""}</div></div>
+    <div><div class="h3">Recent snaps</div><div class="panel" style="padding:4px 10px"><table><tbody>${(h.sn || []).slice().reverse().map((r) => `<tr><td>${r[0]} Wk ${r[1]}</td><td style="text-align:left">vs ${esc(r[2])}</td><td>${Math.round(r[3] * 100)}%</td></tr>`).join("") || `<tr><td>No recent snaps.</td></tr>`}</tbody></table></div></div>
+    <div class="note">Linemen who always play together share credit, so read the trend rather than the decimals.</div>`, "player:" + pid);
+}
+
+/* ---------------- record */
+function renderRecord() {
+  const r = S.meta.record; const t = r.total || {};
+  const ll = (x) => x == null ? "—" : x.toFixed(3);
+  $("#rec-sum").innerHTML = t.n ? `<div class="sb m"><div class="k">Model</div><div class="v num">${t.model_right}-${t.n - t.model_right}<small>${Math.round(t.model_right / t.n * 100)}%</small></div></div>
+    <div class="sb"><div class="k">Vegas</div><div class="v num">${t.vegas_right}-${t.n - t.vegas_right}<small>${Math.round(t.vegas_right / t.n * 100)}%</small></div></div>
+    <div class="sb m"><div class="k">Model log loss</div><div class="v num">${ll(t.model_ll)}</div></div><div class="sb"><div class="k">Vegas log loss</div><div class="v num">${ll(t.vegas_ll)}</div></div>` : "";
+  $("#rec-table").innerHTML = `<thead><tr><th>Week</th><th>Model</th><th>Vegas</th><th>Model LL</th></tr></thead><tbody>` +
+    r.weeks.map((w) => `<tr><td>${w.week}</td><td class="${w.model_right > w.vegas_right ? "ok" : ""}">${w.model_right}-${w.n - w.model_right}</td><td>${w.vegas_right}-${w.n - w.vegas_right}</td><td>${ll(w.model_ll)}</td></tr>`).join("") + `</tbody>`;
+}
+
+/* ---------------- tabs, install hint, boot */
+function show(v) {
+  S.view = v; store.set("view", v);
+  for (const x of ["games", "power", "players", "record"]) $("#v-" + x).hidden = x !== v;
+  document.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String(t.dataset.v === v)));
+  window.scrollTo(0, 0);
+  $("#install").hidden = v !== "games" || !S.showInstall;
+  if (v === "power") loadPower();
+  if (v === "players") loadPlayers();
+  if (v === "record") renderRecord();
+}
+document.querySelectorAll(".tab").forEach((t) => t.onclick = () => show(t.dataset.v));
+
+function installHint() {
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  if (standalone || store.get("installDismissed", false)) return;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const android = /android/i.test(navigator.userAgent);
+  if (!ios && !android) return;
+  $("#install-text").innerHTML = ios ? "<b>Install:</b> tap the Share button, then <b>Add to Home Screen</b>." : "<b>Install:</b> tap the ⋮ menu, then <b>Install app</b> (or Add to Home screen).";
+  S.showInstall = true; $("#install").hidden = false;
+  $("#install-x").onclick = () => { $("#install").hidden = true; S.showInstall = false; store.set("installDismissed", true); };
+}
+
+async function boot() {
+  if (!window.crypto || !crypto.subtle) { $("#games").innerHTML = `<div class="empty">Open this app over https to unlock it.</div>`; }
+  await unlock();
+  try { S.meta = await get("data/meta.json"); }
+  catch (e) { $("#games").innerHTML = `<div class="empty">Couldn't load predictions.<br>${esc(e.message)}</div>`; $("#fresh").textContent = "Offline"; return; }
+  $("#fresh").innerHTML = `${S.meta.season} · thru Wk ${S.meta.last_played_week}<br>updated ${ago(S.meta.updated)}`;
+  let w = S.meta.default_week;
+  const saved = store.get("week", null);
+  if (saved && saved.season === S.meta.season && S.meta.weeks.some((x) => x.week === saved.week)) w = saved.week;
+  // drop QB picks for games that are already played
+  installHint();
+  await selectWeek(w);
+  const v = store.get("view", "games"); if (v !== "games") show(v);
+}
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+boot();
+</script>
+</body>
+</html>

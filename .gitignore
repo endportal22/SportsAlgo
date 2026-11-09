@@ -1,0 +1,11 @@
+# downloaded / generated (rebuilt by the scheduled job)
+data/
+models/
+predictions/
+reports/
+app/data/
+# local only
+archive*/
+.venv/
+__pycache__/
+.DS_Store
