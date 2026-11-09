@@ -1,0 +1,953 @@
+game_id,season,game_type,gameday,start_utc,home_team,away_team,home_score,away_score,state,schedule_state,last_period,neutral,venue,venue_tz,home_name,away_name
+2020020001,2020,R,2021-01-13,2021-01-13T22:30:00Z,PHI,PIT,6,3,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Pittsburgh Penguins
+2020020003,2020,R,2021-01-13,2021-01-14T00:00:00Z,TOR,MTL,5,4,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020020002,2020,R,2021-01-13,2021-01-14T01:00:00Z,TBL,CHI,5,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Chicago Blackhawks
+2020020004,2020,R,2021-01-13,2021-01-14T03:00:00Z,EDM,VAN,3,5,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Vancouver Canucks
+2020020005,2020,R,2021-01-13,2021-01-14T03:30:00Z,COL,STL,1,4,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,St. Louis Blues
+2020020006,2020,R,2021-01-14,2021-01-15T00:00:00Z,BUF,WSH,4,6,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Washington Capitals
+2020020007,2020,R,2021-01-14,2021-01-15T00:00:00Z,NJD,BOS,2,3,OFF,OK,SO,False,Prudential Center,US/Eastern,New Jersey Devils,Boston Bruins
+2020020008,2020,R,2021-01-14,2021-01-15T00:00:00Z,NYR,NYI,0,4,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New York Islanders
+2020020010,2020,R,2021-01-14,2021-01-15T00:30:00Z,DET,CAR,0,3,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Carolina Hurricanes
+2020020011,2020,R,2021-01-14,2021-01-15T01:00:00Z,NSH,CBJ,3,1,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Columbus Blue Jackets
+2020020012,2020,R,2021-01-14,2021-01-15T01:00:00Z,WPG,CGY,4,3,OFF,OK,OT,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Calgary Flames
+2020020013,2020,R,2021-01-14,2021-01-15T02:00:00Z,EDM,VAN,5,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Vancouver Canucks
+2020020014,2020,R,2021-01-14,2021-01-15T02:00:00Z,ARI,SJS,3,4,OFF,OK,SO,False,Gila River Arena,America/Phoenix,Arizona Coyotes,San Jose Sharks
+2020020015,2020,R,2021-01-14,2021-01-15T03:00:00Z,VGK,ANA,5,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Anaheim Ducks
+2020020016,2020,R,2021-01-14,2021-01-15T03:00:00Z,LAK,MIN,3,4,OFF,OK,OT,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Minnesota Wild
+2020020017,2020,R,2021-01-15,2021-01-16T00:00:00Z,BUF,WSH,1,2,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Washington Capitals
+2020020018,2020,R,2021-01-15,2021-01-16T00:00:00Z,PHI,PIT,5,2,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Pittsburgh Penguins
+2020020019,2020,R,2021-01-15,2021-01-16T00:00:00Z,TBL,CHI,5,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Chicago Blackhawks
+2020020021,2020,R,2021-01-15,2021-01-16T00:00:00Z,OTT,TOR,5,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Toronto Maple Leafs
+2020020022,2020,R,2021-01-15,2021-01-16T02:00:00Z,COL,STL,8,0,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,St. Louis Blues
+2020020023,2020,R,2021-01-16,2021-01-16T18:00:00Z,NJD,BOS,2,1,OFF,OK,OT,False,Prudential Center,US/Eastern,New Jersey Devils,Boston Bruins
+2020020030,2020,R,2021-01-16,2021-01-16T21:00:00Z,ARI,SJS,5,3,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,San Jose Sharks
+2020020024,2020,R,2021-01-16,2021-01-17T00:00:00Z,NYR,NYI,5,0,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New York Islanders
+2020020025,2020,R,2021-01-16,2021-01-17T00:00:00Z,DET,CAR,4,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Carolina Hurricanes
+2020020027,2020,R,2021-01-16,2021-01-17T00:00:00Z,OTT,TOR,2,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Toronto Maple Leafs
+2020020029,2020,R,2021-01-16,2021-01-17T00:00:00Z,EDM,MTL,1,5,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Montréal Canadiens
+2020020026,2020,R,2021-01-16,2021-01-17T01:00:00Z,NSH,CBJ,5,2,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Columbus Blue Jackets
+2020020032,2020,R,2021-01-16,2021-01-17T02:00:00Z,LAK,MIN,3,4,OFF,OK,OT,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Minnesota Wild
+2020020028,2020,R,2021-01-16,2021-01-17T03:00:00Z,CGY,VAN,3,0,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Vancouver Canucks
+2020020031,2020,R,2021-01-16,2021-01-17T03:00:00Z,VGK,ANA,2,1,OFF,OK,OT,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Anaheim Ducks
+2020020035,2020,R,2021-01-17,2021-01-17T17:00:00Z,PIT,WSH,4,3,OFF,OK,SO,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Washington Capitals
+2020020034,2020,R,2021-01-17,2021-01-18T00:00:00Z,FLA,CHI,5,2,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Chicago Blackhawks
+2020020038,2020,R,2021-01-18,2021-01-18T17:00:00Z,DET,CBJ,2,3,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Columbus Blue Jackets
+2020020036,2020,R,2021-01-18,2021-01-18T22:00:00Z,NYI,BOS,1,0,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Boston Bruins
+2020020041,2020,R,2021-01-18,2021-01-19T00:00:00Z,TOR,WPG,3,1,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Winnipeg Jets
+2020020037,2020,R,2021-01-18,2021-01-19T00:30:00Z,PHI,BUF,1,6,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Buffalo Sabres
+2020020039,2020,R,2021-01-18,2021-01-19T01:00:00Z,STL,SJS,5,4,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,San Jose Sharks
+2020020040,2020,R,2021-01-18,2021-01-19T01:00:00Z,NSH,CAR,2,4,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Carolina Hurricanes
+2020020042,2020,R,2021-01-18,2021-01-19T02:00:00Z,CGY,VAN,5,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Vancouver Canucks
+2020020043,2020,R,2021-01-18,2021-01-19T02:00:00Z,EDM,MTL,1,3,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Montréal Canadiens
+2020020045,2020,R,2021-01-18,2021-01-19T02:00:00Z,ANA,MIN,1,0,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Minnesota Wild
+2020020044,2020,R,2021-01-18,2021-01-19T03:00:00Z,VGK,ARI,4,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Arizona Coyotes
+2020020046,2020,R,2021-01-19,2021-01-20T00:00:00Z,NYR,NJD,3,4,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New Jersey Devils
+2020020047,2020,R,2021-01-19,2021-01-20T00:00:00Z,PHI,BUF,3,0,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Buffalo Sabres
+2020020049,2020,R,2021-01-19,2021-01-20T00:00:00Z,FLA,CHI,5,4,OFF,OK,OT,False,BB&T Center,US/Eastern,Florida Panthers,Chicago Blackhawks
+2020020050,2020,R,2021-01-19,2021-01-20T00:00:00Z,PIT,WSH,5,4,OFF,OK,OT,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Washington Capitals
+2020020053,2020,R,2021-01-19,2021-01-20T00:00:00Z,OTT,WPG,3,4,OFF,OK,OT,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Winnipeg Jets
+2020020051,2020,R,2021-01-19,2021-01-20T00:30:00Z,DET,CBJ,3,2,OFF,OK,OT,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Columbus Blue Jackets
+2020020054,2020,R,2021-01-19,2021-01-20T03:00:00Z,LAK,COL,2,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Colorado Avalanche
+2020020056,2020,R,2021-01-20,2021-01-21T00:00:00Z,TOR,EDM,1,3,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Edmonton Oilers
+2020020055,2020,R,2021-01-20,2021-01-21T02:00:00Z,STL,SJS,1,2,OFF,OK,SO,False,Enterprise Center,US/Central,St. Louis Blues,San Jose Sharks
+2020020059,2020,R,2021-01-20,2021-01-21T02:30:00Z,ANA,MIN,2,3,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Minnesota Wild
+2020020057,2020,R,2021-01-20,2021-01-21T03:00:00Z,VAN,MTL,6,5,OFF,OK,SO,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Montréal Canadiens
+2020020058,2020,R,2021-01-20,2021-01-21T03:00:00Z,VGK,ARI,5,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Arizona Coyotes
+2020020060,2020,R,2021-01-21,2021-01-22T00:00:00Z,BOS,PHI,5,4,OFF,OK,SO,False,TD Garden,US/Eastern,Boston Bruins,Philadelphia Flyers
+2020020061,2020,R,2021-01-21,2021-01-22T00:00:00Z,NYI,NJD,4,1,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New Jersey Devils
+2020020063,2020,R,2021-01-21,2021-01-22T00:00:00Z,CBJ,TBL,2,3,OFF,OK,OT,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Tampa Bay Lightning
+2020020064,2020,R,2021-01-21,2021-01-22T00:00:00Z,OTT,WPG,1,4,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Winnipeg Jets
+2020020065,2020,R,2021-01-21,2021-01-22T02:30:00Z,VAN,MTL,3,7,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Montréal Canadiens
+2020020066,2020,R,2021-01-21,2021-01-22T03:00:00Z,LAK,COL,4,2,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Colorado Avalanche
+2020020067,2020,R,2021-01-22,2021-01-23T00:00:00Z,WSH,BUF,4,3,OFF,OK,SO,False,Capital One Arena,US/Eastern,Washington Capitals,Buffalo Sabres
+2020020068,2020,R,2021-01-22,2021-01-23T00:00:00Z,PIT,NYR,4,3,OFF,OK,SO,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Rangers
+2020020070,2020,R,2021-01-22,2021-01-23T00:00:00Z,TOR,EDM,4,2,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Edmonton Oilers
+2020020069,2020,R,2021-01-22,2021-01-23T01:00:00Z,CHI,DET,4,1,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Detroit Red Wings
+2020020071,2020,R,2021-01-22,2021-01-23T01:00:00Z,MIN,SJS,4,1,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,San Jose Sharks
+2020020072,2020,R,2021-01-22,2021-01-23T01:30:00Z,DAL,NSH,7,0,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Nashville Predators
+2020020073,2020,R,2021-01-22,2021-01-23T02:00:00Z,ARI,VGK,5,2,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Vegas Golden Knights
+2020020074,2020,R,2021-01-22,2021-01-23T03:00:00Z,ANA,COL,2,3,OFF,OK,OT,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Colorado Avalanche
+2020020077,2020,R,2021-01-23,2021-01-23T19:00:00Z,CBJ,TBL,5,2,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Tampa Bay Lightning
+2020020075,2020,R,2021-01-23,2021-01-24T00:00:00Z,BOS,PHI,6,1,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Philadelphia Flyers
+2020020080,2020,R,2021-01-23,2021-01-24T00:00:00Z,VAN,MTL,2,5,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Montréal Canadiens
+2020020078,2020,R,2021-01-23,2021-01-24T01:00:00Z,STL,LAK,4,2,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Los Angeles Kings
+2020020079,2020,R,2021-01-23,2021-01-24T03:00:00Z,WPG,OTT,6,3,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Ottawa Senators
+2020020084,2020,R,2021-01-24,2021-01-24T17:30:00Z,CHI,DET,6,2,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Detroit Red Wings
+2020020082,2020,R,2021-01-24,2021-01-24T20:00:00Z,WSH,BUF,3,4,OFF,OK,SO,False,Capital One Arena,US/Eastern,Washington Capitals,Buffalo Sabres
+2020020087,2020,R,2021-01-24,2021-01-24T21:00:00Z,CGY,TOR,2,3,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Toronto Maple Leafs
+2020020090,2020,R,2021-01-24,2021-01-24T21:00:00Z,ARI,VGK,0,1,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Vegas Golden Knights
+2020020081,2020,R,2021-01-24,2021-01-25T00:00:00Z,NJD,NYI,2,0,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,New York Islanders
+2020020083,2020,R,2021-01-24,2021-01-25T00:00:00Z,PIT,NYR,3,2,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Rangers
+2020020085,2020,R,2021-01-24,2021-01-25T01:00:00Z,STL,LAK,3,6,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Los Angeles Kings
+2020020088,2020,R,2021-01-24,2021-01-25T01:00:00Z,MIN,SJS,3,5,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,San Jose Sharks
+2020020089,2020,R,2021-01-24,2021-01-25T01:00:00Z,DAL,NSH,3,2,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Nashville Predators
+2020020091,2020,R,2021-01-24,2021-01-25T01:00:00Z,ANA,COL,3,1,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Colorado Avalanche
+2020020086,2020,R,2021-01-24,2021-01-25T02:00:00Z,WPG,EDM,3,4,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Edmonton Oilers
+2020020092,2020,R,2021-01-25,2021-01-26T03:00:00Z,VAN,OTT,7,1,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Ottawa Senators
+2020020093,2020,R,2021-01-26,2021-01-27T00:00:00Z,BOS,PIT,3,2,OFF,OK,OT,False,TD Garden,US/Eastern,Boston Bruins,Pittsburgh Penguins
+2020020094,2020,R,2021-01-26,2021-01-27T00:00:00Z,BUF,NYR,3,2,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Rangers
+2020020095,2020,R,2021-01-26,2021-01-27T00:00:00Z,NJD,PHI,3,5,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Philadelphia Flyers
+2020020096,2020,R,2021-01-26,2021-01-27T00:00:00Z,WSH,NYI,3,2,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Islanders
+2020020098,2020,R,2021-01-26,2021-01-27T00:00:00Z,CBJ,FLA,3,4,OFF,OK,SO,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Florida Panthers
+2020020099,2020,R,2021-01-26,2021-01-27T01:00:00Z,NSH,CHI,3,2,OFF,OK,OT,False,Bridgestone Arena,US/Central,Nashville Predators,Chicago Blackhawks
+2020020100,2020,R,2021-01-26,2021-01-27T01:00:00Z,WPG,EDM,6,4,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Edmonton Oilers
+2020020102,2020,R,2021-01-26,2021-01-27T01:00:00Z,MIN,LAK,1,2,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Los Angeles Kings
+2020020103,2020,R,2021-01-26,2021-01-27T01:30:00Z,DAL,DET,2,1,OFF,OK,OT,False,American Airlines Center,US/Central,Dallas Stars,Detroit Red Wings
+2020020101,2020,R,2021-01-26,2021-01-27T02:00:00Z,CGY,TOR,3,4,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Toronto Maple Leafs
+2020020104,2020,R,2021-01-26,2021-01-27T02:00:00Z,COL,SJS,7,3,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,San Jose Sharks
+2020020105,2020,R,2021-01-26,2021-01-27T02:00:00Z,ARI,ANA,0,1,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Anaheim Ducks
+2020020106,2020,R,2021-01-26,2021-01-27T02:00:00Z,VGK,STL,4,5,OFF,OK,SO,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,St. Louis Blues
+2020020107,2020,R,2021-01-27,2021-01-28T00:30:00Z,NSH,CHI,2,1,OFF,OK,SO,False,Bridgestone Arena,US/Central,Nashville Predators,Chicago Blackhawks
+2020020108,2020,R,2021-01-27,2021-01-28T01:00:00Z,VAN,OTT,5,1,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Ottawa Senators
+2020020109,2020,R,2021-01-28,2021-01-29T00:00:00Z,BOS,PIT,4,1,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Pittsburgh Penguins
+2020020110,2020,R,2021-01-28,2021-01-29T00:00:00Z,BUF,NYR,2,3,OFF,OK,OT,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Rangers
+2020020111,2020,R,2021-01-28,2021-01-29T00:00:00Z,NJD,PHI,1,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Philadelphia Flyers
+2020020112,2020,R,2021-01-28,2021-01-29T00:00:00Z,WSH,NYI,6,3,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Islanders
+2020020113,2020,R,2021-01-28,2021-01-29T00:00:00Z,CAR,TBL,1,0,OFF,OK,OT,False,PNC Arena,US/Eastern,Carolina Hurricanes,Tampa Bay Lightning
+2020020114,2020,R,2021-01-28,2021-01-29T00:00:00Z,CBJ,FLA,3,2,OFF,OK,SO,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Florida Panthers
+2020020115,2020,R,2021-01-28,2021-01-29T00:00:00Z,MTL,CGY,4,2,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Calgary Flames
+2020020118,2020,R,2021-01-28,2021-01-29T01:00:00Z,MIN,LAK,5,3,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Los Angeles Kings
+2020020119,2020,R,2021-01-28,2021-01-29T01:30:00Z,DAL,DET,7,3,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Detroit Red Wings
+2020020120,2020,R,2021-01-28,2021-01-29T02:00:00Z,COL,SJS,3,0,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,San Jose Sharks
+2020020121,2020,R,2021-01-28,2021-01-29T02:00:00Z,ARI,ANA,3,2,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Anaheim Ducks
+2020020116,2020,R,2021-01-28,2021-01-29T03:00:00Z,EDM,TOR,3,4,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Toronto Maple Leafs
+2020020117,2020,R,2021-01-28,2021-01-29T03:00:00Z,VAN,OTT,4,1,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Ottawa Senators
+2020020123,2020,R,2021-01-29,2021-01-30T01:00:00Z,CHI,CBJ,1,2,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Columbus Blue Jackets
+2020020124,2020,R,2021-01-30,2021-01-30T18:00:00Z,BUF,NJD,4,3,OFF,OK,SO,False,KeyBank Center,America/New_York,Buffalo Sabres,New Jersey Devils
+2020020125,2020,R,2021-01-30,2021-01-31T00:00:00Z,NYR,PIT,4,5,OFF,OK,OT,False,Madison Square Garden,America/New_York,New York Rangers,Pittsburgh Penguins
+2020020126,2020,R,2021-01-30,2021-01-31T00:00:00Z,PHI,NYI,3,2,OFF,OK,OT,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Islanders
+2020020127,2020,R,2021-01-30,2021-01-31T00:00:00Z,WSH,BOS,4,3,OFF,OK,OT,False,Capital One Arena,US/Eastern,Washington Capitals,Boston Bruins
+2020020128,2020,R,2021-01-30,2021-01-31T00:00:00Z,CAR,DAL,4,1,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Dallas Stars
+2020020129,2020,R,2021-01-30,2021-01-31T00:00:00Z,TBL,NSH,4,3,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Nashville Predators
+2020020130,2020,R,2021-01-30,2021-01-31T00:00:00Z,DET,FLA,2,3,OFF,OK,OT,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Florida Panthers
+2020020131,2020,R,2021-01-30,2021-01-31T00:00:00Z,MTL,CGY,0,2,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Calgary Flames
+2020020133,2020,R,2021-01-30,2021-01-31T00:00:00Z,EDM,TOR,4,3,OFF,OK,OT,False,Rogers Place,America/Edmonton,Edmonton Oilers,Toronto Maple Leafs
+2020020134,2020,R,2021-01-30,2021-01-31T01:00:00Z,MIN,COL,1,5,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Colorado Avalanche
+2020020135,2020,R,2021-01-30,2021-01-31T02:00:00Z,ANA,STL,1,6,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,St. Louis Blues
+2020020132,2020,R,2021-01-30,2021-01-31T03:00:00Z,WPG,VAN,1,4,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Vancouver Canucks
+2020020136,2020,R,2021-01-31,2021-01-31T18:00:00Z,BUF,NJD,3,5,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,New Jersey Devils
+2020020138,2020,R,2021-01-31,2021-01-31T22:00:00Z,CAR,DAL,4,3,OFF,OK,SO,False,PNC Arena,US/Eastern,Carolina Hurricanes,Dallas Stars
+2020020139,2020,R,2021-01-31,2021-01-31T22:00:00Z,DET,FLA,2,3,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Florida Panthers
+2020020137,2020,R,2021-01-31,2021-02-01T00:00:00Z,PHI,NYI,4,3,OFF,OK,OT,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Islanders
+2020020140,2020,R,2021-01-31,2021-02-01T00:00:00Z,CHI,CBJ,3,1,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Columbus Blue Jackets
+2020020142,2020,R,2021-01-31,2021-02-01T01:00:00Z,MIN,COL,4,3,OFF,OK,OT,False,Xcel Energy Center,US/Central,Minnesota Wild,Colorado Avalanche
+2020020143,2020,R,2021-01-31,2021-02-01T01:00:00Z,ANA,STL,1,4,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,St. Louis Blues
+2020020141,2020,R,2021-01-31,2021-02-01T02:00:00Z,EDM,OTT,8,5,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Ottawa Senators
+2020020144,2020,R,2021-02-01,2021-02-02T00:00:00Z,NYR,PIT,3,1,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Pittsburgh Penguins
+2020020145,2020,R,2021-02-01,2021-02-02T00:00:00Z,WSH,BOS,3,5,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Boston Bruins
+2020020146,2020,R,2021-02-01,2021-02-02T00:00:00Z,TBL,NSH,5,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Nashville Predators
+2020020147,2020,R,2021-02-01,2021-02-02T00:00:00Z,MTL,VAN,6,2,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Vancouver Canucks
+2020020148,2020,R,2021-02-01,2021-02-02T01:00:00Z,WPG,CGY,3,4,OFF,OK,SO,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Calgary Flames
+2020020152,2020,R,2021-02-02,2021-02-03T00:00:00Z,CBJ,DAL,3,6,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Dallas Stars
+2020020155,2020,R,2021-02-02,2021-02-03T00:00:00Z,MTL,VAN,5,3,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Vancouver Canucks
+2020020153,2020,R,2021-02-02,2021-02-03T01:00:00Z,CHI,CAR,3,4,OFF,OK,SO,False,United Center,America/Chicago,Chicago Blackhawks,Carolina Hurricanes
+2020020154,2020,R,2021-02-02,2021-02-03T01:00:00Z,STL,ARI,4,3,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Arizona Coyotes
+2020020156,2020,R,2021-02-02,2021-02-03T01:00:00Z,WPG,CGY,3,2,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Calgary Flames
+2020020158,2020,R,2021-02-02,2021-02-03T01:30:00Z,COL,MIN,2,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Minnesota Wild
+2020020157,2020,R,2021-02-02,2021-02-03T03:00:00Z,EDM,OTT,4,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Ottawa Senators
+2020020161,2020,R,2021-02-02,2021-02-03T03:00:00Z,LAK,ANA,1,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Anaheim Ducks
+2020020160,2020,R,2021-02-03,2021-02-03T22:30:00Z,TBL,DET,5,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Detroit Red Wings
+2020020159,2020,R,2021-02-03,2021-02-04T01:00:00Z,PHI,BOS,3,4,OFF,OK,OT,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Boston Bruins
+2020020164,2020,R,2021-02-04,2021-02-05T00:00:00Z,NYR,WSH,4,2,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Washington Capitals
+2020020165,2020,R,2021-02-04,2021-02-05T00:00:00Z,FLA,NSH,5,6,OFF,OK,OT,False,BB&T Center,US/Eastern,Florida Panthers,Nashville Predators
+2020020167,2020,R,2021-02-04,2021-02-05T00:00:00Z,CBJ,DAL,4,3,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Dallas Stars
+2020020170,2020,R,2021-02-04,2021-02-05T00:00:00Z,MTL,OTT,2,3,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Ottawa Senators
+2020020171,2020,R,2021-02-04,2021-02-05T00:00:00Z,TOR,VAN,7,3,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Vancouver Canucks
+2020020168,2020,R,2021-02-04,2021-02-05T01:00:00Z,CHI,CAR,6,4,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Carolina Hurricanes
+2020020169,2020,R,2021-02-04,2021-02-05T01:00:00Z,STL,ARI,3,4,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Arizona Coyotes
+2020020172,2020,R,2021-02-04,2021-02-05T01:00:00Z,WPG,CGY,4,1,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Calgary Flames
+2020020174,2020,R,2021-02-05,2021-02-06T00:00:00Z,PHI,BOS,1,2,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Boston Bruins
+2020020175,2020,R,2021-02-05,2021-02-06T00:00:00Z,TBL,DET,3,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Detroit Red Wings
+2020020176,2020,R,2021-02-05,2021-02-06T00:00:00Z,FLA,NSH,2,1,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Nashville Predators
+2020020177,2020,R,2021-02-05,2021-02-06T03:00:00Z,VGK,LAK,5,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Los Angeles Kings
+2020020178,2020,R,2021-02-05,2021-02-06T03:00:00Z,ANA,SJS,4,5,OFF,OK,SO,False,Honda Center,America/Los_Angeles,Anaheim Ducks,San Jose Sharks
+2020020183,2020,R,2021-02-06,2021-02-06T18:00:00Z,OTT,MTL,1,2,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Montréal Canadiens
+2020020550,2020,R,2021-02-06,2021-02-06T20:00:00Z,STL,ARI,1,3,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Arizona Coyotes
+2020020181,2020,R,2021-02-06,2021-02-07T00:00:00Z,NYI,PIT,4,3,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Pittsburgh Penguins
+2020020184,2020,R,2021-02-06,2021-02-07T00:00:00Z,TOR,VAN,5,1,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Vancouver Canucks
+2020020185,2020,R,2021-02-06,2021-02-07T03:00:00Z,CGY,EDM,6,4,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Edmonton Oilers
+2020020187,2020,R,2021-02-06,2021-02-07T03:00:00Z,ANA,SJS,2,1,OFF,OK,SO,False,Honda Center,America/Los_Angeles,Anaheim Ducks,San Jose Sharks
+2020020188,2020,R,2021-02-07,2021-02-07T17:00:00Z,WSH,PHI,4,7,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Philadelphia Flyers
+2020020189,2020,R,2021-02-07,2021-02-07T20:00:00Z,FLA,DET,1,4,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Detroit Red Wings
+2020020190,2020,R,2021-02-07,2021-02-07T20:00:00Z,CBJ,CAR,5,6,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Carolina Hurricanes
+2020020193,2020,R,2021-02-07,2021-02-07T20:00:00Z,DAL,CHI,1,2,OFF,OK,OT,False,American Airlines Center,US/Central,Dallas Stars,Chicago Blackhawks
+2020020194,2020,R,2021-02-07,2021-02-07T20:00:00Z,VGK,LAK,4,3,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Los Angeles Kings
+2020020196,2020,R,2021-02-08,2021-02-09T00:00:00Z,NYR,NYI,0,2,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New York Islanders
+2020020197,2020,R,2021-02-08,2021-02-09T00:00:00Z,CBJ,CAR,3,2,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Carolina Hurricanes
+2020020199,2020,R,2021-02-08,2021-02-09T00:00:00Z,OTT,EDM,1,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Edmonton Oilers
+2020020200,2020,R,2021-02-08,2021-02-09T00:00:00Z,TOR,VAN,3,1,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Vancouver Canucks
+2020020198,2020,R,2021-02-08,2021-02-09T01:00:00Z,NSH,TBL,1,4,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Tampa Bay Lightning
+2020020565,2020,R,2021-02-08,2021-02-09T01:00:00Z,STL,ARI,3,4,OFF,OK,SO,False,Enterprise Center,US/Central,St. Louis Blues,Arizona Coyotes
+2020020203,2020,R,2021-02-09,2021-02-10T00:00:00Z,FLA,DET,2,1,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Detroit Red Wings
+2020020205,2020,R,2021-02-09,2021-02-10T00:00:00Z,OTT,EDM,2,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Edmonton Oilers
+2020020204,2020,R,2021-02-09,2021-02-10T01:30:00Z,NSH,TBL,1,6,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Tampa Bay Lightning
+2020020208,2020,R,2021-02-09,2021-02-10T01:30:00Z,DAL,CHI,1,2,OFF,OK,OT,False,American Airlines Center,US/Central,Dallas Stars,Chicago Blackhawks
+2020020206,2020,R,2021-02-09,2021-02-10T03:00:00Z,CGY,WPG,3,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Winnipeg Jets
+2020020210,2020,R,2021-02-09,2021-02-10T03:00:00Z,VGK,ANA,5,4,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Anaheim Ducks
+2020020211,2020,R,2021-02-09,2021-02-10T03:00:00Z,LAK,SJS,3,4,OFF,OK,SO,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,San Jose Sharks
+2020020212,2020,R,2021-02-10,2021-02-11T00:00:00Z,NYR,BOS,2,3,OFF,OK,OT,False,Madison Square Garden,America/New_York,New York Rangers,Boston Bruins
+2020020213,2020,R,2021-02-10,2021-02-11T00:30:00Z,MTL,TOR,2,4,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020020215,2020,R,2021-02-11,2021-02-12T00:00:00Z,NYI,PIT,3,4,OFF,OK,SO,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Pittsburgh Penguins
+2020020217,2020,R,2021-02-11,2021-02-12T00:00:00Z,FLA,TBL,5,2,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Tampa Bay Lightning
+2020020218,2020,R,2021-02-11,2021-02-12T01:00:00Z,CHI,CBJ,5,6,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Columbus Blue Jackets
+2020020219,2020,R,2021-02-11,2021-02-12T01:00:00Z,NSH,DET,3,2,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Detroit Red Wings
+2020020220,2020,R,2021-02-11,2021-02-12T01:00:00Z,MTL,EDM,0,3,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Edmonton Oilers
+2020020221,2020,R,2021-02-11,2021-02-12T01:00:00Z,WPG,OTT,5,1,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Ottawa Senators
+2020020224,2020,R,2021-02-11,2021-02-12T01:30:00Z,DAL,CAR,3,5,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Carolina Hurricanes
+2020020222,2020,R,2021-02-11,2021-02-12T03:00:00Z,VAN,CGY,1,3,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Calgary Flames
+2020020226,2020,R,2021-02-11,2021-02-12T03:00:00Z,VGK,ANA,0,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Anaheim Ducks
+2020020227,2020,R,2021-02-11,2021-02-12T03:00:00Z,LAK,SJS,6,2,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,San Jose Sharks
+2020020228,2020,R,2021-02-12,2021-02-13T00:00:00Z,NYR,BOS,0,1,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Boston Bruins
+2020020684,2020,R,2021-02-12,2021-02-13T02:00:00Z,ARI,STL,1,4,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,St. Louis Blues
+2020020236,2020,R,2021-02-13,2021-02-13T20:00:00Z,WPG,OTT,1,2,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Ottawa Senators
+2020020149,2020,R,2021-02-13,2021-02-13T21:00:00Z,SJS,VGK,1,3,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Vegas Golden Knights
+2020020230,2020,R,2021-02-13,2021-02-14T00:00:00Z,NYI,BOS,4,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Boston Bruins
+2020020232,2020,R,2021-02-13,2021-02-14T00:00:00Z,FLA,TBL,1,6,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Tampa Bay Lightning
+2020020235,2020,R,2021-02-13,2021-02-14T00:00:00Z,TOR,MTL,1,2,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020020233,2020,R,2021-02-13,2021-02-14T01:00:00Z,CHI,CBJ,3,2,OFF,OK,OT,False,United Center,America/Chicago,Chicago Blackhawks,Columbus Blue Jackets
+2020020234,2020,R,2021-02-13,2021-02-14T01:00:00Z,NSH,DET,2,4,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Detroit Red Wings
+2020020238,2020,R,2021-02-13,2021-02-14T01:00:00Z,DAL,CAR,3,4,OFF,OK,SO,False,American Airlines Center,US/Central,Dallas Stars,Carolina Hurricanes
+2020020239,2020,R,2021-02-13,2021-02-14T01:00:00Z,ARI,STL,4,5,OFF,OK,OT,False,Gila River Arena,America/Phoenix,Arizona Coyotes,St. Louis Blues
+2020020237,2020,R,2021-02-13,2021-02-14T03:00:00Z,VAN,CGY,3,1,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Calgary Flames
+2020020242,2020,R,2021-02-14,2021-02-14T20:00:00Z,PIT,WSH,6,3,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Washington Capitals
+2020020243,2020,R,2021-02-14,2021-02-15T00:00:00Z,VGK,COL,1,0,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Colorado Avalanche
+2020020251,2020,R,2021-02-15,2021-02-15T21:00:00Z,ARI,STL,1,0,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,St. Louis Blues
+2020020245,2020,R,2021-02-15,2021-02-16T00:00:00Z,BUF,NYI,1,3,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Islanders
+2020020247,2020,R,2021-02-15,2021-02-16T00:00:00Z,TOR,OTT,5,6,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Ottawa Senators
+2020020255,2020,R,2021-02-15,2021-02-16T00:00:00Z,CAR,CBJ,7,3,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Columbus Blue Jackets
+2020020256,2020,R,2021-02-15,2021-02-16T00:00:00Z,TBL,FLA,4,6,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Florida Panthers
+2020020246,2020,R,2021-02-15,2021-02-16T00:30:00Z,DET,CHI,2,3,OFF,OK,OT,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Chicago Blackhawks
+2020020248,2020,R,2021-02-15,2021-02-16T02:00:00Z,EDM,WPG,5,6,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Winnipeg Jets
+2020020249,2020,R,2021-02-15,2021-02-16T03:00:00Z,VAN,CGY,3,4,OFF,OK,OT,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Calgary Flames
+2020020252,2020,R,2021-02-15,2021-02-16T03:30:00Z,SJS,ANA,3,2,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Anaheim Ducks
+2020020253,2020,R,2021-02-16,2021-02-17T00:00:00Z,BUF,NYI,0,3,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Islanders
+2020020257,2020,R,2021-02-16,2021-02-17T00:00:00Z,PIT,WSH,1,3,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Washington Capitals
+2020020364,2020,R,2021-02-16,2021-02-17T00:00:00Z,NYR,NJD,2,5,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New Jersey Devils
+2020020259,2020,R,2021-02-16,2021-02-17T03:00:00Z,VGK,COL,2,3,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Colorado Avalanche
+2020020260,2020,R,2021-02-16,2021-02-17T03:00:00Z,LAK,MIN,4,0,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Minnesota Wild
+2020020062,2020,R,2021-02-17,2021-02-17T22:00:00Z,CAR,FLA,3,4,OFF,OK,OT,False,PNC Arena,US/Eastern,Carolina Hurricanes,Florida Panthers
+2020020262,2020,R,2021-02-17,2021-02-18T00:00:00Z,TOR,OTT,2,1,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Ottawa Senators
+2020020261,2020,R,2021-02-17,2021-02-18T00:30:00Z,DET,CHI,0,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Chicago Blackhawks
+2020020263,2020,R,2021-02-17,2021-02-18T03:00:00Z,CGY,VAN,1,5,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Vancouver Canucks
+2020020264,2020,R,2021-02-17,2021-02-18T03:00:00Z,EDM,WPG,3,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Winnipeg Jets
+2020020265,2020,R,2021-02-18,2021-02-19T00:00:00Z,BOS,NJD,2,3,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New Jersey Devils
+2020020266,2020,R,2021-02-18,2021-02-19T00:00:00Z,PHI,NYR,2,3,OFF,OK,SO,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Rangers
+2020020267,2020,R,2021-02-18,2021-02-19T00:00:00Z,PIT,NYI,4,1,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Islanders
+2020020268,2020,R,2021-02-18,2021-02-19T00:00:00Z,CBJ,NSH,3,0,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Nashville Predators
+2020020270,2020,R,2021-02-18,2021-02-19T00:00:00Z,TOR,OTT,7,3,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Ottawa Senators
+2020020667,2020,R,2021-02-18,2021-02-19T00:00:00Z,WSH,BUF,3,1,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Buffalo Sabres
+2020020269,2020,R,2021-02-18,2021-02-19T01:00:00Z,STL,SJS,3,2,OFF,OK,OT,False,Enterprise Center,US/Central,St. Louis Blues,San Jose Sharks
+2020020272,2020,R,2021-02-18,2021-02-19T02:00:00Z,ARI,LAK,2,3,OFF,OK,SO,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Los Angeles Kings
+2020020273,2020,R,2021-02-18,2021-02-19T03:00:00Z,ANA,MIN,1,3,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Minnesota Wild
+2020020274,2020,R,2021-02-19,2021-02-20T00:00:00Z,CAR,CHI,5,3,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Chicago Blackhawks
+2020020275,2020,R,2021-02-19,2021-02-20T00:00:00Z,DET,FLA,2,7,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Florida Panthers
+2020020276,2020,R,2021-02-19,2021-02-20T02:00:00Z,CGY,EDM,1,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Edmonton Oilers
+2020020277,2020,R,2021-02-19,2021-02-20T03:00:00Z,VAN,WPG,0,2,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Winnipeg Jets
+2020020278,2020,R,2021-02-20,2021-02-20T17:30:00Z,NJD,BUF,2,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Buffalo Sabres
+2020020279,2020,R,2021-02-20,2021-02-20T17:30:00Z,WSH,NYR,1,4,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Rangers
+2020020287,2020,R,2021-02-20,2021-02-20T20:00:00Z,COL,VGK,3,2,OFF,OK,REG,True,Edgewood Tahoe Resort,US/Pacific,Colorado Avalanche,Vegas Golden Knights
+2020020292,2020,R,2021-02-20,2021-02-20T22:00:00Z,DET,FLA,2,1,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Florida Panthers
+2020020281,2020,R,2021-02-20,2021-02-21T00:00:00Z,PIT,NYI,3,2,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Islanders
+2020020282,2020,R,2021-02-20,2021-02-21T00:00:00Z,CBJ,NSH,2,4,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Nashville Predators
+2020020283,2020,R,2021-02-20,2021-02-21T00:00:00Z,STL,SJS,4,5,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,San Jose Sharks
+2020020284,2020,R,2021-02-20,2021-02-21T00:00:00Z,MTL,TOR,3,5,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020020288,2020,R,2021-02-20,2021-02-21T00:00:00Z,ARI,LAK,2,4,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Los Angeles Kings
+2020020543,2020,R,2021-02-20,2021-02-21T00:00:00Z,CAR,TBL,4,0,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Tampa Bay Lightning
+2020020289,2020,R,2021-02-20,2021-02-21T02:00:00Z,ANA,MIN,1,5,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Minnesota Wild
+2020020285,2020,R,2021-02-20,2021-02-21T03:00:00Z,EDM,CGY,7,1,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Calgary Flames
+2020020392,2020,R,2021-02-21,2021-02-21T19:00:00Z,WSH,NJD,4,3,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New Jersey Devils
+2020020293,2020,R,2021-02-21,2021-02-22T00:00:00Z,OTT,MTL,3,2,OFF,OK,OT,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Montréal Canadiens
+2020020290,2020,R,2021-02-21,2021-02-22T00:30:00Z,BOS,PHI,7,3,OFF,OK,REG,True,Edgewood Tahoe Resort,US/Pacific,Boston Bruins,Philadelphia Flyers
+2020020294,2020,R,2021-02-21,2021-02-22T03:00:00Z,VAN,WPG,3,4,OFF,OK,OT,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Winnipeg Jets
+2020020009,2020,R,2021-02-22,2021-02-23T00:00:00Z,FLA,DAL,3,1,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Dallas Stars
+2020020097,2020,R,2021-02-22,2021-02-23T00:00:00Z,CAR,TBL,2,4,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Tampa Bay Lightning
+2020020150,2020,R,2021-02-22,2021-02-23T00:00:00Z,NYI,BUF,3,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Buffalo Sabres
+2020020298,2020,R,2021-02-22,2021-02-23T00:00:00Z,TOR,CGY,0,3,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Calgary Flames
+2020020297,2020,R,2021-02-22,2021-02-23T01:00:00Z,STL,LAK,0,3,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Los Angeles Kings
+2020020299,2020,R,2021-02-22,2021-02-23T02:00:00Z,COL,VGK,0,3,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Vegas Golden Knights
+2020020300,2020,R,2021-02-22,2021-02-23T02:00:00Z,ARI,ANA,4,3,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Anaheim Ducks
+2020020743,2020,R,2021-02-22,2021-02-23T03:30:00Z,SJS,MIN,2,6,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Minnesota Wild
+2020020295,2020,R,2021-02-23,2021-02-24T00:00:00Z,NJD,BUF,1,4,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Buffalo Sabres
+2020020302,2020,R,2021-02-23,2021-02-24T00:00:00Z,WSH,PIT,2,3,OFF,OK,OT,False,Capital One Arena,US/Eastern,Washington Capitals,Pittsburgh Penguins
+2020020304,2020,R,2021-02-23,2021-02-24T00:00:00Z,CBJ,CHI,5,6,OFF,OK,SO,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Chicago Blackhawks
+2020020306,2020,R,2021-02-23,2021-02-24T00:00:00Z,OTT,MTL,5,4,OFF,OK,SO,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Montréal Canadiens
+2020020305,2020,R,2021-02-23,2021-02-24T00:30:00Z,DET,NSH,0,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Nashville Predators
+2020020307,2020,R,2021-02-23,2021-02-24T03:00:00Z,VAN,EDM,3,4,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Edmonton Oilers
+2020020296,2020,R,2021-02-24,2021-02-24T22:00:00Z,TBL,CAR,3,0,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Carolina Hurricanes
+2020020303,2020,R,2021-02-24,2021-02-24T22:00:00Z,FLA,DAL,0,3,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Dallas Stars
+2020020308,2020,R,2021-02-24,2021-02-25T00:00:00Z,PHI,NYR,4,3,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Rangers
+2020020310,2020,R,2021-02-24,2021-02-25T00:00:00Z,TOR,CGY,2,1,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Calgary Flames
+2020020173,2020,R,2021-02-24,2021-02-25T02:00:00Z,COL,MIN,2,6,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Minnesota Wild
+2020020311,2020,R,2021-02-24,2021-02-25T02:00:00Z,ARI,ANA,4,3,OFF,OK,SO,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Anaheim Ducks
+2020020309,2020,R,2021-02-24,2021-02-25T02:30:00Z,STL,LAK,1,2,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Los Angeles Kings
+2020020312,2020,R,2021-02-25,2021-02-26T00:00:00Z,NYI,BOS,7,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Boston Bruins
+2020020313,2020,R,2021-02-25,2021-02-26T00:00:00Z,WSH,PIT,5,2,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Pittsburgh Penguins
+2020020314,2020,R,2021-02-25,2021-02-26T00:00:00Z,TBL,CAR,3,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Carolina Hurricanes
+2020020315,2020,R,2021-02-25,2021-02-26T00:00:00Z,FLA,DAL,3,2,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Dallas Stars
+2020020316,2020,R,2021-02-25,2021-02-26T00:00:00Z,CBJ,CHI,0,2,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Chicago Blackhawks
+2020020318,2020,R,2021-02-25,2021-02-26T00:00:00Z,OTT,CGY,6,1,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Calgary Flames
+2020020635,2020,R,2021-02-25,2021-02-26T00:00:00Z,BUF,NJD,3,4,OFF,OK,OT,False,KeyBank Center,America/New_York,Buffalo Sabres,New Jersey Devils
+2020020317,2020,R,2021-02-25,2021-02-26T00:30:00Z,DET,NSH,5,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Nashville Predators
+2020020319,2020,R,2021-02-25,2021-02-26T01:00:00Z,WPG,MTL,6,3,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Montréal Canadiens
+2020020320,2020,R,2021-02-25,2021-02-26T03:00:00Z,VAN,EDM,0,3,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Edmonton Oilers
+2020020323,2020,R,2021-02-26,2021-02-27T00:00:00Z,NYR,BOS,6,2,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Boston Bruins
+2020020324,2020,R,2021-02-26,2021-02-27T01:00:00Z,MIN,LAK,3,1,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Los Angeles Kings
+2020020321,2020,R,2021-02-26,2021-02-27T02:00:00Z,ARI,COL,2,3,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Colorado Avalanche
+2020020322,2020,R,2021-02-27,2021-02-27T18:00:00Z,BUF,PHI,0,3,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Philadelphia Flyers
+2020020327,2020,R,2021-02-27,2021-02-27T18:00:00Z,NJD,WSH,2,5,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Washington Capitals
+2020020333,2020,R,2021-02-27,2021-02-27T18:00:00Z,OTT,CGY,3,6,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Calgary Flames
+2020020332,2020,R,2021-02-27,2021-02-27T20:00:00Z,NSH,CBJ,2,1,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Columbus Blue Jackets
+2020020328,2020,R,2021-02-27,2021-02-28T00:00:00Z,NYI,PIT,3,4,OFF,OK,OT,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Pittsburgh Penguins
+2020020329,2020,R,2021-02-27,2021-02-28T00:00:00Z,TBL,DAL,5,0,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Dallas Stars
+2020020330,2020,R,2021-02-27,2021-02-28T00:00:00Z,FLA,CAR,3,4,OFF,OK,SO,False,BB&T Center,US/Eastern,Florida Panthers,Carolina Hurricanes
+2020020335,2020,R,2021-02-27,2021-02-28T00:00:00Z,EDM,TOR,0,4,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Toronto Maple Leafs
+2020020331,2020,R,2021-02-27,2021-02-28T01:00:00Z,CHI,DET,3,5,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Detroit Red Wings
+2020020336,2020,R,2021-02-27,2021-02-28T01:00:00Z,MIN,LAK,4,3,OFF,OK,OT,False,Xcel Energy Center,US/Central,Minnesota Wild,Los Angeles Kings
+2020020337,2020,R,2021-02-27,2021-02-28T02:00:00Z,ARI,COL,2,6,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Colorado Avalanche
+2020020334,2020,R,2021-02-27,2021-02-28T03:00:00Z,WPG,MTL,2,1,OFF,OK,OT,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Montréal Canadiens
+2020020338,2020,R,2021-02-27,2021-02-28T03:00:00Z,ANA,VGK,2,3,OFF,OK,OT,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Vegas Golden Knights
+2020020339,2020,R,2021-02-27,2021-02-28T03:30:00Z,SJS,STL,6,7,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,St. Louis Blues
+2020020342,2020,R,2021-02-28,2021-02-28T17:00:00Z,NYR,BOS,1,4,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Boston Bruins
+2020020340,2020,R,2021-02-28,2021-02-28T20:00:00Z,BUF,PHI,0,3,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Philadelphia Flyers
+2020020344,2020,R,2021-02-28,2021-02-28T20:00:00Z,NSH,CBJ,3,1,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Columbus Blue Jackets
+2020020346,2020,R,2021-02-28,2021-02-28T20:00:00Z,NJD,WSH,2,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Washington Capitals
+2020020341,2020,R,2021-02-28,2021-02-28T22:00:00Z,NYI,PIT,2,0,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Pittsburgh Penguins
+2020020343,2020,R,2021-02-28,2021-03-01T00:00:00Z,CHI,DET,7,2,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Detroit Red Wings
+2020020348,2020,R,2021-03-01,2021-03-02T00:00:00Z,FLA,CAR,2,3,OFF,OK,OT,False,BB&T Center,US/Eastern,Florida Panthers,Carolina Hurricanes
+2020020349,2020,R,2021-03-01,2021-03-02T00:00:00Z,OTT,CGY,5,1,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Calgary Flames
+2020020345,2020,R,2021-03-01,2021-03-02T01:00:00Z,WPG,VAN,0,4,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Vancouver Canucks
+2020020350,2020,R,2021-03-01,2021-03-02T03:00:00Z,EDM,TOR,0,3,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Toronto Maple Leafs
+2020020351,2020,R,2021-03-01,2021-03-02T03:00:00Z,VGK,MIN,5,4,OFF,OK,OT,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020020352,2020,R,2021-03-01,2021-03-02T03:00:00Z,ANA,STL,4,5,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,St. Louis Blues
+2020020353,2020,R,2021-03-01,2021-03-02T03:30:00Z,SJS,COL,6,2,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Colorado Avalanche
+2020020301,2020,R,2021-03-02,2021-03-03T00:00:00Z,NJD,NYI,1,2,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,New York Islanders
+2020020354,2020,R,2021-03-02,2021-03-03T00:00:00Z,NYR,BUF,3,2,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Buffalo Sabres
+2020020355,2020,R,2021-03-02,2021-03-03T00:00:00Z,PIT,PHI,5,2,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Philadelphia Flyers
+2020020356,2020,R,2021-03-02,2021-03-03T00:00:00Z,CBJ,DET,4,1,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Detroit Red Wings
+2020020357,2020,R,2021-03-02,2021-03-03T00:00:00Z,MTL,OTT,3,1,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Ottawa Senators
+2020020052,2020,R,2021-03-02,2021-03-03T01:00:00Z,NSH,CAR,2,4,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Carolina Hurricanes
+2020020358,2020,R,2021-03-02,2021-03-03T01:00:00Z,WPG,VAN,5,2,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Vancouver Canucks
+2020020271,2020,R,2021-03-02,2021-03-03T01:30:00Z,DAL,TBL,0,2,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Tampa Bay Lightning
+2020020359,2020,R,2021-03-03,2021-03-04T00:00:00Z,BOS,WSH,1,2,OFF,OK,SO,False,TD Garden,US/Eastern,Boston Bruins,Washington Capitals
+2020020360,2020,R,2021-03-03,2021-03-04T01:00:00Z,EDM,TOR,1,6,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Toronto Maple Leafs
+2020020362,2020,R,2021-03-03,2021-03-04T02:30:00Z,ANA,STL,2,3,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,St. Louis Blues
+2020020361,2020,R,2021-03-03,2021-03-04T03:00:00Z,VGK,MIN,5,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020020742,2020,R,2021-03-03,2021-03-04T03:00:00Z,LAK,ARI,2,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Arizona Coyotes
+2020020363,2020,R,2021-03-03,2021-03-04T03:30:00Z,SJS,COL,0,4,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Colorado Avalanche
+2020020163,2020,R,2021-03-04,2021-03-05T00:00:00Z,NYI,BUF,5,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Buffalo Sabres
+2020020180,2020,R,2021-03-04,2021-03-05T00:00:00Z,NJD,NYR,1,6,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,New York Rangers
+2020020365,2020,R,2021-03-04,2021-03-05T00:00:00Z,CAR,DET,5,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Detroit Red Wings
+2020020366,2020,R,2021-03-04,2021-03-05T00:00:00Z,PIT,PHI,3,4,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Philadelphia Flyers
+2020020369,2020,R,2021-03-04,2021-03-05T00:00:00Z,MTL,WPG,3,4,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Winnipeg Jets
+2020020367,2020,R,2021-03-04,2021-03-05T01:00:00Z,CHI,TBL,2,3,OFF,OK,OT,False,United Center,America/Chicago,Chicago Blackhawks,Tampa Bay Lightning
+2020020368,2020,R,2021-03-04,2021-03-05T01:00:00Z,NSH,FLA,4,5,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Florida Panthers
+2020020372,2020,R,2021-03-04,2021-03-05T01:30:00Z,DAL,CBJ,2,3,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Columbus Blue Jackets
+2020020370,2020,R,2021-03-04,2021-03-05T02:00:00Z,CGY,OTT,7,3,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Ottawa Senators
+2020020371,2020,R,2021-03-04,2021-03-05T03:00:00Z,VAN,TOR,3,1,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Toronto Maple Leafs
+2020020373,2020,R,2021-03-05,2021-03-06T00:00:00Z,BOS,WSH,5,1,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Washington Capitals
+2020020376,2020,R,2021-03-05,2021-03-06T01:00:00Z,CHI,TBL,4,3,OFF,OK,SO,False,United Center,America/Chicago,Chicago Blackhawks,Tampa Bay Lightning
+2020020377,2020,R,2021-03-05,2021-03-06T02:00:00Z,COL,ANA,3,2,OFF,OK,OT,False,Ball Arena,America/Denver,Colorado Avalanche,Anaheim Ducks
+2020020378,2020,R,2021-03-05,2021-03-06T02:00:00Z,ARI,MIN,1,5,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Minnesota Wild
+2020020379,2020,R,2021-03-05,2021-03-06T02:00:00Z,LAK,STL,2,3,OFF,OK,OT,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,St. Louis Blues
+2020020380,2020,R,2021-03-05,2021-03-06T03:30:00Z,SJS,VGK,4,5,OFF,OK,OT,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Vegas Golden Knights
+2020020374,2020,R,2021-03-06,2021-03-06T18:00:00Z,NJD,NYR,3,6,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,New York Rangers
+2020020375,2020,R,2021-03-06,2021-03-06T18:00:00Z,NYI,BUF,5,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Buffalo Sabres
+2020020668,2020,R,2021-03-06,2021-03-06T18:00:00Z,PIT,PHI,4,3,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Philadelphia Flyers
+2020020381,2020,R,2021-03-06,2021-03-06T19:00:00Z,NSH,FLA,2,6,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Florida Panthers
+2020020382,2020,R,2021-03-06,2021-03-07T00:00:00Z,MTL,WPG,7,1,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Winnipeg Jets
+2020020384,2020,R,2021-03-06,2021-03-07T00:00:00Z,VAN,TOR,4,2,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Toronto Maple Leafs
+2020020387,2020,R,2021-03-06,2021-03-07T00:00:00Z,ARI,MIN,5,2,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Minnesota Wild
+2020020385,2020,R,2021-03-06,2021-03-07T01:00:00Z,DAL,CBJ,5,0,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Columbus Blue Jackets
+2020020386,2020,R,2021-03-06,2021-03-07T01:00:00Z,COL,ANA,4,5,OFF,OK,OT,False,Ball Arena,America/Denver,Colorado Avalanche,Anaheim Ducks
+2020020388,2020,R,2021-03-06,2021-03-07T02:00:00Z,LAK,STL,4,3,OFF,OK,OT,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,St. Louis Blues
+2020020383,2020,R,2021-03-06,2021-03-07T03:00:00Z,EDM,CGY,3,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Calgary Flames
+2020020389,2020,R,2021-03-06,2021-03-07T03:30:00Z,SJS,VGK,0,4,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Vegas Golden Knights
+2020020391,2020,R,2021-03-07,2021-03-07T17:00:00Z,NYI,BUF,5,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Buffalo Sabres
+2020020394,2020,R,2021-03-07,2021-03-07T19:30:00Z,CHI,TBL,3,6,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Tampa Bay Lightning
+2020020076,2020,R,2021-03-07,2021-03-07T22:00:00Z,CAR,FLA,4,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Florida Panthers
+2020020244,2020,R,2021-03-07,2021-03-07T22:00:00Z,BOS,NJD,0,1,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New Jersey Devils
+2020020769,2020,R,2021-03-07,2021-03-08T00:00:00Z,PHI,WSH,1,3,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Washington Capitals
+2020020393,2020,R,2021-03-07,2021-03-08T00:30:00Z,PIT,NYR,5,1,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Rangers
+2020020250,2020,R,2021-03-07,2021-03-08T01:00:00Z,DAL,NSH,3,4,OFF,OK,SO,False,American Airlines Center,US/Central,Dallas Stars,Nashville Predators
+2020020395,2020,R,2021-03-07,2021-03-08T02:30:00Z,CGY,OTT,3,4,OFF,OK,SO,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Ottawa Senators
+2020020398,2020,R,2021-03-08,2021-03-09T01:00:00Z,MIN,VGK,2,0,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Vegas Golden Knights
+2020020326,2020,R,2021-03-08,2021-03-09T02:00:00Z,SJS,STL,3,2,OFF,OK,OT,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,St. Louis Blues
+2020020396,2020,R,2021-03-08,2021-03-09T02:00:00Z,EDM,OTT,3,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Ottawa Senators
+2020020399,2020,R,2021-03-08,2021-03-09T02:00:00Z,COL,ARI,2,3,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Arizona Coyotes
+2020020397,2020,R,2021-03-08,2021-03-09T03:00:00Z,VAN,MTL,2,1,OFF,OK,SO,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Montréal Canadiens
+2020020400,2020,R,2021-03-08,2021-03-09T03:00:00Z,ANA,LAK,6,5,OFF,OK,OT,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Los Angeles Kings
+2020020405,2020,R,2021-03-09,2021-03-09T23:00:00Z,PIT,NYR,4,2,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Rangers
+2020020401,2020,R,2021-03-09,2021-03-10T00:00:00Z,NYI,BOS,2,1,OFF,OK,SO,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Boston Bruins
+2020020402,2020,R,2021-03-09,2021-03-10T00:00:00Z,PHI,BUF,5,4,OFF,OK,SO,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Buffalo Sabres
+2020020403,2020,R,2021-03-09,2021-03-10T00:00:00Z,WSH,NJD,5,4,OFF,OK,OT,False,Capital One Arena,US/Eastern,Washington Capitals,New Jersey Devils
+2020020404,2020,R,2021-03-09,2021-03-10T00:00:00Z,CAR,NSH,3,2,OFF,OK,OT,False,PNC Arena,US/Eastern,Carolina Hurricanes,Nashville Predators
+2020020406,2020,R,2021-03-09,2021-03-10T00:00:00Z,CBJ,FLA,2,4,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Florida Panthers
+2020020408,2020,R,2021-03-09,2021-03-10T00:00:00Z,TOR,WPG,3,4,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Winnipeg Jets
+2020020407,2020,R,2021-03-09,2021-03-10T00:30:00Z,DET,TBL,3,4,OFF,OK,OT,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Tampa Bay Lightning
+2020020409,2020,R,2021-03-09,2021-03-10T01:30:00Z,DAL,CHI,6,1,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Chicago Blackhawks
+2020020412,2020,R,2021-03-10,2021-03-11T00:00:00Z,MIN,VGK,4,3,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Vegas Golden Knights
+2020020410,2020,R,2021-03-10,2021-03-11T01:00:00Z,EDM,OTT,7,1,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Ottawa Senators
+2020020413,2020,R,2021-03-10,2021-03-11T02:00:00Z,COL,ARI,2,1,OFF,OK,OT,False,Ball Arena,America/Denver,Colorado Avalanche,Arizona Coyotes
+2020020414,2020,R,2021-03-10,2021-03-11T02:30:00Z,ANA,LAK,1,5,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Los Angeles Kings
+2020020411,2020,R,2021-03-10,2021-03-11T04:00:00Z,VAN,MTL,1,5,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Montréal Canadiens
+2020020415,2020,R,2021-03-11,2021-03-12T00:00:00Z,BOS,NYR,4,0,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Rangers
+2020020416,2020,R,2021-03-11,2021-03-12T00:00:00Z,BUF,PIT,2,5,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Pittsburgh Penguins
+2020020417,2020,R,2021-03-11,2021-03-12T00:00:00Z,NYI,NJD,5,3,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New Jersey Devils
+2020020418,2020,R,2021-03-11,2021-03-12T00:00:00Z,PHI,WSH,3,5,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Washington Capitals
+2020020419,2020,R,2021-03-11,2021-03-12T00:00:00Z,CAR,NSH,5,1,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Nashville Predators
+2020020420,2020,R,2021-03-11,2021-03-12T00:00:00Z,CBJ,FLA,4,5,OFF,OK,OT,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Florida Panthers
+2020020422,2020,R,2021-03-11,2021-03-12T00:00:00Z,TOR,WPG,4,3,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Winnipeg Jets
+2020020421,2020,R,2021-03-11,2021-03-12T00:30:00Z,DET,TBL,6,4,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Tampa Bay Lightning
+2020020424,2020,R,2021-03-11,2021-03-12T01:30:00Z,DAL,CHI,2,4,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Chicago Blackhawks
+2020020423,2020,R,2021-03-11,2021-03-12T02:00:00Z,CGY,MTL,2,1,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Montréal Canadiens
+2020020425,2020,R,2021-03-12,2021-03-13T01:00:00Z,STL,VGK,4,5,OFF,OK,OT,False,Enterprise Center,US/Central,St. Louis Blues,Vegas Golden Knights
+2020020427,2020,R,2021-03-12,2021-03-13T01:00:00Z,MIN,ARI,4,0,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Arizona Coyotes
+2020020426,2020,R,2021-03-12,2021-03-13T02:00:00Z,EDM,OTT,6,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Ottawa Senators
+2020020428,2020,R,2021-03-12,2021-03-13T02:00:00Z,COL,LAK,2,0,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Los Angeles Kings
+2020020429,2020,R,2021-03-12,2021-03-13T03:00:00Z,ANA,SJS,0,6,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,San Jose Sharks
+2020020430,2020,R,2021-03-13,2021-03-13T18:00:00Z,BOS,NYR,0,4,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Rangers
+2020020436,2020,R,2021-03-13,2021-03-13T22:00:00Z,CBJ,DAL,4,3,OFF,OK,OT,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Dallas Stars
+2020020431,2020,R,2021-03-13,2021-03-14T00:00:00Z,BUF,PIT,0,3,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Pittsburgh Penguins
+2020020432,2020,R,2021-03-13,2021-03-14T00:00:00Z,NJD,NYI,2,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,New York Islanders
+2020020433,2020,R,2021-03-13,2021-03-14T00:00:00Z,PHI,WSH,4,5,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Washington Capitals
+2020020434,2020,R,2021-03-13,2021-03-14T00:00:00Z,TBL,NSH,6,3,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Nashville Predators
+2020020435,2020,R,2021-03-13,2021-03-14T00:00:00Z,FLA,CHI,4,2,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Chicago Blackhawks
+2020020438,2020,R,2021-03-13,2021-03-14T00:00:00Z,TOR,WPG,2,5,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Winnipeg Jets
+2020020439,2020,R,2021-03-13,2021-03-14T00:00:00Z,CGY,MTL,3,1,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Montréal Canadiens
+2020020437,2020,R,2021-03-13,2021-03-14T01:00:00Z,STL,VGK,1,5,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Vegas Golden Knights
+2020020440,2020,R,2021-03-13,2021-03-14T03:00:00Z,VAN,EDM,2,1,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Edmonton Oilers
+2020020441,2020,R,2021-03-13,2021-03-14T03:00:00Z,ANA,SJS,1,3,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,San Jose Sharks
+2020020444,2020,R,2021-03-14,2021-03-14T18:00:00Z,MIN,ARI,4,1,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Arizona Coyotes
+2020020442,2020,R,2021-03-14,2021-03-14T21:00:00Z,DET,CAR,1,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Carolina Hurricanes
+2020020451,2020,R,2021-03-14,2021-03-14T21:00:00Z,CBJ,DAL,1,2,OFF,OK,SO,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Dallas Stars
+2020020767,2020,R,2021-03-14,2021-03-14T21:00:00Z,NJD,NYI,2,3,OFF,OK,SO,False,Prudential Center,US/Eastern,New Jersey Devils,New York Islanders
+2020020445,2020,R,2021-03-14,2021-03-14T21:30:00Z,COL,LAK,4,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Los Angeles Kings
+2020020443,2020,R,2021-03-14,2021-03-14T23:00:00Z,OTT,TOR,4,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Toronto Maple Leafs
+2020020448,2020,R,2021-03-15,2021-03-15T20:00:00Z,TBL,NSH,1,4,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Nashville Predators
+2020020214,2020,R,2021-03-15,2021-03-15T23:00:00Z,BUF,WSH,0,6,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Washington Capitals
+2020020446,2020,R,2021-03-15,2021-03-15T23:00:00Z,NYR,PHI,4,5,OFF,OK,OT,False,Madison Square Garden,America/New_York,New York Rangers,Philadelphia Flyers
+2020020449,2020,R,2021-03-15,2021-03-15T23:00:00Z,FLA,CHI,6,3,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Chicago Blackhawks
+2020020450,2020,R,2021-03-15,2021-03-15T23:00:00Z,PIT,BOS,4,1,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Boston Bruins
+2020020452,2020,R,2021-03-15,2021-03-15T23:00:00Z,OTT,VAN,2,3,OFF,OK,OT,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Vancouver Canucks
+2020020453,2020,R,2021-03-15,2021-03-16T00:00:00Z,WPG,MTL,2,4,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Montréal Canadiens
+2020020454,2020,R,2021-03-15,2021-03-16T01:00:00Z,CGY,EDM,4,3,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Edmonton Oilers
+2020020455,2020,R,2021-03-15,2021-03-16T02:00:00Z,VGK,SJS,2,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,San Jose Sharks
+2020020457,2020,R,2021-03-16,2021-03-16T23:00:00Z,NJD,BUF,3,2,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Buffalo Sabres
+2020020458,2020,R,2021-03-16,2021-03-16T23:00:00Z,WSH,NYI,3,1,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Islanders
+2020020459,2020,R,2021-03-16,2021-03-16T23:00:00Z,PIT,BOS,1,2,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Boston Bruins
+2020020460,2020,R,2021-03-16,2021-03-16T23:30:00Z,DET,CAR,4,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Carolina Hurricanes
+2020020186,2020,R,2021-03-16,2021-03-17T00:00:00Z,MIN,ARI,3,0,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Arizona Coyotes
+2020020286,2020,R,2021-03-16,2021-03-17T00:30:00Z,DAL,TBL,3,4,OFF,OK,SO,False,American Airlines Center,US/Central,Dallas Stars,Tampa Bay Lightning
+2020020568,2020,R,2021-03-16,2021-03-17T01:00:00Z,COL,ANA,8,4,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Anaheim Ducks
+2020020463,2020,R,2021-03-17,2021-03-17T23:00:00Z,OTT,VAN,2,3,OFF,OK,SO,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Vancouver Canucks
+2020020462,2020,R,2021-03-17,2021-03-17T23:30:00Z,NYR,PHI,9,0,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Philadelphia Flyers
+2020020464,2020,R,2021-03-17,2021-03-18T01:00:00Z,WPG,MTL,4,3,OFF,OK,OT,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Montréal Canadiens
+2020020465,2020,R,2021-03-17,2021-03-18T02:00:00Z,CGY,EDM,3,7,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Edmonton Oilers
+2020020466,2020,R,2021-03-17,2021-03-18T02:00:00Z,VGK,SJS,5,4,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,San Jose Sharks
+2020020467,2020,R,2021-03-17,2021-03-18T02:00:00Z,LAK,STL,4,1,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,St. Louis Blues
+2020020201,2020,R,2021-03-18,2021-03-18T23:00:00Z,NJD,PIT,3,2,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Pittsburgh Penguins
+2020020468,2020,R,2021-03-18,2021-03-18T23:00:00Z,BUF,BOS,1,4,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Boston Bruins
+2020020469,2020,R,2021-03-18,2021-03-18T23:00:00Z,NYI,PHI,3,4,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Philadelphia Flyers
+2020020470,2020,R,2021-03-18,2021-03-18T23:00:00Z,CAR,CBJ,2,3,OFF,OK,OT,False,PNC Arena,US/Eastern,Carolina Hurricanes,Columbus Blue Jackets
+2020020471,2020,R,2021-03-18,2021-03-18T23:00:00Z,TBL,CHI,4,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Chicago Blackhawks
+2020020472,2020,R,2021-03-18,2021-03-18T23:00:00Z,FLA,NSH,1,2,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Nashville Predators
+2020020473,2020,R,2021-03-18,2021-03-18T23:30:00Z,DET,DAL,3,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Dallas Stars
+2020020474,2020,R,2021-03-18,2021-03-19T01:00:00Z,EDM,WPG,2,1,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Winnipeg Jets
+2020020475,2020,R,2021-03-18,2021-03-19T01:00:00Z,COL,MIN,5,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Minnesota Wild
+2020020476,2020,R,2021-03-18,2021-03-19T02:00:00Z,ANA,ARI,3,2,OFF,OK,OT,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Arizona Coyotes
+2020020478,2020,R,2021-03-19,2021-03-19T23:00:00Z,WSH,NYR,2,1,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Rangers
+2020020479,2020,R,2021-03-19,2021-03-19T23:00:00Z,MTL,VAN,2,3,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Vancouver Canucks
+2020020480,2020,R,2021-03-19,2021-03-19T23:00:00Z,TOR,CGY,3,4,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Calgary Flames
+2020020482,2020,R,2021-03-19,2021-03-20T01:00:00Z,SJS,STL,1,2,OFF,OK,SO,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,St. Louis Blues
+2020020481,2020,R,2021-03-19,2021-03-20T02:00:00Z,LAK,VGK,2,4,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Vegas Golden Knights
+2020020477,2020,R,2021-03-20,2021-03-20T17:00:00Z,NJD,PIT,1,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Pittsburgh Penguins
+2020020487,2020,R,2021-03-20,2021-03-20T18:00:00Z,FLA,NSH,2,0,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Nashville Predators
+2020020492,2020,R,2021-03-20,2021-03-20T19:00:00Z,COL,MIN,6,0,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Minnesota Wild
+2020020486,2020,R,2021-03-20,2021-03-20T20:00:00Z,TBL,CHI,4,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Chicago Blackhawks
+2020020291,2020,R,2021-03-20,2021-03-20T23:00:00Z,WSH,NYR,1,3,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Rangers
+2020020484,2020,R,2021-03-20,2021-03-20T23:00:00Z,NYI,PHI,6,1,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Philadelphia Flyers
+2020020485,2020,R,2021-03-20,2021-03-20T23:00:00Z,CAR,CBJ,2,3,OFF,OK,SO,False,PNC Arena,US/Eastern,Carolina Hurricanes,Columbus Blue Jackets
+2020020488,2020,R,2021-03-20,2021-03-20T23:00:00Z,DET,DAL,0,3,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Dallas Stars
+2020020489,2020,R,2021-03-20,2021-03-20T23:00:00Z,MTL,VAN,5,4,OFF,OK,SO,False,Centre Bell,America/Montreal,Montréal Canadiens,Vancouver Canucks
+2020020490,2020,R,2021-03-20,2021-03-20T23:00:00Z,TOR,CGY,2,0,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Calgary Flames
+2020020461,2020,R,2021-03-20,2021-03-21T00:00:00Z,ANA,ARI,1,5,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Arizona Coyotes
+2020020493,2020,R,2021-03-20,2021-03-21T01:00:00Z,SJS,STL,2,5,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,St. Louis Blues
+2020020491,2020,R,2021-03-20,2021-03-21T02:00:00Z,EDM,WPG,4,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Winnipeg Jets
+2020020151,2020,R,2021-03-21,2021-03-21T17:00:00Z,PIT,NJD,1,2,OFF,OK,OT,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New Jersey Devils
+2020020828,2020,R,2021-03-21,2021-03-21T20:00:00Z,TBL,FLA,5,3,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Florida Panthers
+2020020495,2020,R,2021-03-21,2021-03-21T22:00:00Z,LAK,VGK,3,1,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Vegas Golden Knights
+2020020258,2020,R,2021-03-21,2021-03-22T00:30:00Z,DAL,NSH,3,4,OFF,OK,SO,False,American Airlines Center,US/Central,Dallas Stars,Nashville Predators
+2020020496,2020,R,2021-03-22,2021-03-22T23:00:00Z,NYR,BUF,5,3,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Buffalo Sabres
+2020020497,2020,R,2021-03-22,2021-03-22T23:00:00Z,CBJ,CAR,0,3,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Carolina Hurricanes
+2020020499,2020,R,2021-03-22,2021-03-22T23:00:00Z,OTT,CGY,2,1,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Calgary Flames
+2020020755,2020,R,2021-03-22,2021-03-22T23:00:00Z,PHI,NYI,1,2,OFF,OK,OT,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Islanders
+2020020501,2020,R,2021-03-22,2021-03-22T23:30:00Z,MIN,ANA,2,1,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Anaheim Ducks
+2020020122,2020,R,2021-03-22,2021-03-23T02:00:00Z,VGK,STL,5,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,St. Louis Blues
+2020020500,2020,R,2021-03-22,2021-03-23T02:00:00Z,VAN,WPG,0,4,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Winnipeg Jets
+2020020502,2020,R,2021-03-22,2021-03-23T02:00:00Z,ARI,COL,1,5,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Colorado Avalanche
+2020020503,2020,R,2021-03-22,2021-03-23T02:30:00Z,SJS,LAK,2,1,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Los Angeles Kings
+2020020504,2020,R,2021-03-23,2021-03-23T23:00:00Z,PHI,NJD,3,4,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New Jersey Devils
+2020020505,2020,R,2021-03-23,2021-03-24T00:00:00Z,CHI,FLA,3,2,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Florida Panthers
+2020020506,2020,R,2021-03-23,2021-03-24T00:00:00Z,NSH,DET,2,0,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Detroit Red Wings
+2020020507,2020,R,2021-03-23,2021-03-24T00:30:00Z,DAL,TBL,1,2,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Tampa Bay Lightning
+2020020508,2020,R,2021-03-23,2021-03-24T02:00:00Z,ARI,COL,5,4,OFF,OK,SO,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Colorado Avalanche
+2020020511,2020,R,2021-03-24,2021-03-24T21:00:00Z,OTT,CGY,3,1,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Calgary Flames
+2020020513,2020,R,2021-03-24,2021-03-24T21:30:00Z,MIN,ANA,3,2,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Anaheim Ducks
+2020020509,2020,R,2021-03-24,2021-03-25T00:00:00Z,PIT,BUF,5,2,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Buffalo Sabres
+2020020512,2020,R,2021-03-24,2021-03-25T02:30:00Z,VAN,WPG,1,5,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Winnipeg Jets
+2020020514,2020,R,2021-03-24,2021-03-25T02:30:00Z,SJS,LAK,4,2,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Los Angeles Kings
+2020020515,2020,R,2021-03-25,2021-03-25T23:00:00Z,BOS,NYI,3,4,OFF,OK,OT,False,TD Garden,US/Eastern,Boston Bruins,New York Islanders
+2020020516,2020,R,2021-03-25,2021-03-25T23:00:00Z,PHI,NYR,3,8,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Rangers
+2020020517,2020,R,2021-03-25,2021-03-25T23:00:00Z,WSH,NJD,4,3,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New Jersey Devils
+2020020518,2020,R,2021-03-25,2021-03-25T23:00:00Z,CBJ,CAR,3,4,OFF,OK,OT,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Carolina Hurricanes
+2020020521,2020,R,2021-03-25,2021-03-25T23:00:00Z,OTT,TOR,2,3,OFF,OK,OT,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Toronto Maple Leafs
+2020020532,2020,R,2021-03-25,2021-03-25T23:00:00Z,PIT,BUF,4,0,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Buffalo Sabres
+2020020223,2020,R,2021-03-25,2021-03-26T00:00:00Z,MIN,STL,2,0,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,St. Louis Blues
+2020020519,2020,R,2021-03-25,2021-03-26T00:00:00Z,CHI,FLA,3,0,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Florida Panthers
+2020020520,2020,R,2021-03-25,2021-03-26T00:00:00Z,NSH,DET,7,1,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Detroit Red Wings
+2020020522,2020,R,2021-03-25,2021-03-26T00:30:00Z,DAL,TBL,4,3,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Tampa Bay Lightning
+2020020523,2020,R,2021-03-25,2021-03-26T01:00:00Z,COL,VGK,5,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Vegas Golden Knights
+2020020524,2020,R,2021-03-26,2021-03-26T23:00:00Z,WSH,NJD,4,0,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New Jersey Devils
+2020020525,2020,R,2021-03-26,2021-03-27T00:00:00Z,STL,ANA,1,4,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Anaheim Ducks
+2020020527,2020,R,2021-03-26,2021-03-27T02:00:00Z,CGY,WPG,2,3,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Winnipeg Jets
+2020020528,2020,R,2021-03-26,2021-03-27T02:00:00Z,ARI,SJS,5,2,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,San Jose Sharks
+2020020179,2020,R,2021-03-27,2021-03-27T17:00:00Z,BOS,BUF,3,2,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Buffalo Sabres
+2020020530,2020,R,2021-03-27,2021-03-27T17:00:00Z,PHI,NYR,2,1,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Rangers
+2020020533,2020,R,2021-03-27,2021-03-27T19:00:00Z,DET,CBJ,3,1,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Columbus Blue Jackets
+2020020539,2020,R,2021-03-27,2021-03-27T19:00:00Z,COL,VGK,2,3,OFF,OK,OT,False,Ball Arena,America/Denver,Colorado Avalanche,Vegas Golden Knights
+2020020531,2020,R,2021-03-27,2021-03-27T23:00:00Z,CAR,TBL,4,3,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Tampa Bay Lightning
+2020020536,2020,R,2021-03-27,2021-03-27T23:00:00Z,TOR,EDM,4,3,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Edmonton Oilers
+2020020561,2020,R,2021-03-27,2021-03-27T23:00:00Z,PIT,NYI,6,3,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Islanders
+2020020534,2020,R,2021-03-27,2021-03-28T00:00:00Z,CHI,NSH,1,3,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Nashville Predators
+2020020538,2020,R,2021-03-27,2021-03-28T00:00:00Z,DAL,FLA,3,4,OFF,OK,OT,False,American Airlines Center,US/Central,Dallas Stars,Florida Panthers
+2020020537,2020,R,2021-03-27,2021-03-28T02:00:00Z,CGY,WPG,4,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Winnipeg Jets
+2020020540,2020,R,2021-03-27,2021-03-28T02:00:00Z,ARI,SJS,4,0,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,San Jose Sharks
+2020020542,2020,R,2021-03-28,2021-03-28T16:00:00Z,WSH,NYR,5,4,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Rangers
+2020020544,2020,R,2021-03-28,2021-03-28T19:00:00Z,DET,CBJ,4,1,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Columbus Blue Jackets
+2020020535,2020,R,2021-03-28,2021-03-28T21:00:00Z,STL,ANA,2,3,OFF,OK,OT,False,Enterprise Center,US/Central,St. Louis Blues,Anaheim Ducks
+2020020541,2020,R,2021-03-28,2021-03-28T21:30:00Z,BOS,NJD,0,1,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New Jersey Devils
+2020020547,2020,R,2021-03-28,2021-03-28T22:00:00Z,DAL,FLA,1,4,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Florida Panthers
+2020020545,2020,R,2021-03-28,2021-03-29T00:00:00Z,CHI,NSH,2,3,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Nashville Predators
+2020020548,2020,R,2021-03-29,2021-03-29T23:00:00Z,BUF,PHI,3,4,OFF,OK,OT,False,KeyBank Center,America/New_York,Buffalo Sabres,Philadelphia Flyers
+2020020549,2020,R,2021-03-29,2021-03-29T23:00:00Z,PIT,NYI,2,1,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Islanders
+2020020551,2020,R,2021-03-29,2021-03-29T23:00:00Z,TOR,EDM,2,3,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Edmonton Oilers
+2020020553,2020,R,2021-03-29,2021-03-30T01:00:00Z,COL,ANA,5,2,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Anaheim Ducks
+2020020552,2020,R,2021-03-29,2021-03-30T02:00:00Z,CGY,WPG,1,5,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Winnipeg Jets
+2020020554,2020,R,2021-03-29,2021-03-30T02:00:00Z,VGK,LAK,4,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Los Angeles Kings
+2020020555,2020,R,2021-03-29,2021-03-30T02:30:00Z,SJS,MIN,4,3,OFF,OK,SO,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Minnesota Wild
+2020020498,2020,R,2021-03-30,2021-03-30T23:00:00Z,MTL,EDM,4,0,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Edmonton Oilers
+2020020556,2020,R,2021-03-30,2021-03-30T23:00:00Z,BOS,NJD,5,4,OFF,OK,SO,False,TD Garden,US/Eastern,Boston Bruins,New Jersey Devils
+2020020558,2020,R,2021-03-30,2021-03-30T23:00:00Z,NYR,WSH,5,2,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Washington Capitals
+2020020559,2020,R,2021-03-30,2021-03-30T23:00:00Z,TBL,CBJ,1,3,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Columbus Blue Jackets
+2020020560,2020,R,2021-03-30,2021-03-30T23:00:00Z,FLA,DET,4,1,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Detroit Red Wings
+2020020562,2020,R,2021-03-30,2021-03-30T23:30:00Z,CHI,CAR,2,1,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Carolina Hurricanes
+2020020563,2020,R,2021-03-30,2021-03-31T00:00:00Z,NSH,DAL,3,2,OFF,OK,OT,False,Bridgestone Arena,US/Central,Nashville Predators,Dallas Stars
+2020020557,2020,R,2021-03-31,2021-03-31T23:30:00Z,BUF,PHI,6,1,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Philadelphia Flyers
+2020020566,2020,R,2021-03-31,2021-03-31T23:30:00Z,WPG,TOR,1,3,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Toronto Maple Leafs
+2020020209,2020,R,2021-03-31,2021-04-01T01:30:00Z,COL,ARI,9,3,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Arizona Coyotes
+2020020569,2020,R,2021-03-31,2021-04-01T02:00:00Z,VGK,LAK,2,4,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Los Angeles Kings
+2020020570,2020,R,2021-03-31,2021-04-01T02:30:00Z,SJS,MIN,4,2,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Minnesota Wild
+2020020571,2020,R,2021-04-01,2021-04-01T23:00:00Z,BOS,PIT,1,4,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Pittsburgh Penguins
+2020020572,2020,R,2021-04-01,2021-04-01T23:00:00Z,BUF,NYR,2,3,OFF,OK,OT,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Rangers
+2020020573,2020,R,2021-04-01,2021-04-01T23:00:00Z,NYI,WSH,8,4,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Washington Capitals
+2020020574,2020,R,2021-04-01,2021-04-01T23:00:00Z,TBL,CBJ,3,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Columbus Blue Jackets
+2020020575,2020,R,2021-04-01,2021-04-01T23:00:00Z,FLA,DET,3,2,OFF,OK,OT,False,BB&T Center,US/Eastern,Florida Panthers,Detroit Red Wings
+2020020578,2020,R,2021-04-01,2021-04-01T23:00:00Z,OTT,MTL,1,4,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Montréal Canadiens
+2020020576,2020,R,2021-04-01,2021-04-02T00:00:00Z,CHI,CAR,3,4,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Carolina Hurricanes
+2020020577,2020,R,2021-04-01,2021-04-02T00:00:00Z,NSH,DAL,1,4,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Dallas Stars
+2020020579,2020,R,2021-04-01,2021-04-02T02:30:00Z,VGK,MIN,2,3,OFF,OK,SO,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020020580,2020,R,2021-04-02,2021-04-02T23:00:00Z,NJD,WSH,1,2,OFF,OK,OT,False,Prudential Center,US/Eastern,New Jersey Devils,Washington Capitals
+2020020581,2020,R,2021-04-02,2021-04-03T00:00:00Z,WPG,TOR,1,2,OFF,OK,SO,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Toronto Maple Leafs
+2020020582,2020,R,2021-04-02,2021-04-03T01:00:00Z,EDM,CGY,3,2,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Calgary Flames
+2020020723,2020,R,2021-04-02,2021-04-03T01:00:00Z,COL,STL,3,2,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,St. Louis Blues
+2020020583,2020,R,2021-04-02,2021-04-03T02:00:00Z,ANA,ARI,2,4,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Arizona Coyotes
+2020020584,2020,R,2021-04-02,2021-04-03T02:00:00Z,LAK,SJS,0,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,San Jose Sharks
+2020020585,2020,R,2021-04-03,2021-04-03T17:00:00Z,BOS,PIT,7,5,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Pittsburgh Penguins
+2020020589,2020,R,2021-04-03,2021-04-03T17:00:00Z,TBL,DET,2,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Detroit Red Wings
+2020020591,2020,R,2021-04-03,2021-04-03T19:00:00Z,NSH,CHI,3,0,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Chicago Blackhawks
+2020020586,2020,R,2021-04-03,2021-04-03T23:00:00Z,BUF,NYR,3,2,OFF,OK,SO,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Rangers
+2020020587,2020,R,2021-04-03,2021-04-03T23:00:00Z,NYI,PHI,3,2,OFF,OK,SO,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Philadelphia Flyers
+2020020588,2020,R,2021-04-03,2021-04-03T23:00:00Z,CAR,DAL,2,3,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Dallas Stars
+2020020590,2020,R,2021-04-03,2021-04-03T23:00:00Z,FLA,CBJ,5,2,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Columbus Blue Jackets
+2020020592,2020,R,2021-04-03,2021-04-03T23:00:00Z,MTL,OTT,3,6,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Ottawa Senators
+2020020594,2020,R,2021-04-03,2021-04-04T01:00:00Z,COL,STL,2,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,St. Louis Blues
+2020020595,2020,R,2021-04-03,2021-04-04T01:00:00Z,VGK,MIN,1,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020020596,2020,R,2021-04-03,2021-04-04T02:00:00Z,LAK,SJS,2,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,San Jose Sharks
+2020020599,2020,R,2021-04-04,2021-04-04T16:00:00Z,TBL,DET,1,5,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Detroit Red Wings
+2020020597,2020,R,2021-04-04,2021-04-04T19:00:00Z,NJD,WSH,4,5,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Washington Capitals
+2020020600,2020,R,2021-04-04,2021-04-04T21:00:00Z,FLA,CBJ,3,0,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Columbus Blue Jackets
+2020020598,2020,R,2021-04-04,2021-04-04T23:00:00Z,CAR,DAL,1,0,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Dallas Stars
+2020020603,2020,R,2021-04-04,2021-04-05T01:00:00Z,CGY,TOR,2,4,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Toronto Maple Leafs
+2020020604,2020,R,2021-04-04,2021-04-05T01:00:00Z,ANA,ARI,2,3,OFF,OK,OT,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Arizona Coyotes
+2020020390,2020,R,2021-04-05,2021-04-05T23:00:00Z,BOS,PHI,2,3,OFF,OK,OT,False,TD Garden,US/Eastern,Boston Bruins,Philadelphia Flyers
+2020020607,2020,R,2021-04-05,2021-04-05T23:00:00Z,MTL,EDM,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Edmonton Oilers
+2020020848,2020,R,2021-04-05,2021-04-05T23:00:00Z,WPG,OTT,4,3,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Ottawa Senators
+2020020606,2020,R,2021-04-05,2021-04-06T00:00:00Z,STL,VGK,1,6,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Vegas Golden Knights
+2020020609,2020,R,2021-04-05,2021-04-06T00:00:00Z,MIN,COL,4,5,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Colorado Avalanche
+2020020608,2020,R,2021-04-05,2021-04-06T01:30:00Z,CGY,TOR,3,5,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Toronto Maple Leafs
+2020020610,2020,R,2021-04-05,2021-04-06T02:00:00Z,LAK,ARI,2,5,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Arizona Coyotes
+2020020611,2020,R,2021-04-06,2021-04-06T23:00:00Z,NJD,BUF,3,5,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Buffalo Sabres
+2020020612,2020,R,2021-04-06,2021-04-06T23:00:00Z,NYI,WSH,1,0,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Washington Capitals
+2020020613,2020,R,2021-04-06,2021-04-06T23:00:00Z,NYR,PIT,8,4,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Pittsburgh Penguins
+2020020614,2020,R,2021-04-06,2021-04-06T23:00:00Z,PHI,BOS,2,4,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Boston Bruins
+2020020615,2020,R,2021-04-06,2021-04-06T23:00:00Z,CAR,FLA,5,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Florida Panthers
+2020020616,2020,R,2021-04-06,2021-04-06T23:00:00Z,CBJ,TBL,4,2,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Tampa Bay Lightning
+2020020617,2020,R,2021-04-06,2021-04-06T23:30:00Z,DET,NSH,2,3,OFF,OK,SO,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Nashville Predators
+2020020618,2020,R,2021-04-06,2021-04-07T00:00:00Z,CHI,DAL,4,2,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Dallas Stars
+2020020241,2020,R,2021-04-06,2021-04-07T02:30:00Z,SJS,ANA,1,5,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Anaheim Ducks
+2020020621,2020,R,2021-04-07,2021-04-07T21:00:00Z,OTT,EDM,2,4,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Edmonton Oilers
+2020020622,2020,R,2021-04-07,2021-04-07T23:30:00Z,TOR,MTL,3,2,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020020620,2020,R,2021-04-07,2021-04-08T01:00:00Z,STL,VGK,3,1,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Vegas Golden Knights
+2020020623,2020,R,2021-04-07,2021-04-08T01:00:00Z,MIN,COL,8,3,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Colorado Avalanche
+2020020624,2020,R,2021-04-07,2021-04-08T02:00:00Z,LAK,ARI,4,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Arizona Coyotes
+2020020625,2020,R,2021-04-08,2021-04-08T23:00:00Z,BUF,NJD,3,6,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,New Jersey Devils
+2020020626,2020,R,2021-04-08,2021-04-08T23:00:00Z,NYI,PHI,3,2,OFF,OK,SO,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Philadelphia Flyers
+2020020627,2020,R,2021-04-08,2021-04-08T23:00:00Z,NYR,PIT,2,5,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Pittsburgh Penguins
+2020020628,2020,R,2021-04-08,2021-04-08T23:00:00Z,WSH,BOS,2,4,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Boston Bruins
+2020020629,2020,R,2021-04-08,2021-04-08T23:00:00Z,CAR,FLA,3,0,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Florida Panthers
+2020020630,2020,R,2021-04-08,2021-04-08T23:00:00Z,CBJ,TBL,4,6,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Tampa Bay Lightning
+2020020633,2020,R,2021-04-08,2021-04-08T23:00:00Z,MTL,WPG,2,4,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Winnipeg Jets
+2020020638,2020,R,2021-04-08,2021-04-08T23:00:00Z,OTT,EDM,1,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Edmonton Oilers
+2020020631,2020,R,2021-04-08,2021-04-08T23:30:00Z,DET,NSH,1,7,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Nashville Predators
+2020020632,2020,R,2021-04-08,2021-04-09T00:00:00Z,CHI,DAL,1,5,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Dallas Stars
+2020020229,2020,R,2021-04-09,2021-04-09T23:00:00Z,BUF,WSH,3,4,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Washington Capitals
+2020020494,2020,R,2021-04-09,2021-04-09T23:00:00Z,NJD,PIT,4,6,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Pittsburgh Penguins
+2020020636,2020,R,2021-04-09,2021-04-09T23:00:00Z,NYI,NYR,1,4,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New York Rangers
+2020020637,2020,R,2021-04-09,2021-04-10T00:00:00Z,STL,MIN,9,1,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Minnesota Wild
+2020020639,2020,R,2021-04-09,2021-04-10T02:00:00Z,VGK,ARI,7,4,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Arizona Coyotes
+2020020640,2020,R,2021-04-09,2021-04-10T02:00:00Z,ANA,COL,0,2,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Colorado Avalanche
+2020020641,2020,R,2021-04-09,2021-04-10T02:30:00Z,SJS,LAK,5,2,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Los Angeles Kings
+2020020605,2020,R,2021-04-10,2021-04-10T18:00:00Z,PHI,BOS,3,2,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Boston Bruins
+2020020648,2020,R,2021-04-10,2021-04-10T18:00:00Z,DAL,FLA,4,1,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Florida Panthers
+2020020642,2020,R,2021-04-10,2021-04-10T23:00:00Z,CAR,DET,4,5,OFF,OK,SO,False,PNC Arena,US/Eastern,Carolina Hurricanes,Detroit Red Wings
+2020020643,2020,R,2021-04-10,2021-04-10T23:00:00Z,CBJ,CHI,3,4,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Chicago Blackhawks
+2020020645,2020,R,2021-04-10,2021-04-10T23:00:00Z,MTL,WPG,0,5,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Winnipeg Jets
+2020020646,2020,R,2021-04-10,2021-04-10T23:00:00Z,TOR,OTT,6,5,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Ottawa Senators
+2020020644,2020,R,2021-04-10,2021-04-11T00:00:00Z,NSH,TBL,0,3,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Tampa Bay Lightning
+2020020654,2020,R,2021-04-10,2021-04-11T00:00:00Z,STL,MIN,3,2,OFF,OK,OT,False,Enterprise Center,US/Central,St. Louis Blues,Minnesota Wild
+2020020849,2020,R,2021-04-10,2021-04-11T02:00:00Z,CGY,EDM,5,0,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Edmonton Oilers
+2020020649,2020,R,2021-04-10,2021-04-11T02:30:00Z,SJS,LAK,2,4,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Los Angeles Kings
+2020020652,2020,R,2021-04-11,2021-04-11T18:00:00Z,PHI,BUF,3,5,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Buffalo Sabres
+2020020655,2020,R,2021-04-11,2021-04-11T20:00:00Z,VGK,ARI,1,0,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Arizona Coyotes
+2020020656,2020,R,2021-04-11,2021-04-11T22:00:00Z,ANA,COL,1,4,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Colorado Avalanche
+2020020650,2020,R,2021-04-11,2021-04-11T23:00:00Z,NJD,PIT,2,5,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Pittsburgh Penguins
+2020020651,2020,R,2021-04-11,2021-04-11T23:00:00Z,NYI,NYR,3,2,OFF,OK,OT,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New York Rangers
+2020020714,2020,R,2021-04-11,2021-04-11T23:00:00Z,BOS,WSH,1,8,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Washington Capitals
+2020020788,2020,R,2021-04-11,2021-04-12T00:00:00Z,NSH,DAL,3,2,OFF,OK,SO,False,Bridgestone Arena,US/Central,Nashville Predators,Dallas Stars
+2020020657,2020,R,2021-04-12,2021-04-12T23:00:00Z,CAR,DET,1,3,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Detroit Red Wings
+2020020658,2020,R,2021-04-12,2021-04-12T23:00:00Z,CBJ,CHI,3,4,OFF,OK,OT,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Chicago Blackhawks
+2020020660,2020,R,2021-04-12,2021-04-12T23:00:00Z,MTL,TOR,4,2,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020020661,2020,R,2021-04-12,2021-04-12T23:00:00Z,OTT,WPG,4,2,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Winnipeg Jets
+2020020225,2020,R,2021-04-12,2021-04-13T01:00:00Z,COL,ARI,4,2,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Arizona Coyotes
+2020020663,2020,R,2021-04-12,2021-04-13T02:00:00Z,LAK,VGK,2,4,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Vegas Golden Knights
+2020020664,2020,R,2021-04-12,2021-04-13T02:30:00Z,SJS,ANA,0,4,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Anaheim Ducks
+2020020195,2020,R,2021-04-13,2021-04-13T23:00:00Z,BOS,BUF,3,2,OFF,OK,SO,False,TD Garden,US/Eastern,Boston Bruins,Buffalo Sabres
+2020020202,2020,R,2021-04-13,2021-04-13T23:00:00Z,WSH,PHI,6,1,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Philadelphia Flyers
+2020020666,2020,R,2021-04-13,2021-04-13T23:00:00Z,NJD,NYR,0,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,New York Rangers
+2020020669,2020,R,2021-04-13,2021-04-13T23:30:00Z,TOR,CGY,2,3,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Calgary Flames
+2020020659,2020,R,2021-04-13,2021-04-14T00:00:00Z,NSH,TBL,7,2,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Tampa Bay Lightning
+2020020670,2020,R,2021-04-13,2021-04-14T00:30:00Z,DAL,FLA,2,3,OFF,OK,OT,False,American Airlines Center,US/Central,Dallas Stars,Florida Panthers
+2020020192,2020,R,2021-04-14,2021-04-14T18:00:00Z,MIN,ARI,5,2,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Arizona Coyotes
+2020020671,2020,R,2021-04-14,2021-04-14T23:00:00Z,MTL,CGY,1,4,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Calgary Flames
+2020020672,2020,R,2021-04-14,2021-04-14T23:00:00Z,OTT,WPG,2,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Winnipeg Jets
+2020020182,2020,R,2021-04-14,2021-04-14T23:30:00Z,STL,COL,3,4,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Colorado Avalanche
+2020020674,2020,R,2021-04-14,2021-04-15T02:00:00Z,LAK,VGK,2,6,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Vegas Golden Knights
+2020020675,2020,R,2021-04-14,2021-04-15T02:30:00Z,SJS,ANA,1,4,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Anaheim Ducks
+2020020665,2020,R,2021-04-15,2021-04-15T23:00:00Z,BOS,NYI,4,1,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Islanders
+2020020676,2020,R,2021-04-15,2021-04-15T23:00:00Z,NYR,NJD,4,0,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New Jersey Devils
+2020020677,2020,R,2021-04-15,2021-04-15T23:00:00Z,WSH,BUF,2,5,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Buffalo Sabres
+2020020678,2020,R,2021-04-15,2021-04-15T23:00:00Z,CAR,NSH,4,1,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Nashville Predators
+2020020679,2020,R,2021-04-15,2021-04-15T23:00:00Z,TBL,FLA,3,2,OFF,OK,OT,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Florida Panthers
+2020020680,2020,R,2021-04-15,2021-04-15T23:00:00Z,PIT,PHI,1,2,OFF,OK,SO,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Philadelphia Flyers
+2020020682,2020,R,2021-04-15,2021-04-15T23:00:00Z,TOR,WPG,2,5,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Winnipeg Jets
+2020020681,2020,R,2021-04-15,2021-04-15T23:30:00Z,DET,CHI,4,1,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Chicago Blackhawks
+2020020683,2020,R,2021-04-15,2021-04-16T00:30:00Z,DAL,CBJ,4,1,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Columbus Blue Jackets
+2020020686,2020,R,2021-04-16,2021-04-16T22:00:00Z,MTL,CGY,2,1,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Calgary Flames
+2020020685,2020,R,2021-04-16,2021-04-16T23:00:00Z,BOS,NYI,3,0,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Islanders
+2020020687,2020,R,2021-04-16,2021-04-17T00:00:00Z,MIN,SJS,3,2,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,San Jose Sharks
+2020020689,2020,R,2021-04-16,2021-04-17T02:00:00Z,ANA,VGK,0,4,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Vegas Golden Knights
+2020020691,2020,R,2021-04-17,2021-04-17T16:30:00Z,NYR,NJD,6,3,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New Jersey Devils
+2020020692,2020,R,2021-04-17,2021-04-17T16:30:00Z,PHI,WSH,3,6,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Washington Capitals
+2020020690,2020,R,2021-04-17,2021-04-17T19:00:00Z,BUF,PIT,2,3,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Pittsburgh Penguins
+2020020546,2020,R,2021-04-17,2021-04-17T20:00:00Z,MTL,OTT,0,4,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Ottawa Senators
+2020020700,2020,R,2021-04-17,2021-04-17T22:00:00Z,ARI,STL,3,2,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,St. Louis Blues
+2020020693,2020,R,2021-04-17,2021-04-17T23:00:00Z,CAR,NSH,3,1,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Nashville Predators
+2020020694,2020,R,2021-04-17,2021-04-17T23:00:00Z,TBL,FLA,3,5,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Florida Panthers
+2020020695,2020,R,2021-04-17,2021-04-17T23:00:00Z,DET,CHI,0,4,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Chicago Blackhawks
+2020020696,2020,R,2021-04-17,2021-04-17T23:00:00Z,WPG,EDM,0,3,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Edmonton Oilers
+2020020698,2020,R,2021-04-17,2021-04-18T00:00:00Z,MIN,SJS,5,2,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,San Jose Sharks
+2020020699,2020,R,2021-04-17,2021-04-18T00:00:00Z,DAL,CBJ,5,1,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Columbus Blue Jackets
+2020020701,2020,R,2021-04-18,2021-04-18T16:00:00Z,BOS,WSH,6,3,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Washington Capitals
+2020020702,2020,R,2021-04-18,2021-04-18T19:00:00Z,NJD,NYR,3,5,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,New York Rangers
+2020020715,2020,R,2021-04-18,2021-04-18T19:00:00Z,BUF,PIT,4,2,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Pittsburgh Penguins
+2020020705,2020,R,2021-04-18,2021-04-18T20:00:00Z,ANA,VGK,2,5,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Vegas Golden Knights
+2020020703,2020,R,2021-04-18,2021-04-18T22:30:00Z,PHI,NYI,0,1,OFF,OK,OT,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New York Islanders
+2020020697,2020,R,2021-04-18,2021-04-18T23:00:00Z,VAN,TOR,3,2,OFF,OK,OT,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Toronto Maple Leafs
+2020020706,2020,R,2021-04-19,2021-04-19T23:00:00Z,TBL,CAR,3,2,OFF,OK,OT,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Carolina Hurricanes
+2020020707,2020,R,2021-04-19,2021-04-19T23:00:00Z,FLA,CBJ,4,2,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Columbus Blue Jackets
+2020020711,2020,R,2021-04-19,2021-04-19T23:30:00Z,DAL,DET,3,2,OFF,OK,SO,False,American Airlines Center,US/Central,Dallas Stars,Detroit Red Wings
+2020020601,2020,R,2021-04-19,2021-04-20T00:00:00Z,NSH,CHI,5,2,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Chicago Blackhawks
+2020020708,2020,R,2021-04-19,2021-04-20T01:00:00Z,CGY,OTT,2,4,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Ottawa Senators
+2020020709,2020,R,2021-04-19,2021-04-20T01:00:00Z,EDM,MTL,4,1,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Montréal Canadiens
+2020020712,2020,R,2021-04-19,2021-04-20T01:00:00Z,ARI,MIN,2,5,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Minnesota Wild
+2020020713,2020,R,2021-04-19,2021-04-20T02:00:00Z,VGK,SJS,3,2,OFF,OK,SO,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,San Jose Sharks
+2020020483,2020,R,2021-04-20,2021-04-20T22:30:00Z,BUF,BOS,0,2,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Boston Bruins
+2020020166,2020,R,2021-04-20,2021-04-20T23:00:00Z,PIT,NJD,7,6,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New Jersey Devils
+2020020717,2020,R,2021-04-20,2021-04-20T23:00:00Z,NYI,NYR,6,1,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New York Rangers
+2020020718,2020,R,2021-04-20,2021-04-20T23:00:00Z,TBL,CAR,1,4,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Carolina Hurricanes
+2020020719,2020,R,2021-04-20,2021-04-20T23:00:00Z,FLA,CBJ,5,1,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Columbus Blue Jackets
+2020020722,2020,R,2021-04-20,2021-04-21T00:30:00Z,DAL,DET,5,2,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Detroit Red Wings
+2020020710,2020,R,2021-04-20,2021-04-21T01:00:00Z,VAN,TOR,6,3,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Toronto Maple Leafs
+2020020724,2020,R,2021-04-20,2021-04-21T02:00:00Z,LAK,ANA,4,1,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Anaheim Ducks
+2020020725,2020,R,2021-04-21,2021-04-21T23:00:00Z,CHI,NSH,5,4,OFF,OK,OT,False,United Center,America/Chicago,Chicago Blackhawks,Nashville Predators
+2020020727,2020,R,2021-04-21,2021-04-22T01:00:00Z,ARI,MIN,1,4,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Minnesota Wild
+2020020728,2020,R,2021-04-21,2021-04-22T01:30:00Z,VGK,SJS,5,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,San Jose Sharks
+2020020721,2020,R,2021-04-21,2021-04-22T02:00:00Z,EDM,MTL,3,4,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Montréal Canadiens
+2020020254,2020,R,2021-04-22,2021-04-22T23:00:00Z,NYR,PHI,2,3,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Philadelphia Flyers
+2020020726,2020,R,2021-04-22,2021-04-22T23:00:00Z,WPG,TOR,3,5,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Toronto Maple Leafs
+2020020729,2020,R,2021-04-22,2021-04-22T23:00:00Z,BUF,BOS,1,5,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Boston Bruins
+2020020730,2020,R,2021-04-22,2021-04-22T23:00:00Z,NYI,WSH,0,1,OFF,OK,SO,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Washington Capitals
+2020020731,2020,R,2021-04-22,2021-04-22T23:00:00Z,TBL,CBJ,3,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Columbus Blue Jackets
+2020020732,2020,R,2021-04-22,2021-04-22T23:00:00Z,FLA,CAR,2,4,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Carolina Hurricanes
+2020020733,2020,R,2021-04-22,2021-04-22T23:00:00Z,PIT,NJD,5,1,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New Jersey Devils
+2020020734,2020,R,2021-04-22,2021-04-22T23:30:00Z,DET,DAL,7,3,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Dallas Stars
+2020020735,2020,R,2021-04-22,2021-04-23T00:00:00Z,STL,COL,2,4,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Colorado Avalanche
+2020020737,2020,R,2021-04-22,2021-04-23T02:00:00Z,VAN,OTT,0,3,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Ottawa Senators
+2020020738,2020,R,2021-04-23,2021-04-23T23:00:00Z,BUF,BOS,6,4,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,Boston Bruins
+2020020739,2020,R,2021-04-23,2021-04-23T23:00:00Z,NYR,PHI,4,1,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Philadelphia Flyers
+2020020740,2020,R,2021-04-23,2021-04-24T00:00:00Z,CHI,NSH,1,3,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Nashville Predators
+2020020736,2020,R,2021-04-23,2021-04-24T01:00:00Z,CGY,MTL,4,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Montréal Canadiens
+2020020240,2020,R,2021-04-23,2021-04-24T02:00:00Z,LAK,MIN,2,4,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Minnesota Wild
+2020020746,2020,R,2021-04-24,2021-04-24T16:30:00Z,PIT,NJD,4,2,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New Jersey Devils
+2020020748,2020,R,2021-04-24,2021-04-24T19:00:00Z,STL,COL,5,3,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Colorado Avalanche
+2020020744,2020,R,2021-04-24,2021-04-24T23:00:00Z,NYI,WSH,3,6,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Washington Capitals
+2020020745,2020,R,2021-04-24,2021-04-24T23:00:00Z,FLA,CAR,4,3,OFF,OK,OT,False,BB&T Center,US/Eastern,Florida Panthers,Carolina Hurricanes
+2020020747,2020,R,2021-04-24,2021-04-24T23:00:00Z,DET,DAL,1,2,OFF,OK,OT,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Dallas Stars
+2020020749,2020,R,2021-04-24,2021-04-24T23:00:00Z,WPG,TOR,1,4,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Toronto Maple Leafs
+2020020750,2020,R,2021-04-24,2021-04-24T23:00:00Z,CGY,MTL,5,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Montréal Canadiens
+2020020325,2020,R,2021-04-24,2021-04-25T01:00:00Z,ANA,VGK,1,5,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Vegas Golden Knights
+2020020753,2020,R,2021-04-24,2021-04-25T01:00:00Z,SJS,MIN,3,6,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Minnesota Wild
+2020020751,2020,R,2021-04-24,2021-04-25T02:00:00Z,VAN,OTT,4,2,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Ottawa Senators
+2020020752,2020,R,2021-04-24,2021-04-25T02:00:00Z,LAK,ARI,0,4,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Arizona Coyotes
+2020020757,2020,R,2021-04-25,2021-04-25T19:00:00Z,PIT,BOS,1,0,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Boston Bruins
+2020020216,2020,R,2021-04-25,2021-04-25T22:00:00Z,PHI,NJD,4,3,OFF,OK,SO,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New Jersey Devils
+2020020754,2020,R,2021-04-25,2021-04-25T22:00:00Z,NYR,BUF,6,3,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Buffalo Sabres
+2020020756,2020,R,2021-04-25,2021-04-25T23:00:00Z,TBL,CBJ,4,3,OFF,OK,OT,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Columbus Blue Jackets
+2020020761,2020,R,2021-04-26,2021-04-26T22:30:00Z,CGY,MTL,1,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Montréal Canadiens
+2020020191,2020,R,2021-04-26,2021-04-26T23:00:00Z,STL,COL,4,1,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Colorado Avalanche
+2020020759,2020,R,2021-04-26,2021-04-26T23:00:00Z,OTT,VAN,2,1,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Vancouver Canucks
+2020020763,2020,R,2021-04-26,2021-04-26T23:30:00Z,DAL,CAR,4,3,OFF,OK,OT,False,American Airlines Center,US/Central,Dallas Stars,Carolina Hurricanes
+2020020758,2020,R,2021-04-26,2021-04-27T00:00:00Z,NSH,FLA,4,1,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Florida Panthers
+2020020760,2020,R,2021-04-26,2021-04-27T01:00:00Z,WPG,EDM,1,6,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Edmonton Oilers
+2020020765,2020,R,2021-04-26,2021-04-27T02:00:00Z,LAK,ANA,4,1,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Anaheim Ducks
+2020020766,2020,R,2021-04-26,2021-04-27T02:30:00Z,SJS,ARI,6,4,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Arizona Coyotes
+2020020447,2020,R,2021-04-27,2021-04-27T23:00:00Z,WSH,NYI,1,0,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,New York Islanders
+2020020716,2020,R,2021-04-27,2021-04-27T23:00:00Z,NJD,PHI,6,4,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Philadelphia Flyers
+2020020768,2020,R,2021-04-27,2021-04-27T23:00:00Z,NYR,BUF,3,1,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Buffalo Sabres
+2020020770,2020,R,2021-04-27,2021-04-27T23:00:00Z,PIT,BOS,1,3,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Boston Bruins
+2020020771,2020,R,2021-04-27,2021-04-27T23:00:00Z,CBJ,DET,1,0,OFF,OK,SO,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Detroit Red Wings
+2020020772,2020,R,2021-04-27,2021-04-28T00:00:00Z,CHI,TBL,4,7,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Tampa Bay Lightning
+2020020773,2020,R,2021-04-27,2021-04-28T00:00:00Z,NSH,FLA,4,7,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Florida Panthers
+2020020774,2020,R,2021-04-27,2021-04-28T00:30:00Z,DAL,CAR,1,5,OFF,OK,REG,False,American Airlines Center,US/Central,Dallas Stars,Carolina Hurricanes
+2020020776,2020,R,2021-04-28,2021-04-28T21:30:00Z,OTT,VAN,6,3,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Vancouver Canucks
+2020020778,2020,R,2021-04-28,2021-04-28T23:00:00Z,MIN,STL,3,4,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,St. Louis Blues
+2020020775,2020,R,2021-04-28,2021-04-29T00:00:00Z,MTL,TOR,1,4,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020020777,2020,R,2021-04-28,2021-04-29T01:00:00Z,WPG,EDM,1,3,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Edmonton Oilers
+2020020779,2020,R,2021-04-28,2021-04-29T01:30:00Z,VGK,COL,5,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Colorado Avalanche
+2020020780,2020,R,2021-04-28,2021-04-29T02:00:00Z,LAK,ANA,2,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Anaheim Ducks
+2020020781,2020,R,2021-04-28,2021-04-29T02:30:00Z,SJS,ARI,4,2,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Arizona Coyotes
+2020020347,2020,R,2021-04-29,2021-04-29T23:00:00Z,TBL,DAL,3,0,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Dallas Stars
+2020020782,2020,R,2021-04-29,2021-04-29T23:00:00Z,BOS,BUF,5,2,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Buffalo Sabres
+2020020783,2020,R,2021-04-29,2021-04-29T23:00:00Z,NJD,PHI,5,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Philadelphia Flyers
+2020020784,2020,R,2021-04-29,2021-04-29T23:00:00Z,NYR,NYI,0,4,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,New York Islanders
+2020020785,2020,R,2021-04-29,2021-04-29T23:00:00Z,WSH,PIT,4,5,OFF,OK,OT,False,Capital One Arena,US/Eastern,Washington Capitals,Pittsburgh Penguins
+2020020786,2020,R,2021-04-29,2021-04-29T23:00:00Z,CAR,DET,3,1,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Detroit Red Wings
+2020020792,2020,R,2021-04-29,2021-04-29T23:30:00Z,TOR,VAN,4,1,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Vancouver Canucks
+2020020762,2020,R,2021-04-29,2021-04-30T00:00:00Z,MIN,STL,4,5,OFF,OK,OT,False,Xcel Energy Center,US/Central,Minnesota Wild,St. Louis Blues
+2020020787,2020,R,2021-04-29,2021-04-30T00:00:00Z,CHI,FLA,3,4,OFF,OK,OT,False,United Center,America/Chicago,Chicago Blackhawks,Florida Panthers
+2020020789,2020,R,2021-04-29,2021-04-30T01:00:00Z,EDM,CGY,1,3,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Calgary Flames
+2020020791,2020,R,2021-04-30,2021-04-30T23:00:00Z,MTL,WPG,5,3,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Winnipeg Jets
+2020020793,2020,R,2021-04-30,2021-05-01T01:00:00Z,COL,SJS,3,0,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,San Jose Sharks
+2020020794,2020,R,2021-04-30,2021-05-01T02:00:00Z,ARI,VGK,3,0,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Vegas Golden Knights
+2020020795,2020,R,2021-04-30,2021-05-01T02:00:00Z,ANA,LAK,1,2,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Los Angeles Kings
+2020020796,2020,R,2021-05-01,2021-05-01T17:00:00Z,BOS,BUF,6,2,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Buffalo Sabres
+2020020801,2020,R,2021-05-01,2021-05-01T19:00:00Z,DET,TBL,1,0,OFF,OK,SO,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Tampa Bay Lightning
+2020020797,2020,R,2021-05-01,2021-05-01T23:00:00Z,NYI,NYR,3,0,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New York Rangers
+2020020798,2020,R,2021-05-01,2021-05-01T23:00:00Z,PHI,NJD,1,4,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New Jersey Devils
+2020020799,2020,R,2021-05-01,2021-05-01T23:00:00Z,WSH,PIT,0,3,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Pittsburgh Penguins
+2020020800,2020,R,2021-05-01,2021-05-01T23:00:00Z,CAR,CBJ,2,1,OFF,OK,OT,False,PNC Arena,US/Eastern,Carolina Hurricanes,Columbus Blue Jackets
+2020020805,2020,R,2021-05-01,2021-05-01T23:00:00Z,MTL,OTT,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Ottawa Senators
+2020020806,2020,R,2021-05-01,2021-05-01T23:00:00Z,TOR,VAN,5,1,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Vancouver Canucks
+2020020207,2020,R,2021-05-01,2021-05-02T00:00:00Z,MIN,STL,4,3,OFF,OK,OT,False,Xcel Energy Center,US/Central,Minnesota Wild,St. Louis Blues
+2020020802,2020,R,2021-05-01,2021-05-02T00:00:00Z,CHI,FLA,4,5,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Florida Panthers
+2020020804,2020,R,2021-05-01,2021-05-02T00:00:00Z,NSH,DAL,1,0,OFF,OK,OT,False,Bridgestone Arena,US/Central,Nashville Predators,Dallas Stars
+2020020808,2020,R,2021-05-01,2021-05-02T00:00:00Z,COL,SJS,4,3,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,San Jose Sharks
+2020020807,2020,R,2021-05-01,2021-05-02T02:00:00Z,EDM,CGY,4,1,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Calgary Flames
+2020020809,2020,R,2021-05-01,2021-05-02T02:00:00Z,ARI,VGK,2,3,OFF,OK,OT,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Vegas Golden Knights
+2020020810,2020,R,2021-05-01,2021-05-02T02:00:00Z,ANA,LAK,6,2,OFF,OK,REG,False,Honda Center,America/Los_Angeles,Anaheim Ducks,Los Angeles Kings
+2020020811,2020,R,2021-05-02,2021-05-02T19:00:00Z,DET,TBL,1,2,OFF,OK,REG,False,Little Caesars Arena,America/Detroit,Detroit Red Wings,Tampa Bay Lightning
+2020020020,2020,R,2021-05-03,2021-05-03T23:00:00Z,FLA,DAL,5,4,OFF,OK,OT,False,BB&T Center,US/Eastern,Florida Panthers,Dallas Stars
+2020020812,2020,R,2021-05-03,2021-05-03T23:00:00Z,BUF,NYI,4,2,OFF,OK,REG,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Islanders
+2020020813,2020,R,2021-05-03,2021-05-03T23:00:00Z,NJD,BOS,0,3,OFF,OK,REG,False,Prudential Center,US/Eastern,New Jersey Devils,Boston Bruins
+2020020814,2020,R,2021-05-03,2021-05-03T23:00:00Z,NYR,WSH,3,6,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Washington Capitals
+2020020815,2020,R,2021-05-03,2021-05-03T23:00:00Z,PHI,PIT,7,2,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Pittsburgh Penguins
+2020020816,2020,R,2021-05-03,2021-05-03T23:00:00Z,CAR,CHI,5,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Chicago Blackhawks
+2020020817,2020,R,2021-05-03,2021-05-03T23:00:00Z,CBJ,NSH,3,4,OFF,OK,OT,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Nashville Predators
+2020020819,2020,R,2021-05-03,2021-05-03T23:00:00Z,MTL,TOR,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020020820,2020,R,2021-05-03,2021-05-03T23:00:00Z,OTT,WPG,2,1,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Winnipeg Jets
+2020020818,2020,R,2021-05-03,2021-05-04T00:00:00Z,STL,ANA,3,1,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Anaheim Ducks
+2020020821,2020,R,2021-05-03,2021-05-04T00:00:00Z,MIN,VGK,6,5,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Vegas Golden Knights
+2020020822,2020,R,2021-05-03,2021-05-04T02:00:00Z,ARI,LAK,2,3,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Los Angeles Kings
+2020020829,2020,R,2021-05-03,2021-05-04T02:00:00Z,VAN,EDM,3,5,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Edmonton Oilers
+2020020823,2020,R,2021-05-03,2021-05-04T02:30:00Z,SJS,COL,4,5,OFF,OK,OT,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Colorado Avalanche
+2020020824,2020,R,2021-05-04,2021-05-04T23:00:00Z,BUF,NYI,4,3,OFF,OK,SO,False,KeyBank Center,America/New_York,Buffalo Sabres,New York Islanders
+2020020825,2020,R,2021-05-04,2021-05-04T23:00:00Z,NJD,BOS,4,3,OFF,OK,OT,False,Prudential Center,US/Eastern,New Jersey Devils,Boston Bruins
+2020020826,2020,R,2021-05-04,2021-05-04T23:00:00Z,PHI,PIT,3,7,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,Pittsburgh Penguins
+2020020827,2020,R,2021-05-04,2021-05-04T23:00:00Z,CAR,CHI,6,3,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Chicago Blackhawks
+2020020844,2020,R,2021-05-04,2021-05-05T02:00:00Z,VAN,EDM,1,4,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Edmonton Oilers
+2020020033,2020,R,2021-05-05,2021-05-05T23:00:00Z,TBL,DAL,6,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Dallas Stars
+2020020564,2020,R,2021-05-05,2021-05-05T23:00:00Z,OTT,MTL,5,1,OFF,OK,REG,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Montréal Canadiens
+2020020830,2020,R,2021-05-05,2021-05-05T23:00:00Z,NYR,WSH,2,4,OFF,OK,REG,False,Madison Square Garden,America/New_York,New York Rangers,Washington Capitals
+2020020831,2020,R,2021-05-05,2021-05-05T23:00:00Z,CBJ,NSH,4,2,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Nashville Predators
+2020020832,2020,R,2021-05-05,2021-05-06T00:00:00Z,STL,ANA,2,3,OFF,OK,SO,False,Enterprise Center,US/Central,St. Louis Blues,Anaheim Ducks
+2020020835,2020,R,2021-05-05,2021-05-06T00:00:00Z,MIN,VGK,2,3,OFF,OK,OT,False,Xcel Energy Center,US/Central,Minnesota Wild,Vegas Golden Knights
+2020020834,2020,R,2021-05-05,2021-05-06T01:30:00Z,CGY,WPG,0,4,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Winnipeg Jets
+2020020837,2020,R,2021-05-05,2021-05-06T01:30:00Z,SJS,COL,3,2,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Colorado Avalanche
+2020020836,2020,R,2021-05-05,2021-05-06T02:00:00Z,ARI,LAK,2,4,OFF,OK,REG,False,Gila River Arena,America/Phoenix,Arizona Coyotes,Los Angeles Kings
+2020020280,2020,R,2021-05-06,2021-05-06T23:00:00Z,CAR,CHI,1,2,OFF,OK,OT,False,PNC Arena,US/Eastern,Carolina Hurricanes,Chicago Blackhawks
+2020020838,2020,R,2021-05-06,2021-05-06T23:00:00Z,BOS,NYR,4,0,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Rangers
+2020020839,2020,R,2021-05-06,2021-05-06T23:00:00Z,NYI,NJD,1,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New Jersey Devils
+2020020842,2020,R,2021-05-06,2021-05-06T23:00:00Z,PIT,BUF,8,4,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Buffalo Sabres
+2020020847,2020,R,2021-05-06,2021-05-06T23:00:00Z,TOR,MTL,5,2,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020020593,2020,R,2021-05-06,2021-05-07T01:00:00Z,EDM,VAN,3,6,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Vancouver Canucks
+2020020048,2020,R,2021-05-07,2021-05-07T23:00:00Z,TBL,DAL,2,5,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Dallas Stars
+2020020840,2020,R,2021-05-07,2021-05-07T23:00:00Z,WSH,PHI,2,4,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Philadelphia Flyers
+2020020845,2020,R,2021-05-07,2021-05-07T23:00:00Z,CBJ,DET,2,5,OFF,OK,REG,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Detroit Red Wings
+2020020850,2020,R,2021-05-07,2021-05-08T00:00:00Z,MIN,ANA,4,3,OFF,OK,OT,False,Xcel Energy Center,US/Central,Minnesota Wild,Anaheim Ducks
+2020020851,2020,R,2021-05-07,2021-05-08T02:00:00Z,VGK,STL,4,3,OFF,OK,OT,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,St. Louis Blues
+2020020852,2020,R,2021-05-07,2021-05-08T02:00:00Z,LAK,COL,2,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Colorado Avalanche
+2020020853,2020,R,2021-05-07,2021-05-08T02:30:00Z,SJS,ARI,2,5,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Arizona Coyotes
+2020020854,2020,R,2021-05-08,2021-05-08T19:00:00Z,BOS,NYR,4,5,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Rangers
+2020020858,2020,R,2021-05-08,2021-05-08T19:00:00Z,PIT,BUF,1,0,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,Buffalo Sabres
+2020020855,2020,R,2021-05-08,2021-05-08T23:00:00Z,NYI,NJD,5,1,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,New Jersey Devils
+2020020856,2020,R,2021-05-08,2021-05-08T23:00:00Z,WSH,PHI,2,1,OFF,OK,OT,False,Capital One Arena,US/Eastern,Washington Capitals,Philadelphia Flyers
+2020020857,2020,R,2021-05-08,2021-05-08T23:00:00Z,FLA,TBL,5,1,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Tampa Bay Lightning
+2020020859,2020,R,2021-05-08,2021-05-08T23:00:00Z,CBJ,DET,5,4,OFF,OK,OT,False,Nationwide Arena,US/Eastern,Columbus Blue Jackets,Detroit Red Wings
+2020020862,2020,R,2021-05-08,2021-05-08T23:00:00Z,TOR,MTL,3,2,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020020863,2020,R,2021-05-08,2021-05-08T23:00:00Z,WPG,OTT,2,4,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Ottawa Senators
+2020020861,2020,R,2021-05-08,2021-05-09T00:00:00Z,NSH,CAR,3,1,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Carolina Hurricanes
+2020020865,2020,R,2021-05-08,2021-05-09T00:00:00Z,MIN,ANA,4,3,OFF,OK,OT,False,Xcel Energy Center,US/Central,Minnesota Wild,Anaheim Ducks
+2020020662,2020,R,2021-05-08,2021-05-09T02:00:00Z,EDM,VAN,4,3,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Vancouver Canucks
+2020020866,2020,R,2021-05-08,2021-05-09T02:00:00Z,VGK,STL,4,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,St. Louis Blues
+2020020867,2020,R,2021-05-08,2021-05-09T02:00:00Z,LAK,COL,2,3,OFF,OK,REG,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,Colorado Avalanche
+2020020868,2020,R,2021-05-08,2021-05-09T02:30:00Z,SJS,ARI,4,5,OFF,OK,OT,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Arizona Coyotes
+2020020843,2020,R,2021-05-09,2021-05-09T23:00:00Z,CHI,DAL,4,2,OFF,OK,REG,False,United Center,America/Chicago,Chicago Blackhawks,Dallas Stars
+2020020720,2020,R,2021-05-09,2021-05-10T00:00:00Z,CGY,OTT,6,1,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Ottawa Senators
+2020020231,2020,R,2021-05-10,2021-05-10T23:00:00Z,PHI,NJD,4,2,OFF,OK,REG,False,Wells Fargo Center,US/Eastern,Philadelphia Flyers,New Jersey Devils
+2020020510,2020,R,2021-05-10,2021-05-10T23:00:00Z,MTL,EDM,3,4,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Edmonton Oilers
+2020020529,2020,R,2021-05-10,2021-05-10T23:00:00Z,BOS,NYI,3,2,OFF,OK,OT,False,TD Garden,US/Eastern,Boston Bruins,New York Islanders
+2020020841,2020,R,2021-05-10,2021-05-10T23:00:00Z,FLA,TBL,4,0,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Tampa Bay Lightning
+2020020602,2020,R,2021-05-10,2021-05-11T00:00:00Z,WPG,VAN,1,3,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Vancouver Canucks
+2020020846,2020,R,2021-05-10,2021-05-11T00:00:00Z,NSH,CAR,5,0,OFF,OK,REG,False,Bridgestone Arena,US/Central,Nashville Predators,Carolina Hurricanes
+2020020860,2020,R,2021-05-10,2021-05-11T00:00:00Z,CHI,DAL,4,5,OFF,OK,OT,False,United Center,America/Chicago,Chicago Blackhawks,Dallas Stars
+2020020456,2020,R,2021-05-10,2021-05-11T02:00:00Z,LAK,STL,1,2,OFF,OK,OT,False,STAPLES Center,America/Los_Angeles,Los Angeles Kings,St. Louis Blues
+2020020764,2020,R,2021-05-10,2021-05-11T02:00:00Z,VGK,COL,1,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Colorado Avalanche
+2020020653,2020,R,2021-05-11,2021-05-11T23:00:00Z,WSH,BOS,2,1,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Boston Bruins
+2020020619,2020,R,2021-05-11,2021-05-12T00:00:00Z,WPG,VAN,5,0,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Vancouver Canucks
+2020020526,2020,R,2021-05-12,2021-05-12T21:00:00Z,MTL,EDM,3,4,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Edmonton Oilers
+2020020833,2020,R,2021-05-12,2021-05-13T00:00:00Z,OTT,TOR,4,3,OFF,OK,OT,False,Canadian Tire Centre,US/Eastern,Ottawa Senators,Toronto Maple Leafs
+2020020162,2020,R,2021-05-12,2021-05-13T01:00:00Z,SJS,VGK,0,6,OFF,OK,REG,False,SAP Center at San Jose,US/Pacific,San Jose Sharks,Vegas Golden Knights
+2020020688,2020,R,2021-05-12,2021-05-13T01:00:00Z,COL,LAK,6,0,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Los Angeles Kings
+2020020790,2020,R,2021-05-12,2021-05-13T01:00:00Z,STL,MIN,4,0,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Minnesota Wild
+2020020803,2020,R,2021-05-13,2021-05-14T00:00:00Z,STL,MIN,7,3,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Minnesota Wild
+2020020647,2020,R,2021-05-13,2021-05-14T01:00:00Z,CGY,VAN,4,1,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Vancouver Canucks
+2020020704,2020,R,2021-05-13,2021-05-14T01:00:00Z,COL,LAK,5,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Los Angeles Kings
+2020020741,2020,R,2021-05-14,2021-05-15T00:00:00Z,WPG,TOR,4,2,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Toronto Maple Leafs
+2020020673,2020,R,2021-05-15,2021-05-15T19:30:00Z,EDM,VAN,1,4,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Vancouver Canucks
+2020030121,2020,P,2021-05-15,2021-05-15T23:15:00Z,WSH,BOS,3,2,OFF,OK,OT,False,Capital One Arena,US/Eastern,Washington Capitals,Boston Bruins
+2020030111,2020,P,2021-05-16,2021-05-16T16:00:00Z,PIT,NYI,3,4,OFF,OK,OT,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Islanders
+2020030161,2020,P,2021-05-16,2021-05-16T19:00:00Z,VGK,MIN,0,1,OFF,OK,OT,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020030141,2020,P,2021-05-16,2021-05-16T23:30:00Z,FLA,TBL,4,5,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Tampa Bay Lightning
+2020020567,2020,R,2021-05-16,2021-05-17T02:30:00Z,VAN,CGY,5,6,OFF,OK,OT,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Calgary Flames
+2020030122,2020,P,2021-05-17,2021-05-17T23:30:00Z,WSH,BOS,3,4,OFF,OK,OT,False,Capital One Arena,US/Eastern,Washington Capitals,Boston Bruins
+2020030131,2020,P,2021-05-17,2021-05-18T00:00:00Z,CAR,NSH,5,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Nashville Predators
+2020030151,2020,P,2021-05-17,2021-05-18T02:00:00Z,COL,STL,4,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,St. Louis Blues
+2020020864,2020,R,2021-05-18,2021-05-18T20:00:00Z,VAN,CGY,4,2,OFF,OK,REG,False,Rogers Arena,America/Vancouver,Vancouver Canucks,Calgary Flames
+2020030112,2020,P,2021-05-18,2021-05-18T23:30:00Z,PIT,NYI,2,1,OFF,OK,REG,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Islanders
+2020030142,2020,P,2021-05-18,2021-05-19T00:00:00Z,FLA,TBL,1,3,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Tampa Bay Lightning
+2020030162,2020,P,2021-05-18,2021-05-19T02:00:00Z,VGK,MIN,3,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020020634,2020,R,2021-05-19,2021-05-19T19:30:00Z,CGY,VAN,6,2,OFF,OK,REG,False,Scotiabank Saddledome,America/Edmonton,Calgary Flames,Vancouver Canucks
+2020030123,2020,P,2021-05-19,2021-05-19T22:30:00Z,BOS,WSH,3,2,OFF,OK,OT,False,TD Garden,US/Eastern,Boston Bruins,Washington Capitals
+2020030132,2020,P,2021-05-19,2021-05-20T00:00:00Z,CAR,NSH,3,0,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Nashville Predators
+2020030181,2020,P,2021-05-19,2021-05-20T01:00:00Z,EDM,WPG,1,4,OFF,OK,REG,False,Rogers Place,America/Edmonton,Edmonton Oilers,Winnipeg Jets
+2020030152,2020,P,2021-05-19,2021-05-20T02:30:00Z,COL,STL,6,3,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,St. Louis Blues
+2020030143,2020,P,2021-05-20,2021-05-20T22:30:00Z,TBL,FLA,5,6,OFF,OK,OT,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Florida Panthers
+2020030113,2020,P,2021-05-20,2021-05-20T23:00:00Z,NYI,PIT,4,5,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Pittsburgh Penguins
+2020030171,2020,P,2021-05-20,2021-05-20T23:30:00Z,TOR,MTL,1,2,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020030163,2020,P,2021-05-20,2021-05-21T01:30:00Z,MIN,VGK,2,5,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Vegas Golden Knights
+2020030124,2020,P,2021-05-21,2021-05-21T22:30:00Z,BOS,WSH,4,1,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,Washington Capitals
+2020030133,2020,P,2021-05-21,2021-05-21T23:00:00Z,NSH,CAR,5,4,OFF,OK,OT,False,Bridgestone Arena,US/Central,Nashville Predators,Carolina Hurricanes
+2020030182,2020,P,2021-05-21,2021-05-22T01:00:00Z,EDM,WPG,0,1,OFF,OK,OT,False,Rogers Place,America/Edmonton,Edmonton Oilers,Winnipeg Jets
+2020030153,2020,P,2021-05-21,2021-05-22T01:30:00Z,STL,COL,1,5,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Colorado Avalanche
+2020030144,2020,P,2021-05-22,2021-05-22T16:30:00Z,TBL,FLA,6,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Florida Panthers
+2020030114,2020,P,2021-05-22,2021-05-22T19:00:00Z,NYI,PIT,4,1,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Pittsburgh Penguins
+2020030172,2020,P,2021-05-22,2021-05-22T23:00:00Z,TOR,MTL,5,1,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020030164,2020,P,2021-05-22,2021-05-23T00:00:00Z,MIN,VGK,0,4,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Vegas Golden Knights
+2020030134,2020,P,2021-05-23,2021-05-23T18:30:00Z,NSH,CAR,4,3,OFF,OK,OT,False,Bridgestone Arena,US/Central,Nashville Predators,Carolina Hurricanes
+2020030154,2020,P,2021-05-23,2021-05-23T21:00:00Z,STL,COL,2,5,OFF,OK,REG,False,Enterprise Center,US/Central,St. Louis Blues,Colorado Avalanche
+2020030125,2020,P,2021-05-23,2021-05-23T23:00:00Z,WSH,BOS,1,3,OFF,OK,REG,False,Capital One Arena,US/Eastern,Washington Capitals,Boston Bruins
+2020030183,2020,P,2021-05-23,2021-05-23T23:30:00Z,WPG,EDM,5,4,OFF,OK,OT,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Edmonton Oilers
+2020030115,2020,P,2021-05-24,2021-05-24T23:00:00Z,PIT,NYI,2,3,OFF,OK,OT,False,PPG Paints Arena,US/Eastern,Pittsburgh Penguins,New York Islanders
+2020030173,2020,P,2021-05-24,2021-05-24T23:00:00Z,MTL,TOR,1,2,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020030145,2020,P,2021-05-24,2021-05-25T00:00:00Z,FLA,TBL,4,1,OFF,OK,REG,False,BB&T Center,US/Eastern,Florida Panthers,Tampa Bay Lightning
+2020030184,2020,P,2021-05-24,2021-05-25T01:45:00Z,WPG,EDM,4,3,OFF,OK,OT,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Edmonton Oilers
+2020030165,2020,P,2021-05-24,2021-05-25T02:30:00Z,VGK,MIN,2,4,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020030174,2020,P,2021-05-25,2021-05-25T23:30:00Z,MTL,TOR,0,4,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020030135,2020,P,2021-05-25,2021-05-26T00:00:00Z,CAR,NSH,3,2,OFF,OK,OT,False,PNC Arena,US/Eastern,Carolina Hurricanes,Nashville Predators
+2020030116,2020,P,2021-05-26,2021-05-26T22:30:00Z,NYI,PIT,5,3,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Pittsburgh Penguins
+2020030146,2020,P,2021-05-26,2021-05-27T00:00:00Z,TBL,FLA,4,0,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Florida Panthers
+2020030166,2020,P,2021-05-26,2021-05-27T01:00:00Z,MIN,VGK,3,0,OFF,OK,REG,False,Xcel Energy Center,US/Central,Minnesota Wild,Vegas Golden Knights
+2020030175,2020,P,2021-05-27,2021-05-27T23:00:00Z,TOR,MTL,3,4,OFF,OK,OT,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020030136,2020,P,2021-05-27,2021-05-28T01:30:00Z,NSH,CAR,3,4,OFF,OK,OT,False,Bridgestone Arena,US/Central,Nashville Predators,Carolina Hurricanes
+2020030167,2020,P,2021-05-28,2021-05-29T01:00:00Z,VGK,MIN,6,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Minnesota Wild
+2020030176,2020,P,2021-05-29,2021-05-29T23:30:00Z,MTL,TOR,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Toronto Maple Leafs
+2020030211,2020,P,2021-05-29,2021-05-30T00:00:00Z,BOS,NYI,5,2,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Islanders
+2020030221,2020,P,2021-05-30,2021-05-30T21:00:00Z,CAR,TBL,1,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Tampa Bay Lightning
+2020030231,2020,P,2021-05-30,2021-05-31T00:00:00Z,COL,VGK,7,1,OFF,OK,REG,False,Ball Arena,America/Denver,Colorado Avalanche,Vegas Golden Knights
+2020030177,2020,P,2021-05-31,2021-05-31T23:00:00Z,TOR,MTL,1,3,OFF,OK,REG,False,Scotiabank Arena,America/Toronto,Toronto Maple Leafs,Montréal Canadiens
+2020030212,2020,P,2021-05-31,2021-05-31T23:30:00Z,BOS,NYI,3,4,OFF,OK,OT,False,TD Garden,US/Eastern,Boston Bruins,New York Islanders
+2020030222,2020,P,2021-06-01,2021-06-01T23:30:00Z,CAR,TBL,1,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Tampa Bay Lightning
+2020030241,2020,P,2021-06-02,2021-06-02T23:30:00Z,WPG,MTL,3,5,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Montréal Canadiens
+2020030232,2020,P,2021-06-02,2021-06-03T02:00:00Z,COL,VGK,3,2,OFF,OK,OT,False,Ball Arena,America/Denver,Colorado Avalanche,Vegas Golden Knights
+2020030213,2020,P,2021-06-03,2021-06-03T23:30:00Z,NYI,BOS,1,2,OFF,OK,OT,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Boston Bruins
+2020030223,2020,P,2021-06-03,2021-06-04T00:00:00Z,TBL,CAR,2,3,OFF,OK,OT,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Carolina Hurricanes
+2020030242,2020,P,2021-06-04,2021-06-04T23:30:00Z,WPG,MTL,0,1,OFF,OK,REG,False,Bell MTS Place,America/Winnipeg,Winnipeg Jets,Montréal Canadiens
+2020030233,2020,P,2021-06-04,2021-06-05T02:00:00Z,VGK,COL,3,2,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Colorado Avalanche
+2020030224,2020,P,2021-06-05,2021-06-05T20:00:00Z,TBL,CAR,6,4,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Carolina Hurricanes
+2020030214,2020,P,2021-06-05,2021-06-05T23:15:00Z,NYI,BOS,4,1,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Boston Bruins
+2020030243,2020,P,2021-06-06,2021-06-06T22:00:00Z,MTL,WPG,5,1,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Winnipeg Jets
+2020030234,2020,P,2021-06-06,2021-06-07T00:30:00Z,VGK,COL,5,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Colorado Avalanche
+2020030215,2020,P,2021-06-07,2021-06-07T22:30:00Z,BOS,NYI,4,5,OFF,OK,REG,False,TD Garden,US/Eastern,Boston Bruins,New York Islanders
+2020030244,2020,P,2021-06-07,2021-06-08T00:00:00Z,MTL,WPG,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Winnipeg Jets
+2020030225,2020,P,2021-06-08,2021-06-08T22:30:00Z,CAR,TBL,0,2,OFF,OK,REG,False,PNC Arena,US/Eastern,Carolina Hurricanes,Tampa Bay Lightning
+2020030235,2020,P,2021-06-08,2021-06-09T01:00:00Z,COL,VGK,2,3,OFF,OK,OT,False,Ball Arena,America/Denver,Colorado Avalanche,Vegas Golden Knights
+2020030216,2020,P,2021-06-09,2021-06-09T23:30:00Z,NYI,BOS,6,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Boston Bruins
+2020030236,2020,P,2021-06-10,2021-06-11T01:00:00Z,VGK,COL,6,3,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Colorado Avalanche
+2020030321,2020,P,2021-06-13,2021-06-13T19:00:00Z,TBL,NYI,1,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,New York Islanders
+2020030311,2020,P,2021-06-14,2021-06-15T01:00:00Z,VGK,MTL,4,1,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Montréal Canadiens
+2020030322,2020,P,2021-06-15,2021-06-16T00:00:00Z,TBL,NYI,4,2,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,New York Islanders
+2020030312,2020,P,2021-06-16,2021-06-17T01:00:00Z,VGK,MTL,2,3,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Montréal Canadiens
+2020030323,2020,P,2021-06-17,2021-06-18T00:00:00Z,NYI,TBL,1,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Tampa Bay Lightning
+2020030313,2020,P,2021-06-18,2021-06-19T00:00:00Z,MTL,VGK,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Vegas Golden Knights
+2020030324,2020,P,2021-06-19,2021-06-20T00:00:00Z,NYI,TBL,3,2,OFF,OK,REG,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Tampa Bay Lightning
+2020030314,2020,P,2021-06-20,2021-06-21T00:00:00Z,MTL,VGK,1,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Vegas Golden Knights
+2020030325,2020,P,2021-06-21,2021-06-22T00:00:00Z,TBL,NYI,8,0,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,New York Islanders
+2020030315,2020,P,2021-06-22,2021-06-23T01:00:00Z,VGK,MTL,1,4,OFF,OK,REG,False,T-Mobile Arena,US/Pacific,Vegas Golden Knights,Montréal Canadiens
+2020030326,2020,P,2021-06-23,2021-06-24T00:00:00Z,NYI,TBL,3,2,OFF,OK,OT,False,Nassau Veterans Memorial Coliseum,America/New_York,New York Islanders,Tampa Bay Lightning
+2020030316,2020,P,2021-06-24,2021-06-25T00:00:00Z,MTL,VGK,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Vegas Golden Knights
+2020030327,2020,P,2021-06-25,2021-06-26T00:00:00Z,TBL,NYI,1,0,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,New York Islanders
+2020030411,2020,P,2021-06-28,2021-06-29T00:00:00Z,TBL,MTL,5,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Montréal Canadiens
+2020030412,2020,P,2021-06-30,2021-07-01T00:00:00Z,TBL,MTL,3,1,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Montréal Canadiens
+2020030413,2020,P,2021-07-02,2021-07-03T00:00:00Z,MTL,TBL,3,6,OFF,OK,REG,False,Centre Bell,America/Montreal,Montréal Canadiens,Tampa Bay Lightning
+2020030414,2020,P,2021-07-05,2021-07-06T00:00:00Z,MTL,TBL,3,2,OFF,OK,OT,False,Centre Bell,America/Montreal,Montréal Canadiens,Tampa Bay Lightning
+2020030415,2020,P,2021-07-07,2021-07-08T00:00:00Z,TBL,MTL,1,0,OFF,OK,REG,False,Amalie Arena,US/Eastern,Tampa Bay Lightning,Montréal Canadiens
