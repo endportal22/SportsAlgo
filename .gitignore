@@ -4,6 +4,9 @@ models/
 predictions/
 reports/
 app/data/
+nfl/app/
+nhl/app/
+nba/app/
 # local only
 archive*/
 .venv/

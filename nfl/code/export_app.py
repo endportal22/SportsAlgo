@@ -17,10 +17,13 @@ Usage: python export_app.py [--out DIR]        (run after update_data.py; ~1 min
 from __future__ import annotations
 
 import argparse
+import sys
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
-import appdata
+sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
+import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
 import hud_data as H
 from paths import ROOT
 

@@ -1,12 +1,17 @@
 # Sports Algo
 
-Private prediction app for a small group of friends. Switch between leagues at the top of the app:
+Game predictions for a small group of friends, as an app you install on your phone. Pick a league at the top:
 
-- **NFL:** weekly game win probabilities with starting-QB switching, power rankings, ratings for every player with weekly trends, and the season record against Vegas.
-- **NHL:** daily game win probabilities with starting-goalie switching, power rankings, skater and goalie ratings, and the record against the moneyline.
-- **NBA, MLB:** coming soon.
+| League | What you get |
+|---|---|
+| **NFL** | Weekly win probabilities. Switch a team's starting QB and the prediction updates. |
+| **NHL** | Daily win probabilities. Switch the starting goalie. |
+| **NBA** | Daily win probabilities. Mark any player in or out. |
+| **MLB** | Coming for opening day. |
 
-## For friends: install the app
+Each league also has power rankings, ratings for every player with their trends, and the season record against Vegas. None of the models ever see the betting line; Vegas is shown only for comparison. Not betting advice.
+
+## Install the app (for friends)
 
 1. Open the link you were sent: **Safari** on iPhone, **Chrome** on Android.
 2. Enter the password.
@@ -14,41 +19,56 @@ Private prediction app for a small group of friends. Switch between leagues at t
    - **iPhone:** tap Share, then **Add to Home Screen**.
    - **Android:** tap ⋮, then **Install app**.
 
-It then opens in its own window like any other app, and keeps the last predictions it loaded when you're offline.
+It opens in its own window and keeps the last predictions it loaded when you're offline.
 
 ## How it updates
 
-`.github/workflows/update.yml` runs every morning (~6am ET), every afternoon (~5pm ET, for NHL lines and goalies), and on Sunday at about 11:30am ET (after the NFL inactives). Each run:
+`.github/workflows/update.yml` runs:
 
-1. downloads the latest NFL data from [nflverse](https://github.com/nflverse/nflverse-data) and NHL data from the NHL and ESPN APIs;
-2. rebuilds each league's predictions (`nfl/code/export_app.py`, `nhl/code/export_app.py`);
+- every morning (about 6am Eastern);
+- every afternoon (about 5pm Eastern, for NHL goalies, the NBA injury report and the day's lines);
+- Sunday late morning (after the NFL inactives).
+
+Each run does this for every league (`.github/scripts/build_league.sh`):
+
+1. downloads the newest data;
+2. rebuilds the predictions;
 3. encrypts them with the `APP_PASSWORD` secret;
 4. publishes `app/` to GitHub Pages.
 
-If one league fails to update, the app keeps that league's last published predictions. To update right away, go to **Actions → Update predictions → Run workflow**.
+If one league's update fails, the app keeps that league's last published predictions.
 
-To change the password, update the `APP_PASSWORD` secret (Settings → Secrets and variables → Actions), then run the workflow. Friends will be asked for the new password.
+- **Update now:** **Actions → Update predictions → Run workflow**.
+- **Change the password:** update the `APP_PASSWORD` secret (Settings → Secrets and variables → Actions), then run the workflow. Everyone is asked for the new password.
 
 ## What's where
 
 | Path | What it is |
 |---|---|
-| `app/` | The phone app (HTML/JS). `model.js` re-runs the model on the phone when you switch a QB or goalie. |
-| `nfl/code/` | The NFL model: data download, features, player ratings, training, backtest, desktop HUD (`app.py`). |
-| `nhl/code/` | The NHL model: data download, expected goals, features, skater and goalie ratings, desktop HUD. |
-| `*/code/export_app.py` | Packages a league's output as (encrypted) JSON for the app, in a format shared by every league. |
+| `app/` | The phone app: one HTML page, `model.js` (re-runs a model on the phone when you change a starter or lineup), service worker, icons. |
+| `nfl/`, `nhl/`, `nba/` | One folder per league: `code/` downloads its data, rates teams and players, trains, backtests and exports the app's data. Each has its own README. |
+| `shared/appdata.py` | Writes the app's (encrypted) data files, in one format for every league. |
+| `.github/` | The scheduled build. |
+| `data-seed` branch | Past NHL games and NBA betting lines, used once to start the hosted build. |
 
-The NHL history (2018 on) is kept on the `nhl-data-seed` branch and used to start the first hosted build; after that, each run only downloads new games.
+The code is public. The predictions and data inside the app are encrypted with the password.
 
-The program code in this repository is public. The predictions and data the app shows are encrypted with the password.
+## How good is it?
 
-## Models
+Walk-forward backtests: every game is predicted by a model trained only on earlier games. Lower log loss is better; a coin flip scores 0.693.
 
-Both are ridge regressions on the game margin, converted to a win probability, that never see the betting line.
+| League | Seasons | Model log loss | Vegas log loss |
+|---|---|---|---|
+| NFL | 2019–2025 | 0.621 | 0.608 |
+| NHL | 2020–2025 | 0.660 | 0.659 |
+| NBA | 2017–2026 (games with a line) | 0.610 | 0.606 |
 
-- **NFL:** Elo, pass and run efficiency matchups, QB rating, roster strength from per-player ratings, injuries, rest, home field, final-week adjustment. Over 2019–2025 (walk-forward): log loss 0.621 and 64.8% of winners, against Vegas at 0.608 and 66.3%.
-- **NHL:** Elo, even-strength and special-teams expected-goal ratings, starting-goalie rating, injuries relative to depth, back-to-backs, rest, home ice. Over 2020–2025 (walk-forward): log loss 0.6595, against the closing moneyline at 0.6593.
+## Run a league locally
 
-Not betting advice.
+```
+pip install -r requirements.txt
+python nba/code/update_data.py
+python nba/code/export_app.py
+```
 
-To run one locally: `pip install -r requirements.txt`, then e.g. `python nhl/code/update_data.py` and `python nhl/code/app.py` for the desktop HUD.
+The NFL and NHL folders also have a desktop dashboard: `python nfl/code/app.py` or `python nhl/code/app.py`.

@@ -1,19 +1,18 @@
-# Rebuilds every sport's predictions and publishes the phone app to GitHub Pages.
-# Runs every morning, again on Sunday late morning (NFL inactives) and late afternoon
-# (NHL starting goalies), when you press "Run workflow" on the Actions tab, and when
-# new code is pushed. If one sport fails to update, the app keeps that sport's last
-# published predictions instead of dropping it.
+# Rebuilds every league's predictions and publishes the phone app to GitHub Pages.
+# Runs every morning, every afternoon (NHL goalies, NBA injury reports and lines), on Sunday
+# late morning (NFL inactives), when you press "Run workflow" on the Actions tab, and when
+# new code is pushed. A league that fails to update keeps its last published predictions.
 name: Update predictions
 
 on:
   schedule:
     - cron: "0 11 * * *"     # daily, ~6am Eastern
-    - cron: "30 16 * * 0"    # Sunday ~11:30am Eastern (NFL inactives)
-    - cron: "0 22 * * *"     # daily ~5pm Eastern (NHL lines and goalies before puck drop)
+    - cron: "0 22 * * *"     # daily, ~5pm Eastern
+    - cron: "30 16 * * 0"    # Sunday, ~11:30am Eastern
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["app/**", "nfl/code/**", "nhl/code/**", "requirements.txt", ".github/workflows/**"]
+    paths: ["app/**", "nfl/code/**", "nhl/code/**", "nba/code/**", "shared/**", "requirements.txt", ".github/**"]
 
 permissions:
   contents: write   # only used for the keep-alive commit below
@@ -26,7 +25,7 @@ concurrency:
 
 env:
   SITE: https://endportal22.github.io/SportsAlgo
-  TZ: America/New_York   # game dates are Eastern; "today" should be too
+  TZ: America/New_York   # game dates are Eastern, so "today" should be too
 
 jobs:
   build:
@@ -51,65 +50,23 @@ jobs:
             exit 1
           fi
 
-      # ---------------- NFL ----------------
+      # each league keeps its downloaded data between runs
       - uses: actions/cache@v4
-        with:
-          path: nfl/data
-          key: nfl-data-${{ github.run_id }}
-          restore-keys: nfl-data-
-
-      - name: NFL predictions
-        id: nfl
-        continue-on-error: true
-        env:
-          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
-        run: |
-          python nfl/code/update_data.py
-          python nfl/code/export_app.py --out app/data/nfl
-
-      # ---------------- NHL ----------------
+        with: { path: nfl/data, key: "nfl-data-${{ github.run_id }}", restore-keys: nfl-data- }
       - uses: actions/cache@v4
-        with:
-          path: nhl/data
-          key: nhl-data-${{ github.run_id }}
-          restore-keys: nhl-data-
+        with: { path: nhl/data, key: "nhl-data-${{ github.run_id }}", restore-keys: nhl-data- }
+      - uses: actions/cache@v4
+        with: { path: nba/data, key: "nba-data-${{ github.run_id }}", restore-keys: nba-data- }
 
-      - name: Seed NHL history (first run only)
-        run: |
-          if [ ! -f nhl/data/games.csv ]; then
-            git fetch --depth 1 origin nhl-data-seed
-            mkdir -p nhl/data
-            git archive FETCH_HEAD | tar -x -C nhl/data
-            echo "Seeded $(ls nhl/data | wc -l) NHL data files"
-          fi
-
-      - name: NHL predictions
-        id: nhl
-        continue-on-error: true
-        env:
-          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
-        run: |
-          python nhl/code/update_data.py
-          python nhl/code/export_app.py --out app/data/nhl
-
-      # ---------------- fall back to the last published data for any sport that failed ----------------
-      - name: Keep last good data for failed sports
-        if: steps.nfl.outcome != 'success' || steps.nhl.outcome != 'success'
-        run: |
-          for lg in nfl nhl; do
-            outcome=$([ "$lg" = nfl ] && echo "${{ steps.nfl.outcome }}" || echo "${{ steps.nhl.outcome }}")
-            if [ "$outcome" != "success" ]; then
-              echo "::warning::$lg update failed; republishing its last published data"
-              rm -rf "app/data/$lg"; mkdir -p "app/data/$lg"
-              if curl -fsS "$SITE/data/$lg/files.json" -o "app/data/$lg/files.json"; then
-                for f in $(python -c "import json;print(' '.join(json.load(open('app/data/$lg/files.json'))))"); do
-                  curl -fsS "$SITE/data/$lg/$f" -o "app/data/$lg/$f" || echo "missing $f"
-                done
-              else
-                echo "::warning::no published $lg data to fall back on"
-              fi
-            fi
-          done
+      - name: NFL
+        env: { APP_PASSWORD: "${{ secrets.APP_PASSWORD }}" }
+        run: .github/scripts/build_league.sh nfl
+      - name: NHL
+        env: { APP_PASSWORD: "${{ secrets.APP_PASSWORD }}" }
+        run: .github/scripts/build_league.sh nhl
+      - name: NBA
+        env: { APP_PASSWORD: "${{ secrets.APP_PASSWORD }}" }
+        run: .github/scripts/build_league.sh nba
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
