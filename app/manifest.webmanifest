@@ -1,7 +1,7 @@
 {
   "name": "Sports Algo",
   "short_name": "Sports Algo",
-  "description": "Sports Algo: weekly NFL game predictions, QB switches, power rankings and player ratings.",
+  "description": "Sports Algo: game predictions for the NFL and NHL, with starter switching, power rankings and player ratings.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

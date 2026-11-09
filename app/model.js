@@ -1,36 +1,41 @@
-/* The model's formula, run on the phone. Mirrors MarginModel in code/model.py:
-   margin = intercept + sum(coef * (x - mean) / scale);  win% = normal CDF(margin / sigma).
-   Used to recompute a game instantly when you switch a starting QB. */
+/* The model's formula, run on the phone (same for every sport):
+   margin = intercept + sum(coef * (x - mean) / scale)
+   win%   = normal CDF(margin / sigma)        (link "normal", NFL)
+          = 1 / (1 + exp(-(a + b * margin)))   (link "logistic", NHL)
+   Used to recompute a game instantly when you switch a starting QB or goalie. */
 (function (root) {
   function erf(x) { // Abramowitz-Stegun 7.1.26, |error| < 1.5e-7
     const s = Math.sign(x); x = Math.abs(x);
     const t = 1 / (1 + 0.3275911 * x);
-    const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
-    return s * y;
+    return s * (1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x));
   }
   const ncdf = (z) => 0.5 * (1 + erf(z / Math.SQRT2));
 
-  // feature values for a game, with optional QB overrides {home: option, away: option}
-  function features(game, ov) {
+  // feature values for a game, with optional starter overrides {home: option, away: option}
+  function features(game, model, ov) {
     const x = {};
     for (const c of game.contributions) x[c.feature] = c.value == null ? 0 : c.value;
-    const q = (side) => {
-      const o = ov && ov[side];
-      const base = game[side + "_qb"];
-      return o ? { rating: o.rating == null ? -2.8 : o.rating, isNew: o.new ? 1 : 0 }
-               : { rating: base.rating == null ? -2.8 : base.rating, isNew: base.new ? 1 : 0 };
-    };
-    if (ov && (ov.home || ov.away)) {
-      const h = q("home"), a = q("away");
-      x.d_qb_rating = h.rating - a.rating;      // ratings are already in points per game (x35 dropbacks)
-      x.d_qb_new = h.isNew - a.isNew;
-      if ("fw_x_qb_rating" in x) x.fw_x_qb_rating = game.final_week ? x.d_qb_rating : 0;
+    const sw = model.switch || {};
+    if (ov && (ov.home || ov.away) && sw.rating) {
+      const pick = (side) => {
+        const o = ov[side], base = game[side + "_starter"];
+        const src = o || base;
+        return { rating: src.rating == null ? 0 : src.rating, isNew: src.new ? 1 : 0 };
+      };
+      const h = pick("home"), a = pick("away");
+      x[sw.rating] = h.rating - a.rating;   // ratings are already on the model's scale (points or goals per game)
+      if (sw.new) x[sw.new] = h.isNew - a.isNew;
+      if (sw.final_week) x[sw.final_week] = game.final_week ? x[sw.rating] : 0;
     }
     return x;
   }
 
+  function prob(model, m) {
+    return model.link === "logistic" ? 1 / (1 + Math.exp(-(model.a + model.b * m))) : ncdf(m / model.sigma);
+  }
+
   function predict(game, model, ov) {
-    const x = features(game, ov);
+    const x = features(game, model, ov);
     let m = model.intercept;
     const parts = [];
     model.feats.forEach((f, i) => {
@@ -38,10 +43,9 @@
       m += p;
       parts.push({ feature: f, label: model.labels[i], value: x[f], points: p });
     });
-    const prob = ncdf(m / model.sigma);
-    return { margin: m, prob, parts, base: model.intercept };
+    return { margin: m, prob: prob(model, m), parts, base: model.intercept };
   }
 
-  const api = { predict, features, ncdf };
+  const api = { predict, features, ncdf, prob };
   if (typeof module !== "undefined") module.exports = api; else root.NFLModel = api;
 })(this);

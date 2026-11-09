@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sports Algo</title>
-<meta name="description" content="Sports Algo: weekly NFL game predictions, QB switches, power rankings and player ratings.">
+<meta name="description" content="Sports Algo: game predictions for the NFL and NHL, with starter switching, power rankings and player ratings.">
 <meta name="theme-color" content="#0b1017">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -43,7 +43,7 @@ button, select, input { font: inherit; color: inherit; }
 .brand b { color: var(--accent); }
 .league { font: 700 11px var(--display); letter-spacing: .1em; color: var(--accent-ink); background: var(--accent); border-radius: 4px; padding: 2px 5px; margin-left: 8px; vertical-align: 4px; }
 .fresh { font-size: 12px; color: var(--muted); text-align: right; }
-main { padding: calc(var(--top) + 58px) 16px calc(var(--bottom) + 84px); max-width: 760px; margin: 0 auto; }
+main { padding: calc(var(--top) + 104px) 16px calc(var(--bottom) + 84px); max-width: 760px; margin: 0 auto; }
 .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: grid; grid-template-columns: repeat(4, 1fr);
   background: color-mix(in srgb, var(--panel) 96%, transparent); border-top: 1px solid var(--line);
   padding: 6px 8px calc(var(--bottom) + 6px); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
@@ -58,13 +58,25 @@ h2 { font: 700 30px/1.05 var(--display); margin: 6px 0 4px; letter-spacing: .02e
 .note.warn { color: var(--warn); }
 .empty { text-align: center; color: var(--muted); padding: 40px 10px; }
 
+/* ---------- sport switcher */
+.leagues { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; max-width: 760px; margin: 10px auto 2px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+.lg { background: none; border: 0; border-radius: 8px; padding: 7px 0; color: var(--muted); font: 700 15px var(--display); letter-spacing: .08em; cursor: pointer; display: flex; align-items: baseline; justify-content: center; gap: 4px; }
+.lg small { font: 600 9px var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+.lg.cur { background: var(--accent); color: var(--accent-ink); }
+.lg.cur small { color: var(--accent-ink); opacity: .7; }
+.lg.off:not(.cur) { color: var(--dim); }
+.soon { text-align: center; padding: 48px 12px; display: grid; gap: 8px; justify-items: center; }
+.soon-tag { font: 700 44px/1 var(--display); letter-spacing: .06em; color: var(--accent); }
+.badge.b2b { background: var(--panel-2); color: var(--warn); border: 1px solid var(--warn); }
+
 /* ---------- week strip */
 .weeks { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 10px; margin: 0 -16px; padding-left: 16px; padding-right: 16px;
   scrollbar-width: none; scroll-snap-type: x proximity; }
 .weeks::-webkit-scrollbar { display: none; }
-.wk { flex: none; scroll-snap-align: center; min-width: 46px; height: 38px; border-radius: 10px; border: 1px solid var(--line);
+.wk { flex: none; scroll-snap-align: center; min-width: 52px; height: 44px; padding: 0 8px; display: grid; place-content: center; line-height: 1.05; border-radius: 10px; border: 1px solid var(--line);
   background: var(--panel); color: var(--muted); font: 700 15px var(--display); cursor: pointer; }
 .wk.played { color: var(--fg); }
+.wk small { font: 600 10px var(--display); letter-spacing: .08em; opacity: .75; }
 .wk.cur { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .summary { display: flex; gap: 8px; margin-bottom: 12px; overflow-x: auto; scrollbar-width: none; }
 #rec-sum { flex-wrap: wrap; overflow: visible; }
@@ -187,28 +199,40 @@ th:first-child, td:first-child { text-align: left; }
 .install { display: flex; gap: 10px; align-items: flex-start; background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; }
 .install button { background: none; border: 0; color: var(--muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 0 2px; }
 </style>
+
 </head>
 <body>
-<header class="top"><div class="top-row"><div class="brand">SPORTS <b>ALGO</b><span class="league">NFL</span></div><div class="fresh" id="fresh">Loading…</div></div></header>
+<header class="top">
+  <div class="top-row"><div class="brand">SPORTS <b>ALGO</b></div><div class="fresh" id="fresh">Loading…</div></div>
+  <div class="leagues" id="leagues" role="tablist" aria-label="Sport"></div>
+</header>
 
 <main>
   <div class="install" id="install" hidden><div id="install-text"></div><button id="install-x" aria-label="Dismiss">×</button></div>
 
+  <section id="v-soon" hidden>
+    <div class="soon">
+      <div class="soon-tag" id="soon-name">NBA</div>
+      <h2>Coming soon</h2>
+      <p class="sub" id="soon-text">This sport doesn't have a model yet.</p>
+    </div>
+  </section>
+
   <section id="v-games">
-    <div class="weeks" id="weeks" role="tablist" aria-label="Week"></div>
+    <div class="weeks" id="weeks" role="tablist" aria-label="Game day"></div>
     <div class="summary" id="summary"></div>
     <div class="games" id="games"><div class="empty">Loading games…</div></div>
   </section>
 
   <section id="v-power" hidden>
-    <h2 id="power-title">Power rankings</h2>
-    <p class="sub">Points better than an average team on a neutral field, with each team's projected QB.</p>
+    <h2>Power rankings</h2>
+    <p class="sub" id="power-about"></p>
     <div class="list" id="power"></div>
   </section>
 
   <section id="v-players" hidden>
     <h2>Players</h2>
-    <p class="sub"><b>Impact</b>: points per game a player adds to his unit at full snaps vs. an average player, refit weekly. <b>Prod</b>: his own EPA per dropback, carry or target (QB/RB/WR/TE).</p>
+    <p class="sub" id="players-about"></p>
     <div class="chips" id="pgroups"></div>
     <div class="chips" id="psort"></div>
     <input class="search" id="psearch" type="search" placeholder="Search player or team" aria-label="Search players">
@@ -218,16 +242,16 @@ th:first-child, td:first-child { text-align: left; }
 
   <section id="v-record" hidden>
     <h2>Season record</h2>
-    <p class="sub">Each week predicted by a model trained only on earlier games. Not betting advice.</p>
+    <p class="sub">Each game predicted by a model trained only on earlier games. Not betting advice.</p>
     <div class="summary" id="rec-sum"></div>
     <div class="panel"><table id="rec-table"></table></div>
-    <div class="signout" id="signout" hidden><span>Password saved on this device.</span><button id="forget">Forget password</button></div>
+    <div class="signout" id="signout" hidden><span></span><button id="forget">Forget password</button></div>
     <p class="note" style="margin-top:12px">Log loss scores the probabilities themselves (lower is better; a coin flip is 0.693). The model never sees the Vegas line. Vegas is shown only for comparison.</p>
   </section>
 </main>
 
-<nav class="tabs" role="tablist">
-  <button class="tab" data-v="games" aria-selected="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9.5" ry="6" transform="rotate(-35 12 12)"/><path d="M9 15l6-6M10.5 10.5l1 1M12.5 8.5l1 1M8.5 12.5l1 1"/></svg>Games</button>
+<nav class="tabs" id="tabs" role="tablist">
+  <button class="tab" data-v="games" aria-selected="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Games</button>
   <button class="tab" data-v="power" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Power</button>
   <button class="tab" data-v="players" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>Players</button>
   <button class="tab" data-v="record" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 18l5-5 4 3 7-8"/><path d="M15 8h5v5"/></svg>Record</button>
@@ -252,143 +276,187 @@ th:first-child, td:first-child { text-align: left; }
 <script src="model.js"></script>
 <script>
 const $ = (s) => document.querySelector(s);
-const S = { meta: null, weeks: {}, week: null, view: "games", power: null, players: null, hist: null, pgroup: "QB", pq: "", ov: {} };
+const LEAGUES = [
+  { key: "nfl", name: "NFL", ready: true },
+  { key: "nhl", name: "NHL", ready: true },
+  { key: "nba", name: "NBA", ready: false, soon: "The NBA model is next on the list. The season is underway, so it will start with this season's games." },
+  { key: "mlb", name: "MLB", ready: false, soon: "The MLB model isn't built yet. The season starts in late March." },
+];
 const store = {
   get(k, d) { try { const v = localStorage.getItem("nflalgo." + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem("nflalgo." + k, JSON.stringify(v)); } catch (e) {} },
 };
-S.ov = store.get("qb", {});
+const S = { lg: store.get("league", "nfl"), view: store.get("view", "games"), D: {}, ov: store.get("ov", null) || {}, pq: "" };
+// carry over QB picks saved by the NFL-only version
+(() => { const old = store.get("qb", null); if (old && !S.ov.nfl) { S.ov.nfl = old; store.set("ov", S.ov); } })();
+const L = () => S.D[S.lg];                       // data for the current league
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pct = (p) => p == null ? "—" : Math.round(p * 100) + "%";
 const sgn = (x, d = 1) => x == null ? "—" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x).toFixed(d);
-const fav = (h, a, m) => m == null ? "—" : Math.abs(m) < 0.05 ? "Pick'em" : `${m > 0 ? h : a} by ${Math.abs(m).toFixed(1)}`;
-const line = (h, a, s) => s == null ? "no line" : s === 0 ? "Pick'em" : `${s > 0 ? h : a} −${Math.abs(s).toFixed(1)}`;
-/* Password protection: the hosted data files are AES-GCM encrypted; data/lock.json holds the
-   salt and a check value. The password stays on this phone (never sent anywhere). */
-const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
-let KEY = null;
-async function deriveKey(pw, lock) {
-  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
-  return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(lock.salt), iterations: lock.iter, hash: "SHA-256" },
-    base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-}
-async function decrypt(obj, key) {
-  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(obj.iv) }, key || KEY, b64(obj.ct));
-  return new TextDecoder().decode(pt);
-}
-async function get(path) {
-  const r = await fetch(path, { cache: "no-cache" });
-  if (!r.ok) throw new Error(`Couldn't load ${path} (${r.status})`);
-  const j = await r.json();
-  return KEY && j && j.ct && j.iv ? JSON.parse(await decrypt(j)) : j;
-}
-async function tryUnlock(pw, lock) {
-  try { const k = await deriveKey(pw, lock); if ((await decrypt(lock.check, k)) === "nflalgo-ok") return k; } catch (e) {}
-  return null;
-}
-async function unlock() {
-  let lock = null;
-  try { const r = await fetch("data/lock.json", { cache: "no-cache" }); if (r.ok) lock = await r.json(); } catch (e) {}
-  if (!lock) return true;                      // unencrypted (local) build
-  let ses = null; try { ses = sessionStorage.getItem("sportsalgo.pw"); } catch (e) {}
-  const saved = store.get("pw", null) || ses;
-  if (saved) { KEY = await tryUnlock(saved, lock); if (KEY) return true; }
-  const el = $("#lock"); el.hidden = false;
-  return new Promise((resolve) => {
-    $("#lock-form").onsubmit = async (e) => {
-      e.preventDefault();
-      const pw = $("#lock-pw").value; $("#lock-err").textContent = "Checking…";
-      const k = await tryUnlock(pw, lock);
-      if (!k) { $("#lock-err").textContent = "That password didn't work. Check with whoever sent you the link."; return; }
-      KEY = k; el.hidden = true;
-      if ($("#lock-remember").checked) store.set("pw", pw);
-      else { store.set("pw", null); try { sessionStorage.setItem("sportsalgo.pw", pw); } catch (e) {} }
-      // let the browser's password manager offer to save it (Chrome / Android)
-      try { if (window.PasswordCredential && $("#lock-remember").checked) navigator.credentials.store(new PasswordCredential({ id: "Sports Algo", password: pw, name: "Sports Algo" })).catch(() => {}); } catch (e) {}
-      resolve(true);
-    };
-    setTimeout(() => $("#lock-pw").focus(), 50);
-  });
-}
+const dec = () => (L().meta.units.margin === "goals" ? 2 : 1);
+const by = (h, a, m) => m == null ? "—" : Math.abs(m) < 0.05 ? "Toss-up" : `${m > 0 ? h : a} by ${Math.abs(m).toFixed(1)}${L().meta.units.margin === "goals" ? "" : ""}`;
 function ago(iso) {
   const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
   if (m < 60) return `${Math.max(m, 1)} min ago`;
   const h = Math.round(m / 60); if (h < 36) return `${h} h ago`;
   return `${Math.round(h / 24)} days ago`;
 }
+const localTime = (iso) => { try { return new Date(iso).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); } catch (e) { return ""; } };
 
-/* ---------------- games */
+/* ---------------- password + encrypted data (per sport) ---------------- */
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+const KEYS = {};
+async function deriveKey(pw, lock) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(lock.salt), iterations: lock.iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+}
+async function decrypt(obj, key) {
+  return new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(obj.iv) }, key, b64(obj.ct)));
+}
+async function tryKey(pw, lock) {
+  try { const k = await deriveKey(pw, lock); if ((await decrypt(lock.check, k)) === "nflalgo-ok") return k; } catch (e) {}
+  return null;
+}
+function savedPw() { let s = null; try { s = sessionStorage.getItem("sportsalgo.pw"); } catch (e) {} return store.get("pw", null) || s; }
+async function ensureKey(lg) {
+  if (lg in KEYS) return;
+  let lock = null;
+  try { const r = await fetch(`data/${lg}/lock.json`, { cache: "no-cache" }); if (r.ok) lock = await r.json(); } catch (e) {}
+  if (!lock) { KEYS[lg] = null; return; }      // unencrypted (local) build
+  const pw = savedPw();
+  if (pw) { const k = await tryKey(pw, lock); if (k) { KEYS[lg] = k; return; } }
+  KEYS[lg] = await askPassword(lock);
+}
+function askPassword(lock) {
+  const el = $("#lock"); el.hidden = false;
+  return new Promise((resolve) => {
+    $("#lock-form").onsubmit = async (e) => {
+      e.preventDefault();
+      const pw = $("#lock-pw").value; $("#lock-err").textContent = "Checking…";
+      const k = await tryKey(pw, lock);
+      if (!k) { $("#lock-err").textContent = "That password didn't work. Check with whoever sent you the link."; return; }
+      el.hidden = true; $("#lock-err").textContent = "";
+      if ($("#lock-remember").checked) store.set("pw", pw);
+      else { store.set("pw", null); try { sessionStorage.setItem("sportsalgo.pw", pw); } catch (e) {} }
+      try { if (window.PasswordCredential && $("#lock-remember").checked) navigator.credentials.store(new PasswordCredential({ id: "Sports Algo", password: pw, name: "Sports Algo" })).catch(() => {}); } catch (e) {}
+      resolve(k);
+    };
+    setTimeout(() => $("#lock-pw").focus(), 50);
+  });
+}
+async function get(lg, name) {
+  await ensureKey(lg);
+  const r = await fetch(`data/${lg}/${name}`, { cache: "no-cache" });
+  if (!r.ok) throw new Error(`Couldn't load ${lg.toUpperCase()} ${name} (${r.status})`);
+  const j = await r.json();
+  return KEYS[lg] && j && j.ct && j.iv ? JSON.parse(await decrypt(j, KEYS[lg])) : j;
+}
+
+/* ---------------- sport switcher ---------------- */
+function renderLeagues() {
+  $("#leagues").innerHTML = LEAGUES.map((x) => `<button class="lg ${x.key === S.lg ? "cur" : ""} ${x.ready ? "" : "off"}" data-lg="${x.key}" role="tab" aria-selected="${x.key === S.lg}">${x.name}${x.ready ? "" : "<small>soon</small>"}</button>`).join("");
+  $("#leagues").querySelectorAll(".lg").forEach((b) => b.onclick = () => switchLeague(b.dataset.lg));
+}
+async function switchLeague(lg) {
+  if (lg === S.lg && L()) return;
+  S.lg = lg; store.set("league", lg); S.pq = ""; $("#psearch").value = "";
+  renderLeagues();
+  const info = LEAGUES.find((x) => x.key === lg);
+  if (!info.ready) {
+    $("#fresh").textContent = "";
+    for (const v of ["games", "power", "players", "record"]) $("#v-" + v).hidden = true;
+    $("#v-soon").hidden = false; $("#tabs").hidden = true;
+    $("#soon-name").textContent = info.name; $("#soon-text").textContent = info.soon;
+    return;
+  }
+  $("#v-soon").hidden = true; $("#tabs").hidden = false;
+  if (!S.D[lg]) {
+    $("#games").innerHTML = `<div class="empty">Loading ${info.name}…</div>`;
+    try { S.D[lg] = { meta: await get(lg, "meta.json"), periods: {}, power: null, players: null, hist: null }; }
+    catch (e) { $("#games").innerHTML = `<div class="empty">${esc(e.message)}<br>Check your connection and reopen the app.</div>`; return; }
+  }
+  const m = L().meta;
+  $("#fresh").innerHTML = `${esc(m.season_label)} · ${esc(m.through)}<br>updated ${ago(m.updated)}`;
+  let p = m.default_period;
+  const saved = store.get("period." + lg, null);
+  if (saved && saved.season === m.season && m.periods.some((x) => x.key === saved.key)) p = saved.key;
+  S.period = null;
+  show(S.view, true);
+  await selectPeriod(p);
+}
+
+/* ---------------- games ---------------- */
+const ovKey = (g, team) => `${g.id}:${team}`;
 function ovFor(g) {
-  const out = {};
+  const o = S.ov[S.lg] || {}, out = {};
+  if (g.played) return out;
   for (const side of ["home", "away"]) {
-    const team = g[side], pfr = S.ov[`${g.game_id}:${team}`];
-    const opts = g[side + "_qb"].options || [];
-    const o = pfr && opts.find((x) => x.pfr === pfr);
-    if (o && !g.played) out[side] = o;
+    const id = o[ovKey(g, g[side])], opts = g[side + "_starter"].options || [];
+    const x = id && opts.find((q) => q.id === id);
+    if (x) out[side] = x;
   }
   return out;
 }
 function view(g, model) {
   const ov = ovFor(g);
-  if (!ov.home && !ov.away) return { ...g, ov, prob: g.model_prob, margin: g.model_margin };
+  if (!ov.home && !ov.away) return { ...g, ov };
   const r = NFLModel.predict(g, model, ov);
-  return { ...g, ov, prob: r.prob, margin: r.margin, parts: r.parts, edge: g.vegas_prob == null ? null : r.prob - g.vegas_prob,
-    pick: r.prob >= 0.5 ? g.home : g.away };
+  return { ...g, ov, prob: r.prob, margin: r.margin, parts: r.parts, edge: g.vegas_prob == null ? null : r.prob - g.vegas_prob, pick: r.prob >= 0.5 ? g.home : g.away };
 }
-async function loadWeek(w) {
-  if (!S.weeks[w]) {
-    const info = S.meta.weeks.find((x) => x.week === w);
-    S.weeks[w] = await get("data/" + info.file);
-  }
-  return S.weeks[w];
+async function loadPeriod(key) {
+  const D = L();
+  if (!D.periods[key]) { const info = D.meta.periods.find((x) => x.key === key); D.periods[key] = await get(S.lg, info.file); }
+  return D.periods[key];
 }
-async function selectWeek(w) {
-  S.week = w; store.set("week", { season: S.meta.season, week: w });
-  renderWeeks();
+async function selectPeriod(key) {
+  S.period = key; store.set("period." + S.lg, { season: L().meta.season, key });
+  renderPeriods();
   $("#games").innerHTML = `<div class="empty">Loading…</div>`;
-  try {
-    const d = await loadWeek(w);
-    if (S.week !== w) return;
-    renderGames(d);
-  } catch (e) { $("#games").innerHTML = `<div class="empty">${esc(e.message)}<br>Check your connection and reopen the app.</div>`; }
+  const lg = S.lg;
+  try { const d = await loadPeriod(key); if (S.period === key && S.lg === lg) renderGames(d); }
+  catch (e) { $("#games").innerHTML = `<div class="empty">${esc(e.message)}<br>Check your connection and reopen the app.</div>`; }
 }
-function renderWeeks() {
-  const el = $("#weeks");
-  el.innerHTML = S.meta.weeks.map((w) => `<button class="wk ${w.played ? "played" : ""} ${w.week === S.week ? "cur" : ""}" data-w="${w.week}" role="tab" aria-selected="${w.week === S.week}" title="${esc(w.label)}">${w.week}</button>`).join("");
-  el.querySelectorAll(".wk").forEach((b) => b.onclick = () => selectWeek(+b.dataset.w));
+function renderPeriods() {
+  const el = $("#weeks"), m = L().meta;
+  el.innerHTML = m.periods.map((p) => `<button class="wk ${p.played ? "played" : ""} ${p.key === S.period ? "cur" : ""}" data-k="${esc(p.key)}" role="tab" aria-selected="${p.key === S.period}" title="${esc(p.label)}">${p.top ? `<small>${esc(p.top)}</small>` : ""}${esc(p.bottom)}</button>`).join("");
+  el.querySelectorAll(".wk").forEach((b) => b.onclick = () => selectPeriod(b.dataset.k));
   const cur = el.querySelector(".cur"); if (cur) cur.scrollIntoView({ inline: "center", block: "nearest" });
 }
-function qbLine(q, ov) {
-  const name = ov ? ov.name : q.name;
-  let s = `<span class="qb">${esc(name || "")}</span>`;
+function badges(st, ov, extra) {
+  let s = "";
   if (ov) s += `<span class="badge you">YOUR PICK</span>`;
   else {
-    if (q.new) s += `<span class="badge new">NEW QB</span>`;
-    if (q.return_flag) s += `<span class="badge ret">QB?</span>`;
+    if (st.new) s += `<span class="badge new">NEW ${esc(L().meta.units.starter.toUpperCase())}</span>`;
+    if (st.flag) s += `<span class="badge ret" title="${esc(st.flag)}">${esc(L().meta.units.starter)}?</span>`;
   }
+  for (const b of extra || []) s += `<span class="badge b2b" title="Second night of a back-to-back">${esc(b)}</span>`;
   return s;
+}
+function teamRow(g, side) {
+  const st = g[side + "_starter"], ov = g.ov[side], p = side === "home" ? g.prob : 1 - g.prob;
+  const lost = g.played && g.winner && g.winner !== g[side];
+  return `<div class="row"><div class="tm"><span class="ab ${lost ? "lose" : ""}">${esc(g[side])}</span>${g.played ? `<span class="score num">${g[side + "_score"] ?? ""}</span>` : ""}
+    <span class="qb">${esc((ov ? ov.name : st.name) || "")}</span>${badges(st, ov, g[side + "_badges"])}</div>
+    <span class="pct num ${p >= 0.5 ? "fav" : ""}">${pct(p)}</span></div>`;
 }
 function renderGames(d) {
   const el = $("#games");
-  if (!d.games.length) { el.innerHTML = `<div class="empty">No games this week.</div>`; return; }
+  if (!d.games.length) { el.innerHTML = `<div class="empty">No games.</div>`; return; }
   const gs = d.games.map((g) => view(g, d.model));
-  let html = "", lastDay = "";
+  let html = "", last = "";
   for (const g of gs) {
-    if (g.gameday !== lastDay) { html += `<div class="day">${esc(g.gameday)}</div>`; lastDay = g.gameday; }
+    const grp = g.group || (g.time ? localTime(g.time) : "");
+    if (grp !== last) { html += `<div class="day">${esc(grp)}</div>`; last = grp; }
     const pm = g.prob, pv = g.vegas_prob;
-    const homeFav = pm >= 0.5;
     const res = g.played
-      ? `<span><span class="${g.model_correct ? "ok" : "no"}">Model ${g.model_correct ? "✓" : "✗"}</span>${g.vegas_correct == null ? "" : ` · <span class="${g.vegas_correct ? "ok" : "no"}">Vegas ${g.vegas_correct ? "✓" : "✗"}</span>`}</span>`
+      ? `<span>${g.score_note ? `<span class="small">${esc(g.score_note)} · </span>` : ""}<span class="${g.model_correct ? "ok" : "no"}">Model ${g.model_correct ? "✓" : "✗"}</span>${g.vegas_correct == null ? "" : ` · <span class="${g.vegas_correct ? "ok" : "no"}">Vegas ${g.vegas_correct ? "✓" : "✗"}</span>`}</span>`
       : `<span class="edge ${g.edge != null && Math.abs(g.edge) >= 0.08 ? "hot" : ""}">Edge ${g.edge == null ? "—" : sgn(g.edge * 100, 0)}</span>`;
-    html += `<button class="card" data-id="${esc(g.game_id)}">
-      <div class="row"><div class="tm"><span class="ab ${g.played && g.winner !== g.away ? "lose" : ""}">${esc(g.away)}</span>${g.played ? `<span class="score num">${g.away_score ?? ""}</span>` : ""}${qbLine(g.away_qb, g.ov.away)}</div>
-        <span class="pct num ${!homeFav ? "fav" : ""}">${pct(1 - pm)}</span></div>
-      <div class="row"><div class="tm"><span class="ab ${g.played && g.winner !== g.home ? "lose" : ""}">${esc(g.home)}</span>${g.played ? `<span class="score num">${g.home_score ?? ""}</span>` : ""}${qbLine(g.home_qb, g.ov.home)}</div>
-        <span class="pct num ${homeFav ? "fav" : ""}">${pct(pm)}</span></div>
+    html += `<button class="card" data-id="${esc(g.id)}">
+      ${teamRow(g, "away")}${teamRow(g, "home")}
       <div class="track" aria-label="Home win chance: model ${pct(pm)}, Vegas ${pct(pv)}"><div class="rail"></div><div class="mid"></div>
         <div class="fill" style="left:${Math.min(50, pm * 100)}%;width:${Math.abs(pm * 100 - 50)}%"></div>
         ${pv == null ? "" : `<div class="mk v" style="left:${pv * 100}%"></div>`}<div class="mk m" style="left:${pm * 100}%"></div></div>
-      <div class="foot num"><span>Model <b>${esc(fav(g.home, g.away, g.margin))}</b> · Vegas <em>${esc(line(g.home, g.away, g.spread))}</em></span>${res}</div>
+      <div class="foot num"><span>Model <b>${esc(by(g.home, g.away, g.margin))}</b> · Vegas <em>${esc(g.vegas_text || "no line")}</em></span>${res}</div>
     </button>`;
   }
   el.innerHTML = html;
@@ -396,108 +464,108 @@ function renderGames(d) {
   renderSummary(gs);
 }
 function renderSummary(gs) {
-  const r = S.meta.record && S.meta.record.total;
+  const t = L().meta.record && L().meta.record.total, m = L().meta;
   const played = gs.filter((g) => g.played && g.model_correct != null);
   let h = "";
   if (played.length) {
-    const m = played.filter((g) => g.model_correct).length, v = played.filter((g) => g.vegas_correct).length;
-    h += `<div class="sb m"><div class="k">Model this week</div><div class="v num">${m}-${played.length - m}</div></div><div class="sb"><div class="k">Vegas this week</div><div class="v num">${v}-${played.length - v}</div></div>`;
+    const a = played.filter((g) => g.model_correct).length, vs = played.filter((g) => g.vegas_correct != null), v = vs.filter((g) => g.vegas_correct).length;
+    h += `<div class="sb m"><div class="k">Model ${m.period_word === "day" ? "today" : "this week"}</div><div class="v num">${a}-${played.length - a}</div></div>${vs.length ? `<div class="sb"><div class="k">Vegas</div><div class="v num">${v}-${vs.length - v}</div></div>` : ""}`;
   } else {
     const dis = gs.filter((g) => g.vegas_prob != null && (g.prob >= 0.5) !== (g.vegas_prob >= 0.5)).length;
     h += `<div class="sb"><div class="k">Picks vs Vegas</div><div class="v num">${dis}<small>disagree</small></div></div>`;
   }
-  if (r && r.n) h += `<div class="sb m"><div class="k">Model ${S.meta.season}</div><div class="v num">${r.model_right}-${r.n - r.model_right}<small>${Math.round(r.model_right / r.n * 100)}%</small></div></div>
-    <div class="sb"><div class="k">Vegas ${S.meta.season}</div><div class="v num">${r.vegas_right}-${r.n - r.vegas_right}<small>${Math.round(r.vegas_right / r.n * 100)}%</small></div></div>`;
+  if (t && t.n) {
+    const vn = t.vegas_n ?? t.n;
+    h += `<div class="sb m"><div class="k">Model ${esc(m.season_label)}</div><div class="v num">${t.model_right}-${t.n - t.model_right}<small>${Math.round(t.model_right / t.n * 100)}%</small></div></div>`;
+    if (vn) h += `<div class="sb"><div class="k">Vegas ${esc(m.season_label)}</div><div class="v num">${t.vegas_right}-${vn - t.vegas_right}<small>${Math.round(t.vegas_right / vn * 100)}%</small></div></div>`;
+  }
   $("#summary").innerHTML = h;
 }
 
-/* ---------------- sheets (game / player) with back-button support */
+/* ---------------- sheets with back-button support ---------------- */
 function openSheet(html, key) {
   const el = $("#sheet");
   el.innerHTML = `<div class="sheet-in"><button class="back" id="back">‹ Back</button>${html}</div>`;
-  el.hidden = false; el.scrollTop = 0;
+  el.hidden = false;
   document.body.style.overflow = "hidden";
   if (!history.state || history.state.sheet !== key) history.pushState({ sheet: key }, "");
   $("#back").onclick = () => history.back();
 }
 function closeSheet() { $("#sheet").hidden = true; document.body.style.overflow = ""; }
-window.addEventListener("popstate", () => { if (!$("#sheet").hidden) { closeSheet(); if (S.view === "games" && S.weeks[S.week]) renderGames(S.weeks[S.week]); } });
+window.addEventListener("popstate", () => { if (!$("#sheet").hidden) { closeSheet(); const d = L() && L().periods[S.period]; if (S.view === "games" && d) renderGames(d); } });
 
-function openGame(id, keepScroll) {
-  const d = S.weeks[S.week]; const g0 = d.games.find((x) => x.game_id === id); if (!g0) return;
-  const g = view(g0, d.model);
+function openGame(id) {
+  const d = L().periods[S.period]; const g0 = d.games.find((x) => String(x.id) === String(id)); if (!g0) return;
+  const g = view(g0, d.model), m = L().meta, u = m.units, dp = dec();
   const parts = g.parts || g.contributions;
   const pickP = g.pick === g.home ? g.prob : 1 - g.prob;
   const vPick = g.vegas_prob == null ? null : (g.vegas_prob >= 0.5 ? g.home : g.away);
   const vP = g.vegas_prob == null ? null : Math.max(g.vegas_prob, 1 - g.vegas_prob);
-  const rows = [{ label: g.neutral ? "Baseline" : "Home baseline", points: g.base_points }].concat(
-    parts.filter((c) => Math.abs(c.points) >= 0.05).sort((a, b) => Math.abs(b.points) - Math.abs(a.points)));
-  const mx = Math.max(3, ...rows.map((r) => Math.abs(r.points)), Math.abs(g.margin));
+  const rows = [{ label: g.neutral ? "Baseline" : "Home baseline", points: g.base }].concat(parts.filter((c) => Math.abs(c.points) >= (dp === 2 ? 0.005 : 0.05)).sort((a, b) => Math.abs(b.points) - Math.abs(a.points)));
+  const mx = Math.max(dp === 2 ? 0.3 : 3, ...rows.map((r) => Math.abs(r.points)), Math.abs(g.margin));
   const bar = (p) => { const w = Math.abs(p) / mx * 50; return `<div class="bar"><div class="ax"></div><div class="b" style="${p >= 0 ? "left:50%" : `left:${50 - w}%`};width:${w}%;background:${p >= 0 ? "var(--accent)" : "var(--vegas)"}"></div></div>`; };
-  const qbSel = (side) => {
-    const q = g[side + "_qb"], team = g[side];
-    if (g.played || !q.options) return `<div class="note">${esc(team)}: ${esc(q.name || "?")}${q.rating == null ? "" : ` (${sgn(q.rating)} pts/g)`}</div>`;
-    const cur = g.ov[side] ? g.ov[side].pfr : (q.options.find((o) => o.selected) || {}).pfr;
-    return `<label><span class="k">${esc(team)} QB${g.ov[side] ? " · your pick" : ""}</span><select data-team="${esc(team)}" data-side="${side}">
-      ${q.options.map((o) => `<option value="${esc(o.pfr)}" ${o.pfr === cur ? "selected" : ""} ${o.available ? "" : "disabled"}>${esc(o.name)} · ${o.rating == null ? "no rating" : sgn(o.rating) + " pts/g"}${!o.available ? ` (${esc(o.status)})` : o.note ? ` (${esc(o.note)})` : o.status ? ` (${esc(o.status)})` : ""}</option>`).join("")}</select></label>`;
+  const sel = (side) => {
+    const st = g[side + "_starter"], team = g[side];
+    if (g.played || !st.options) return `<div class="note">${esc(team)}: ${esc(st.name || "?")}${st.rating == null ? "" : ` (${sgn(st.rating, dp)} ${esc(u.rating_unit)})`}</div>`;
+    const cur = g.ov[side] ? g.ov[side].id : (st.options.find((o) => o.selected) || {}).id;
+    return `<label><span class="k">${esc(team)} ${esc(u.starter)}${g.ov[side] ? " · your pick" : ""}</span><select data-team="${esc(team)}" data-side="${side}">
+      ${st.options.map((o) => `<option value="${esc(o.id)}" ${o.id === cur ? "selected" : ""} ${o.available ? "" : "disabled"}>${esc(o.name)} · ${o.rating == null ? "no rating" : sgn(o.rating, dp) + " " + esc(u.rating_unit)}${!o.available ? ` (${esc(o.status)})` : o.status ? ` (${esc(o.status)})` : o.note ? ` (${esc(o.note)})` : ""}</option>`).join("")}</select></label>`;
   };
-  const missCol = (side) => {
-    const lu = g[side + "_lineup"], cost = g[side + "_injury"];
-    if (!lu) return "<div></div>";
-    const items = lu.absences.length ? lu.absences.map((a) => `<li><span class="nm">${esc(a.name)} <span class="why">${esc(a.pos || "")} · ${esc(a.why || "out")}</span></span><span class="num">${sgn(a.impact)}</span></li>`).join("") : `<li><span class="why">No regulars out${g.played ? "" : " so far"}</span></li>`;
-    return `<div><div class="note"><b style="color:var(--fg)">${esc(g[side])}</b> · cost ${cost == null ? "—" : (cost > 0 ? "−" : "") + Math.abs(cost).toFixed(1) + " pts"}</div><ul>${items}</ul></div>`;
+  const miss = (side) => {
+    const ab = g[side + "_abs"] || [], cost = g[side + "_injury"];
+    const items = ab.length ? ab.map((a) => `<li><span class="nm">${esc(a.name)} <span class="why">${esc(a.pos || "")} · ${esc(a.why || "out")}</span></span><span class="num">${sgn(a.impact, dp)}</span></li>`).join("") : `<li><span class="why">No regulars out${g.played ? "" : " so far"}</span></li>`;
+    return `<div><div class="note"><b style="color:var(--fg)">${esc(g[side])}</b> · cost ${cost == null ? "—" : (cost > 0 ? "−" : "") + Math.abs(cost).toFixed(dp)}</div><ul>${items}</ul></div>`;
   };
   const warn = [];
   for (const side of ["away", "home"]) {
-    const q = g[side + "_qb"];
-    if (!g.ov[side] && q.return_flag) warn.push(`${q.return_flag} (${g[side]}) may return from injury. Vegas often assumes he plays. Switch QB above to compare.`);
+    const st = g[side + "_starter"];
+    if (!g.ov[side] && st.flag) warn.push(`${st.flag} (${g[side]}). Vegas often assumes he plays. Switch above to compare.`);
+    if (!g.ov[side] && st.note && !g.played) warn.push(`${g[side]}: ${st.note}`);
+    if ((g[side + "_badges"] || []).includes("B2B")) warn.push(`${g[side]} is on the second night of a back-to-back.`);
   }
-  if (g.edge != null && Math.abs(g.edge) >= 0.12) warn.push("Big disagreement with Vegas. The market usually knows something (injuries, weather) the model doesn't.");
-  const injWk = S.meta.injury_report_week;
+  if (g.edge != null && Math.abs(g.edge) >= 0.12) warn.push("Big disagreement with Vegas. The market usually knows something the model doesn't.");
+  const pend = !g.played && m.injury_pending && m.injury_period != null && Number(m.injury_period) < Number(S.period);
   const anyOv = g.ov.home || g.ov.away;
+  const when = g.group || (g.time ? new Date(g.time).toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "");
   openSheet(`
-    <div><div class="hd">${esc(g.away)}<span>@</span>${esc(g.home)}</div><div class="note">${esc(g.gameday)}${g.neutral ? " · neutral site" : ""}${g.final_week ? " · final regular-season week" : ""}</div></div>
+    <div><div class="hd">${esc(g.away)}<span>@</span>${esc(g.home)}</div><div class="note">${esc(when)}${g.neutral ? " · neutral site" : ""}${g.final_week ? " · final regular-season week" : ""}</div></div>
     <div class="duel">
-      <div class="model"><div class="k">Model</div><div class="v num">${esc(g.pick)} ${pct(pickP)}</div><div class="note">${esc(fav(g.home, g.away, g.margin))}</div></div>
-      <div class="vegas"><div class="k">Vegas</div><div class="v num">${vPick ? esc(vPick) + " " + pct(vP) : "—"}</div><div class="note">${esc(line(g.home, g.away, g.spread))}</div></div>
+      <div class="model"><div class="k">Model</div><div class="v num">${esc(g.pick)} ${pct(pickP)}</div><div class="note">${esc(by(g.home, g.away, g.margin))} ${esc(u.margin)}</div></div>
+      <div class="vegas"><div class="k">Vegas</div><div class="v num">${vPick ? esc(vPick) + " " + pct(vP) : "—"}</div><div class="note">${esc(g.vegas_text || "no line")}</div></div>
     </div>
-    ${g.played ? `<div class="note">Final: ${esc(g.away)} ${g.away_score} – ${esc(g.home)} ${g.home_score}. Model ${g.model_correct ? "called it" : "missed"}${g.vegas_correct == null ? "" : `, Vegas ${g.vegas_correct ? "called it" : "missed"}`}.</div>` : ""}
-    <div><div class="h3">Starting QBs</div><div class="qbs">${qbSel("away")}${qbSel("home")}</div>
-      ${anyOv ? `<button class="reset" id="reset">Reset to projected starters</button>` : `<div class="note" style="margin-top:6px">Defaults to last game's starter. Change it if you know who's playing; the prediction updates instantly.</div>`}</div>
+    ${g.played ? `<div class="note">Final: ${esc(g.away)} ${g.away_score} – ${esc(g.home)} ${g.home_score}${g.score_note ? " (" + esc(g.score_note) + ")" : ""}. Model ${g.model_correct ? "called it" : "missed"}${g.vegas_correct == null ? "" : `, Vegas ${g.vegas_correct ? "called it" : "missed"}`}.</div>` : ""}
+    <div><div class="h3">Starting ${esc(u.starter_plural)}</div><div class="qbs">${sel("away")}${sel("home")}</div>
+      ${anyOv ? `<button class="reset" id="reset">Reset to projected starters</button>` : (g.played ? "" : `<div class="note" style="margin-top:6px">${esc(m.starter_help)}</div>`)}</div>
     ${warn.map((w) => `<div class="note warn">${esc(w)}</div>`).join("")}
-    <div><div class="h3">Missing regulars (pts/g)</div><div class="miss">${missCol("away")}${missCol("home")}</div>
-      ${!g.played && injWk != null && injWk < S.week ? `<div class="note warn" style="margin-top:6px">This week's injury report isn't out yet (Wed–Fri). Only IR and roster moves are counted so far.</div>` : ""}</div>
-    <div><div class="h3">Why: points of ${esc(g.home)} margin</div><div class="wf">
-      ${rows.map((r) => `<div class="wfr"><span class="lab">${esc(r.label)}</span>${bar(r.points)}<span class="pts num">${sgn(r.points)}</span></div>`).join("")}
-      <div class="wfr tot"><span class="lab">${esc(g.home)} margin</span>${bar(g.margin)}<span class="pts num">${sgn(g.margin)}</span></div></div>
+    <div><div class="h3">Missing regulars (${esc(u.margin)}/game)</div><div class="miss">${miss("away")}${miss("home")}</div>
+      ${pend ? `<div class="note warn" style="margin-top:6px">${esc(m.injury_pending)}</div>` : ""}</div>
+    <div><div class="h3">Why: ${esc(u.margin)} of ${esc(g.home)} margin</div><div class="wf">
+      ${rows.map((r) => `<div class="wfr"><span class="lab">${esc(r.label)}</span>${bar(r.points)}<span class="pts num">${sgn(r.points, dp)}</span></div>`).join("")}
+      <div class="wfr tot"><span class="lab">${esc(g.home)} margin</span>${bar(g.margin)}<span class="pts num">${sgn(g.margin, dp)}</span></div></div>
       <div class="note" style="margin-top:8px">Yellow pushes toward ${esc(g.home)}, blue toward ${esc(g.away)}.</div></div>`, "game:" + id);
   $("#sheet").querySelectorAll("select[data-team]").forEach((s) => s.onchange = () => {
-    const sel = s.value, side = s.dataset.side, team = s.dataset.team;
-    const proj = (g0[side + "_qb"].options.find((o) => o.selected) || {}).pfr;
-    const key = `${id}:${team}`;
-    if (sel === proj) delete S.ov[key]; else S.ov[key] = sel;
-    store.set("qb", S.ov);
-    const y = $("#sheet").scrollTop; openGame(id, true); $("#sheet").scrollTop = y;
+    const side = s.dataset.side, proj = (g0[side + "_starter"].options.find((o) => o.selected) || {}).id;
+    const o = S.ov[S.lg] = S.ov[S.lg] || {}, k = ovKey(g0, s.dataset.team);
+    if (s.value === proj) delete o[k]; else o[k] = s.value;
+    store.set("ov", S.ov);
+    const y = $("#sheet").scrollTop; openGame(id); $("#sheet").scrollTop = y;
   });
-  const rb = $("#reset"); if (rb) rb.onclick = () => { delete S.ov[`${id}:${g.home}`]; delete S.ov[`${id}:${g.away}`]; store.set("qb", S.ov); openGame(id, true); };
+  const rb = $("#reset"); if (rb) rb.onclick = () => { const o = S.ov[S.lg] || {}; delete o[ovKey(g0, g0.home)]; delete o[ovKey(g0, g0.away)]; store.set("ov", S.ov); openGame(id); };
 }
 
-/* ---------------- power */
+/* ---------------- power ---------------- */
 async function loadPower() {
-  const el = $("#power");
-  if (!S.power) { el.innerHTML = `<div class="li">Loading…</div>`; try { S.power = await get("data/power.json"); } catch (e) { el.innerHTML = `<div class="li">${esc(e.message)}</div>`; return; } }
-  const d = S.power; $("#power-title").textContent = `Power rankings`;
-  const mx = Math.max(...d.teams.map((t) => Math.abs(t.power)));
+  const D = L(), el = $("#power"), lg = S.lg;
+  if (!D.power) { el.innerHTML = `<div class="li">Loading…</div>`; try { D.power = await get(lg, "power.json"); } catch (e) { el.innerHTML = `<div class="li">${esc(e.message)}</div>`; return; } }
+  if (S.lg !== lg) return;
+  const d = D.power; $("#power-about").textContent = d.about;
+  const mx = Math.max(...d.teams.map((t) => Math.abs(t.power))) || 1, dp = dec();
   el.innerHTML = d.teams.map((t) => `<div class="li pw"><span class="rk">${t.rank}</span><span class="ab" style="font-size:22px">${esc(t.team)}</span>
-    <div style="min-width:0"><div class="small">${esc(t.record)} · ${esc(t.qb || "QB ?")} ${t.qb_rating == null ? "" : `(${sgn(t.qb_rating)})`}</div>
-      <div class="pbar" style="width:${Math.abs(t.power) / mx * 100}%;background:${t.power >= 0 ? "var(--accent)" : "var(--vegas)"};opacity:${t.power >= 0 ? 1 : .6}"></div></div>
-    <span class="big num">${sgn(t.power)}</span></div>`).join("");
+    <div style="min-width:0"><div class="small">${esc(t.sub)}</div><div class="pbar" style="width:${Math.abs(t.power) / mx * 100}%;background:${t.power >= 0 ? "var(--accent)" : "var(--vegas)"};opacity:${t.power >= 0 ? 1 : .6}"></div></div>
+    <span class="big num">${sgn(t.power, dp)}</span></div>`).join("");
 }
 
-/* ---------------- players */
-const GROUPS = ["QB", "RB", "WR", "TE", "OL", "DL", "LB", "DB", "ALL"];
-const PROD_GROUPS = ["QB", "RB", "WR", "TE"];
-const sortFor = (g) => store.get("psort." + g, PROD_GROUPS.includes(g) ? "prod" : "imp");
+/* ---------------- players ---------------- */
 function spark(v, w = 56, h = 22) {
   if (!v || v.length < 2) return "";
   const lo = Math.min(...v, 0), hi = Math.max(...v, 0), rg = hi - lo || 1;
@@ -506,42 +574,55 @@ function spark(v, w = 56, h = 22) {
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><line x1="2" x2="${w - 2}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)"/><polyline points="${v.map((q, i) => `${x(i).toFixed(1)},${y(q).toFixed(1)}`).join(" ")}" fill="none" stroke="var(--vegas)" stroke-width="1.5"/><circle cx="${x(v.length - 1)}" cy="${y(last)}" r="2.5" fill="${last >= v[0] ? "var(--good)" : "var(--bad)"}"/></svg>`;
 }
 async function loadPlayers() {
-  if (!S.players) { $("#plist").innerHTML = `<div class="li">Loading…</div>`; try { S.players = await get("data/players.json"); } catch (e) { $("#plist").innerHTML = `<div class="li">${esc(e.message)}</div>`; return; } }
-  S.pgroup = store.get("pgroup", "QB");
+  const D = L(), lg = S.lg;
+  if (!D.players) { $("#plist").innerHTML = `<div class="li">Loading…</div>`; try { D.players = await get(lg, "players.json"); } catch (e) { $("#plist").innerHTML = `<div class="li">${esc(e.message)}</div>`; return; } }
+  if (S.lg !== lg) return;
   renderPlayers();
 }
+function plabel(g, k) { const P = L().players; return ((P.group_labels || {})[g] || {})[k] || P.labels[k]; }
 function renderPlayers() {
-  const d = S.players, g = S.pgroup, q = S.pq.toLowerCase();
-  $("#pgroups").innerHTML = GROUPS.map((x) => `<button class="chip" aria-pressed="${x === g}" data-g="${x}">${x === "ALL" ? "All" : x}</button>`).join("");
-  $("#pgroups").querySelectorAll(".chip").forEach((b) => b.onclick = () => { S.pgroup = b.dataset.g; store.set("pgroup", S.pgroup); renderPlayers(); });
-  const byId = new Map(d.players.map((p) => [p.pid, p]));
-  const mv = d.movers[g] || d.movers.ALL;
-  const mvCol = (title, ids, cls) => `<div class="mv"><div class="k">${title}</div>${ids.map((id) => byId.get(id)).filter(Boolean).map((p) => `<button data-pid="${esc(p.pid)}"><span>${esc(p.name)} <span class="small">${esc(p.team || "")}</span></span><span class="num ${cls}">${sgn(p.tr, 1)}</span></button>`).join("")}</div>`;
-  $("#movers").innerHTML = q ? "" : mvCol("Rising · 4 wks", mv.up, "ok") + mvCol("Falling · 4 wks", mv.down, "no");
-  const srt = sortFor(g);
-  const sorts = [["imp", "Impact"]].concat(PROD_GROUPS.includes(g) ? [["prod", "Production"]] : []).concat([["tr", "Rising"]]);
-  $("#psort").innerHTML = sorts.map(([k, l]) => `<button class="chip" aria-pressed="${k === srt}" data-s="${k}">Sort: ${l}</button>`).join("");
-  $("#psort").querySelectorAll(".chip").forEach((b) => b.onclick = () => { store.set("psort." + g, b.dataset.s); renderPlayers(); });
-  let rows = d.players.filter((p) => g === "ALL" || p.g === g);
-  if (q) rows = d.players.filter((p) => (p.name || "").toLowerCase().includes(q) || (p.team || "").toLowerCase() === q);
-  const val = (p) => srt === "prod" ? (p.prod == null ? -99 : p.prod) : srt === "tr" ? (p.tr == null ? -99 : p.tr) : p.imp;
+  const P = L().players, lg = S.lg;
+  const g = store.get("pgroup." + lg, P.default_group);
+  const grp = P.groups.some((x) => x.key === g) ? g : P.default_group;
+  $("#players-about").textContent = P.about;
+  $("#pgroups").innerHTML = P.groups.map((x) => `<button class="chip" aria-pressed="${x.key === grp}" data-g="${x.key}">${esc(x.label)}</button>`).join("");
+  $("#pgroups").querySelectorAll(".chip").forEach((b) => b.onclick = () => { store.set("pgroup." + lg, b.dataset.g); renderPlayers(); });
+  const hasProd = (P.prod_groups || []).includes(grp);
+  const sorts = [["imp", plabel(grp, "imp")]].concat(hasProd ? [["prod", plabel(grp, "prod")]] : []).concat([["tr", "Rising"]]);
+  let srt = store.get(`psort.${lg}.${grp}`, lg === "nfl" && ["QB", "RB", "WR", "TE"].includes(grp) ? "prod" : "imp");
+  if (!sorts.some((s) => s[0] === srt)) srt = "imp";
+  $("#psort").innerHTML = sorts.map(([k, l]) => `<button class="chip" aria-pressed="${k === srt}" data-s="${k}">Sort: ${esc(l)}</button>`).join("");
+  $("#psort").querySelectorAll(".chip").forEach((b) => b.onclick = () => { store.set(`psort.${lg}.${grp}`, b.dataset.s); renderPlayers(); });
+  const q = S.pq.toLowerCase();
+  const byId = new Map(P.players.map((p) => [String(p.pid), p]));
+  const mv = P.movers[grp] || P.movers.ALL || { up: [], down: [] };
+  const mvCol = (title, ids, cls) => `<div class="mv"><div class="k">${title}</div>${ids.map((id) => byId.get(String(id))).filter(Boolean).map((p) => `<button data-pid="${esc(p.pid)}"><span>${esc(p.name)} <span class="small">${esc(p.team || "")}</span></span><span class="num ${cls}">${sgn(p.tr, 2)}</span></button>`).join("")}</div>`;
+  $("#movers").innerHTML = q ? "" : mvCol("Rising", mv.up, "ok") + mvCol("Falling", mv.down, "no");
+  const excl = P.all_excludes || [];
+  let rows = P.players.filter((p) => grp === "ALL" ? !excl.includes(p.g) : p.g === grp);
+  if (q) rows = P.players.filter((p) => (p.name || "").toLowerCase().includes(q) || (p.team || "").toLowerCase() === q);
+  const val = (p) => { const v = srt === "prod" ? p.prod : srt === "tr" ? p.tr : p.imp; return v == null ? -1e9 : v; };
   rows = rows.slice().sort((a, b) => val(b) - val(a)).slice(0, 80);
   const main = (p) => srt === "prod" ? p.prod : srt === "tr" ? p.tr : p.imp;
-  $("#plist").innerHTML = rows.length ? rows.map((p) => `<button class="li pl" data-pid="${esc(p.pid)}"><div style="min-width:0"><div class="nm">${esc(p.name)}</div>
-      <div class="small">${esc(p.pos)} · ${esc(p.team || "")} · ${Math.round(p.snap * 100)}% snaps · ${srt === "imp" ? (p.prod != null ? `prod ${sgn(p.prod)}` : `trend ${sgn(p.tr)}`) : `impact ${sgn(p.imp)}`}</div></div>
-      <span>${spark(p.sp)}</span><span class="big num ${srt === "tr" ? (p.tr > 0 ? "ok" : p.tr < 0 ? "no" : "") : ""}">${sgn(main(p))}</span></button>`).join("") : `<div class="li">No players match.</div>`;
+  const unit = (P.units || {})[grp] || P.unit;
+  $("#plist").innerHTML = rows.length ? rows.map((p) => {
+    const other = srt === "imp" ? (p.prod != null ? `${plabel(p.g, "prod").toLowerCase()} ${sgn(p.prod, 2)}` : "") : `${plabel(p.g, "imp").toLowerCase()} ${sgn(p.imp, 2)}`;
+    return `<button class="li pl" data-pid="${esc(p.pid)}"><div style="min-width:0"><div class="nm">${esc(p.name)}</div><div class="small">${esc(p.sub)}${other ? " · " + esc(other) : ""}</div></div>
+      <span>${spark(p.sp)}</span><span class="big num ${srt === "tr" ? (p.tr > 0 ? "ok" : p.tr < 0 ? "no" : "") : ""}">${sgn(main(p), 2)}</span></button>`;
+  }).join("") : `<div class="li">No players match.</div>`;
   document.querySelectorAll("#plist [data-pid], #movers [data-pid]").forEach((b) => b.onclick = () => openPlayer(b.dataset.pid));
 }
 $("#psearch").oninput = (e) => { S.pq = e.target.value.trim(); renderPlayers(); };
 function chart(series, keys) {
-  const W = 360, H = 160, L = 32, R = 8, T = 8, B = 22;
+  const W = 360, H = 160, Lm = 34, R = 8, T = 8, B = 22;
   const all = series.flatMap((s) => s.pts.map((p) => p.v)).concat([0]);
-  let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.1 || 0.5; lo -= pad; hi += pad;
+  let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.1 || 0.05; lo -= pad; hi += pad;
   const idx = new Map(keys.map((k, i) => [k, i]));
-  const x = (i) => L + (keys.length < 2 ? 0 : i / (keys.length - 1) * (W - L - R)), y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  const x = (i) => Lm + (keys.length < 2 ? 0 : i / (keys.length - 1) * (W - Lm - R)), y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  const dp = Math.abs(hi - lo) < 1 ? 2 : 1;
   let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Rating history">`;
-  [lo + pad, (lo + hi) / 2, hi - pad].forEach((t) => s += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${L - 4}" y="${y(t) + 4}" text-anchor="end">${sgn(t, 1)}</text>`);
-  s += `<line x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--dim)" stroke-dasharray="3 3"/>`;
+  [lo + pad, (lo + hi) / 2, hi - pad].forEach((t) => s += `<line x1="${Lm}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${Lm - 4}" y="${y(t) + 4}" text-anchor="end">${sgn(t, dp)}</text>`);
+  s += `<line x1="${Lm}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--dim)" stroke-dasharray="3 3"/>`;
   let prev = null; keys.forEach((k, i) => { const yr = k.slice(0, 4); if (yr !== prev) { if (prev) s += `<line x1="${x(i)}" x2="${x(i)}" y1="${T}" y2="${H - B}" stroke="var(--line)"/>`; s += `<text x="${x(i) + 3}" y="${H - 6}">${yr}</text>`; prev = yr; } });
   for (const se of series) {
     const p = se.pts.filter((q) => idx.has(q.k));
@@ -551,88 +632,71 @@ function chart(series, keys) {
   return s + "</svg>";
 }
 async function openPlayer(pid) {
-  const p = S.players.players.find((x) => x.pid === pid); if (!p) return;
+  const D = L(), P = D.players, lg = S.lg;
+  const p = P.players.find((x) => String(x.pid) === String(pid)); if (!p) return;
   openSheet(`<div class="hd" style="font-size:28px">${esc(p.name)}</div><div class="note">Loading history…</div>`, "player:" + pid);
-  if (!S.hist) { try { S.hist = await get("data/history.json"); } catch (e) { S.hist = {}; } }
-  const h = S.hist[pid] || {};
-  const key = (r) => `${r[0]}-${String(r[1]).padStart(2, "0")}`;
-  const imp = (h.imp || []).map((r) => ({ k: key(r), v: r[2] })), prod = (h.prod || []).map((r) => ({ k: key(r), v: r[2] }));
+  if (!D.hist) { try { D.hist = await get(lg, "history.json"); } catch (e) { D.hist = {}; } }
+  if (S.lg !== lg || $("#sheet").hidden) return;
+  const h = D.hist[String(pid)] || {};
+  const imp = (h.imp || []).map((r) => ({ k: r[0], v: r[1] })), prod = (h.prod || []).map((r) => ({ k: r[0], v: r[1] }));
   const keys = [...new Set(imp.map((r) => r.k).concat(prod.map((r) => r.k)))].sort();
-  const cur = imp.filter((r) => r.k.startsWith(String(S.players.season)));
-  const ytd = cur.length ? cur[cur.length - 1].v - cur[0].v : null;
-  const label = p.pk ? S.players.prod_labels[p.pk] : null;
-  openSheet(`<div><div class="hd" style="font-size:28px">${esc(p.name)}</div><div class="note">${esc(p.pos)} · ${esc(p.team || "")} · ${p.gp} games · ${Math.round(p.snap * 100)}% of snaps lately</div></div>
-    <div class="kv"><div><div class="k">Impact</div><div class="v num" style="color:var(--accent)">${sgn(p.imp, 2)}</div></div>
-      <div><div class="k">Prod</div><div class="v num">${p.prod == null ? "—" : sgn(p.prod, 2)}</div></div>
-      <div><div class="k">This season</div><div class="v num ${ytd > 0 ? "ok" : ytd < 0 ? "no" : ""}">${ytd == null ? "—" : sgn(ytd, 2)}</div></div></div>
-    <div><div class="h3">Rating over time (pts/game)</div>${keys.length > 1 ? chart([{ c: "var(--accent)", pts: imp }].concat(prod.length ? [{ c: "var(--vegas)", pts: prod }] : []), keys) : `<div class="note">Not enough history yet.</div>`}
-      <div class="legend" style="margin-top:6px"><span><i style="background:var(--accent)"></i>Impact (weekly)</span>${prod.length ? `<span><i style="background:var(--vegas)"></i>Prod: ${esc(label || "")}</span>` : ""}</div></div>
-    <div><div class="h3">Recent snaps</div><div class="panel" style="padding:4px 10px"><table><tbody>${(h.sn || []).slice().reverse().map((r) => `<tr><td>${r[0]} Wk ${r[1]}</td><td style="text-align:left">vs ${esc(r[2])}</td><td>${Math.round(r[3] * 100)}%</td></tr>`).join("") || `<tr><td>No recent snaps.</td></tr>`}</tbody></table></div></div>
-    <div class="note">Linemen who always play together share credit, so read the trend rather than the decimals.</div>`, "player:" + pid);
+  const n = imp.length, ytd = n > 1 ? imp[n - 1].v - imp[Math.max(0, n - 9)].v : null;
+  const unit = (P.units || {})[p.g] || P.unit;
+  openSheet(`<div><div class="hd" style="font-size:28px">${esc(p.name)}</div><div class="note">${esc(p.sub)}</div></div>
+    <div class="kv"><div><div class="k">${esc(plabel(p.g, "imp"))}</div><div class="v num" style="color:var(--accent)">${sgn(p.imp, 2)}</div></div>
+      <div><div class="k">${esc(plabel(p.g, "prod"))}</div><div class="v num">${p.prod == null ? "—" : sgn(p.prod, 2)}</div></div>
+      <div><div class="k">Recent trend</div><div class="v num ${ytd > 0 ? "ok" : ytd < 0 ? "no" : ""}">${ytd == null ? "—" : sgn(ytd, 2)}</div></div></div>
+    <div><div class="h3">${esc(plabel(p.g, "imp"))} over time (${esc(unit)})</div>${keys.length > 1 ? chart([{ c: "var(--accent)", pts: imp }].concat(prod.length ? [{ c: "var(--vegas)", pts: prod }] : []), keys) : `<div class="note">Not enough history yet.</div>`}
+      ${prod.length ? `<div class="legend" style="margin-top:6px"><span><i style="background:var(--accent)"></i>${esc(plabel(p.g, "imp"))}</span><span><i style="background:var(--vegas)"></i>${esc(plabel(p.g, "prod"))}</span></div>` : ""}</div>
+    <div><div class="h3">Recent games</div><div class="panel" style="padding:4px 10px"><table><tbody>${(h.recent || []).map((r) => `<tr><td>${esc(r[0])}</td><td style="text-align:left">${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("") || `<tr><td>No recent games.</td></tr>`}</tbody></table></div></div>
+    <div class="note">${esc(P.detail_note || "")}</div>`, "player:" + pid);
 }
 
-/* ---------------- record */
-function renderSignout() {
-  const el = $("#signout"); if (!el) return;
-  el.hidden = !KEY;
-  el.querySelector("span").textContent = store.get("pw", null) ? "Password saved on this device." : "Unlocked for this session only.";
-  $("#forget").onclick = () => {
-    store.set("pw", null); try { sessionStorage.removeItem("sportsalgo.pw"); } catch (e) {}
-    location.reload();
-  };
-}
+/* ---------------- record ---------------- */
 function renderRecord() {
-  renderSignout();
-  const r = S.meta.record; const t = r.total || {};
+  const r = L().meta.record, t = r.total || {};
   const ll = (x) => x == null ? "—" : x.toFixed(3);
+  const vn = t.vegas_n ?? t.n;
   $("#rec-sum").innerHTML = t.n ? `<div class="sb m"><div class="k">Model</div><div class="v num">${t.model_right}-${t.n - t.model_right}<small>${Math.round(t.model_right / t.n * 100)}%</small></div></div>
-    <div class="sb"><div class="k">Vegas</div><div class="v num">${t.vegas_right}-${t.n - t.vegas_right}<small>${Math.round(t.vegas_right / t.n * 100)}%</small></div></div>
-    <div class="sb m"><div class="k">Model log loss</div><div class="v num">${ll(t.model_ll)}</div></div><div class="sb"><div class="k">Vegas log loss</div><div class="v num">${ll(t.vegas_ll)}</div></div>` : "";
-  $("#rec-table").innerHTML = `<thead><tr><th>Week</th><th>Model</th><th>Vegas</th><th>Model LL</th></tr></thead><tbody>` +
-    r.weeks.map((w) => `<tr><td>${w.week}</td><td class="${w.model_right > w.vegas_right ? "ok" : ""}">${w.model_right}-${w.n - w.model_right}</td><td>${w.vegas_right}-${w.n - w.vegas_right}</td><td>${ll(w.model_ll)}</td></tr>`).join("") + `</tbody>`;
+    ${vn ? `<div class="sb"><div class="k">Vegas</div><div class="v num">${t.vegas_right}-${vn - t.vegas_right}<small>${Math.round(t.vegas_right / vn * 100)}%</small></div></div>` : ""}
+    <div class="sb m"><div class="k">Model log loss</div><div class="v num">${ll(t.model_ll)}</div></div>${t.vegas_ll != null ? `<div class="sb"><div class="k">Vegas log loss</div><div class="v num">${ll(t.vegas_ll)}</div></div>` : ""}` : `<div class="note">No games played yet.</div>`;
+  $("#rec-table").innerHTML = `<thead><tr><th></th><th>Model</th><th>Vegas</th><th>Model LL</th></tr></thead><tbody>` +
+    r.rows.map((w) => { const v = w.vegas_n ?? w.n; return `<tr><td>${esc(w.label)}</td><td>${w.model_right}-${w.n - w.model_right}</td><td>${v ? `${w.vegas_right}-${v - w.vegas_right}` : "—"}</td><td>${ll(w.model_ll)}</td></tr>`; }).join("") + `</tbody>`;
+  const so = $("#signout"); so.hidden = !KEYS[S.lg];
+  so.querySelector("span").textContent = store.get("pw", null) ? "Password saved on this device." : "Unlocked for this session only.";
+  $("#forget").onclick = () => { store.set("pw", null); try { sessionStorage.removeItem("sportsalgo.pw"); } catch (e) {} location.reload(); };
 }
 
-/* ---------------- tabs, install hint, boot */
-function show(v) {
+/* ---------------- tabs, install hint, boot ---------------- */
+function show(v, quiet) {
   S.view = v; store.set("view", v);
   for (const x of ["games", "power", "players", "record"]) $("#v-" + x).hidden = x !== v;
   document.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String(t.dataset.v === v)));
-  window.scrollTo(0, 0);
+  if (!quiet) window.scrollTo(0, 0);
   $("#install").hidden = v !== "games" || !S.showInstall;
+  if (!L()) return;
+  if (v === "games" && S.period && L().periods[S.period]) renderGames(L().periods[S.period]);
   if (v === "power") loadPower();
   if (v === "players") loadPlayers();
   if (v === "record") renderRecord();
 }
 document.querySelectorAll(".tab").forEach((t) => t.onclick = () => show(t.dataset.v));
-
 function installHint() {
   const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
   if (standalone || store.get("installDismissed", false)) return;
-  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const android = /android/i.test(navigator.userAgent);
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent), android = /android/i.test(navigator.userAgent);
   if (!ios && !android) return;
   $("#install-text").innerHTML = ios ? "<b>Install:</b> tap the Share button, then <b>Add to Home Screen</b>." : "<b>Install:</b> tap the ⋮ menu, then <b>Install app</b> (or Add to Home screen).";
-  S.showInstall = true; $("#install").hidden = false;
+  S.showInstall = true; $("#install").hidden = S.view !== "games";
   $("#install-x").onclick = () => { $("#install").hidden = true; S.showInstall = false; store.set("installDismissed", true); };
 }
-
 async function boot() {
-  if (!window.crypto || !crypto.subtle) { $("#games").innerHTML = `<div class="empty">Open this app over https to unlock it.</div>`; }
-  await unlock();
-  try { S.meta = await get("data/meta.json"); }
-  catch (e) { $("#games").innerHTML = `<div class="empty">Couldn't load predictions.<br>${esc(e.message)}</div>`; $("#fresh").textContent = "Offline"; return; }
-  $("#fresh").innerHTML = `${S.meta.season} · thru Wk ${S.meta.last_played_week}<br>updated ${ago(S.meta.updated)}`;
-  let w = S.meta.default_week;
-  const saved = store.get("week", null);
-  if (saved && saved.season === S.meta.season && S.meta.weeks.some((x) => x.week === saved.week)) w = saved.week;
-  // drop QB picks for games that are already played
-  installHint();
-  await selectWeek(w);
-  const v = store.get("view", "games"); if (v !== "games") show(v);
+  if (!window.crypto || !crypto.subtle) { $("#games").innerHTML = `<div class="empty">Open this app over https to unlock it.</div>`; return; }
+  renderLeagues(); installHint();
+  if (!LEAGUES.some((x) => x.key === S.lg)) S.lg = "nfl";
+  await switchLeague(S.lg);
 }
-if ("serviceWorker" in navigator && location.protocol !== "file:") {
-  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
-}
+if ("serviceWorker" in navigator && location.protocol !== "file:") window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 boot();
 </script>
 </body>
