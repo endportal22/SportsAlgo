@@ -48,6 +48,11 @@ def _f(x, d=3):
         return None
 
 
+def last_name(n):
+    parts = [p for p in str(n).split(" ") if p.rstrip(".").upper() not in ("JR", "SR", "II", "III", "IV")]
+    return parts[-1] if parts else str(n)
+
+
 def ml_text(home, away, hml, aml):
     h, a = _f(hml, 0), _f(aml, 0)
     if h is None or a is None:
@@ -135,7 +140,7 @@ class Exporter:
                 out[f"{side}_typ"] = {"pm": _f(getattr(g, f"pm_typ_{side[0]}"), 4), "box": _f(getattr(g, f"box_typ_{side[0]}"), 4)}
                 outs = [p for p in lu if not p["on"] and p["status"] and p["min"] >= 18]
                 if outs:
-                    label = "w/o " + ", ".join(p["name"].split(" ")[-1] for p in outs[:2]) + ("…" if len(outs) > 2 else "")
+                    label = "w/o " + ", ".join(last_name(p["name"]) for p in outs[:2]) + ("…" if len(outs) > 2 else "")
             out[f"{side}_starter"] = {"name": label, "rating": None, "new": False, "flag": None, "note": None}
         if g.played:
             hw = g.margin > 0
@@ -217,7 +222,7 @@ def power(ex):
     for i, (team, r) in enumerate(t.iterrows(), 1):
         o = outs[outs.team == team]
         teams.append({"rank": i, "team": team, "power": round(float(r.power), 2),
-                      "sub": f"{w.get(team, 0)}-{l.get(team, 0)}" + (" · w/o " + ", ".join(n.split(' ')[-1] for n in o.name[:3]) if len(o) else "")})
+                      "sub": f"{w.get(team, 0)}-{l.get(team, 0)}" + (" · w/o " + ", ".join(last_name(n) for n in o.name[:3]) if len(o) else "")})
     return {"about": "Points better than an average team on a neutral floor, with tonight's expected lineup (injuries included).",
             "unit": "pts", "teams": teams}
 
