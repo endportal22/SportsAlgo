@@ -380,19 +380,20 @@ def update_injuries(data):
 def update_rosters(data, teams):
     rows = []
 
-    def one(t):
-        js = get_json(f"{ESPN_SITE}/teams/{t}/roster", timeout=30)
+    espn = {v: k for k, v in ABBR.items() if k != "NJ"}
+
+    def one(team):
+        js = get_json(f"{ESPN_SITE}/teams/{espn.get(team, team).lower()}/roster", timeout=30)
         out = []
         for a in js.get("athletes", []) or []:
             items = a.get("items") if isinstance(a, dict) and "items" in a else [a]
             for p in items:
-                out.append({"team": ab(t), "player_id": int(p["id"]), "name": p.get("displayName"),
+                out.append({"team": team, "player_id": int(p["id"]), "name": p.get("displayName"),
                             "pos": (p.get("position") or {}).get("abbreviation")})
         return out
 
-    espn = {v: k for k, v in ABBR.items() if k != "NJ"}
     with ThreadPoolExecutor(max_workers=WORKERS) as ex:
-        for fut in as_completed([ex.submit(one, espn.get(t, t).lower()) for t in teams]):
+        for fut in as_completed([ex.submit(one, t) for t in teams]):
             try:
                 rows += fut.result()
             except Exception:  # noqa: BLE001

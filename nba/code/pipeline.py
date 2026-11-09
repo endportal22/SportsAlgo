@@ -33,6 +33,12 @@ def _fingerprint(data_dir):
     return h.hexdigest()[:16]
 
 
+def _norm(n):
+    import unicodedata
+    n = unicodedata.normalize("NFKD", str(n or "")).encode("ascii", "ignore").decode().lower()
+    return "".join(ch for ch in n if ch.isalnum())
+
+
 def _status_off(s):
     s = str(s or "").lower()
     return any(k in s for k in ("out", "doubtful", "suspen", "inactive"))
@@ -47,13 +53,19 @@ def upcoming_lineups(games, box, last, data_dir, day):
     names = box.drop_duplicates("player_id", keep="last").set_index("player_id")[["name", "pos"]]
     # rosters: ESPN's current rosters if we have them, else each player's most recent team
     rf, inf = Path(data_dir) / "rosters.csv", Path(data_dir) / "injuries.csv"
+    recent = last[last.last_date >= pd.Timestamp(day) - pd.Timedelta(days=120)].reset_index()[["team", "player_id"]]
+    roster = recent
     if rf.exists():
         ro = pd.read_csv(rf)
-        roster = ro[["team", "player_id"]].astype({"player_id": int})
-    else:
-        recent = last[last.last_date >= pd.Timestamp(day) - pd.Timedelta(days=120)]
-        roster = recent.reset_index()[["team", "player_id"]]
-    inj = pd.read_csv(inf) if inf.exists() else pd.DataFrame(columns=["player_id", "status", "detail", "comment"])
+        ro = ro[ro.player_id.notna()].astype({"player_id": int})
+        ro["team"] = ro.team.astype(str).str.upper().map(lambda t: {"GS": "GSW", "NO": "NOP", "NY": "NYK", "SA": "SAS", "UTAH": "UTA", "WSH": "WAS"}.get(t, t))
+        ok = set(ro.team) & set(games.home)
+        # ESPN's rosters where we have them (they catch trades); each player's latest team otherwise
+        roster = pd.concat([ro[ro.team.isin(ok)][["team", "player_id"]], recent[~recent.team.isin(ok)]], ignore_index=True)
+    inj = pd.read_csv(inf) if inf.exists() else pd.DataFrame(columns=["player_id", "name", "status", "detail", "comment"])
+    # match the injury report by ESPN player id, or by name when the id is missing
+    by_name = {_norm(n): p for p, n in names.name.items()}
+    inj["player_id"] = [p if pd.notna(p) else by_name.get(_norm(n)) for p, n in zip(inj.player_id, inj.get("name", [None] * len(inj)))]
     inj = inj[inj.player_id.notna()].astype({"player_id": int}).drop_duplicates("player_id", keep="first").set_index("player_id")
     rows = []
     d0 = pd.Timestamp(day)
