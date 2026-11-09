@@ -178,6 +178,11 @@ th:first-child, td:first-child { text-align: left; }
 .lock-in { display: grid; gap: 12px; justify-items: center; text-align: center; width: 100%; max-width: 340px; }
 .lock-in img { border-radius: 16px; }
 .lock-in input { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; font-size: 17px; }
+.pm-user { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.remember { display: flex; align-items: center; gap: 8px; justify-self: start; font-size: 14px; color: var(--muted); cursor: pointer; }
+.remember input { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; }
+.signout { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 16px; font-size: 13px; color: var(--muted); }
+.signout button { background: none; border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; color: var(--fg); font-size: 13px; cursor: pointer; }
 .lock-in button { width: 100%; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 12px; padding: 13px; font: 700 17px var(--display); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
 .install { display: flex; gap: 10px; align-items: flex-start; background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; }
 .install button { background: none; border: 0; color: var(--muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 0 2px; }
@@ -216,6 +221,7 @@ th:first-child, td:first-child { text-align: left; }
     <p class="sub">Each week predicted by a model trained only on earlier games. Not betting advice.</p>
     <div class="summary" id="rec-sum"></div>
     <div class="panel"><table id="rec-table"></table></div>
+    <div class="signout" id="signout" hidden><span>Password saved on this device.</span><button id="forget">Forget password</button></div>
     <p class="note" style="margin-top:12px">Log loss scores the probabilities themselves (lower is better; a coin flip is 0.693). The model never sees the Vegas line. Vegas is shown only for comparison.</p>
   </section>
 </main>
@@ -230,11 +236,14 @@ th:first-child, td:first-child { text-align: left; }
 <div id="sheet" class="sheet" hidden></div>
 
 <div id="lock" class="lock" hidden>
-  <form id="lock-form" class="lock-in" autocomplete="on">
+  <form id="lock-form" class="lock-in" autocomplete="on" action="#" method="post">
     <img src="icons/icon-192.png" alt="" width="72" height="72">
     <div class="brand" style="font-size:30px">SPORTS <b>ALGO</b></div>
     <p class="note" style="font-size:14px">Private app. Enter the password you were given.</p>
-    <input id="lock-pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" required>
+    <!-- a fixed username lets iPhone Keychain / Google Password Manager save and autofill the password -->
+    <input id="lock-user" name="username" type="text" autocomplete="username" value="Sports Algo" readonly tabindex="-1" aria-hidden="true" class="pm-user">
+    <input id="lock-pw" name="password" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" required>
+    <label class="remember"><input id="lock-remember" type="checkbox" checked> Remember me on this device</label>
     <button type="submit" id="lock-go">Unlock</button>
     <div class="note warn" id="lock-err" role="alert"></div>
   </form>
@@ -281,7 +290,8 @@ async function unlock() {
   let lock = null;
   try { const r = await fetch("data/lock.json", { cache: "no-cache" }); if (r.ok) lock = await r.json(); } catch (e) {}
   if (!lock) return true;                      // unencrypted (local) build
-  const saved = store.get("pw", null);
+  let ses = null; try { ses = sessionStorage.getItem("sportsalgo.pw"); } catch (e) {}
+  const saved = store.get("pw", null) || ses;
   if (saved) { KEY = await tryUnlock(saved, lock); if (KEY) return true; }
   const el = $("#lock"); el.hidden = false;
   return new Promise((resolve) => {
@@ -290,7 +300,12 @@ async function unlock() {
       const pw = $("#lock-pw").value; $("#lock-err").textContent = "Checking…";
       const k = await tryUnlock(pw, lock);
       if (!k) { $("#lock-err").textContent = "That password didn't work. Check with whoever sent you the link."; return; }
-      KEY = k; store.set("pw", pw); el.hidden = true; resolve(true);
+      KEY = k; el.hidden = true;
+      if ($("#lock-remember").checked) store.set("pw", pw);
+      else { store.set("pw", null); try { sessionStorage.setItem("sportsalgo.pw", pw); } catch (e) {} }
+      // let the browser's password manager offer to save it (Chrome / Android)
+      try { if (window.PasswordCredential && $("#lock-remember").checked) navigator.credentials.store(new PasswordCredential({ id: "Sports Algo", password: pw, name: "Sports Algo" })).catch(() => {}); } catch (e) {}
+      resolve(true);
     };
     setTimeout(() => $("#lock-pw").focus(), 50);
   });
@@ -557,7 +572,17 @@ async function openPlayer(pid) {
 }
 
 /* ---------------- record */
+function renderSignout() {
+  const el = $("#signout"); if (!el) return;
+  el.hidden = !KEY;
+  el.querySelector("span").textContent = store.get("pw", null) ? "Password saved on this device." : "Unlocked for this session only.";
+  $("#forget").onclick = () => {
+    store.set("pw", null); try { sessionStorage.removeItem("sportsalgo.pw"); } catch (e) {}
+    location.reload();
+  };
+}
 function renderRecord() {
+  renderSignout();
   const r = S.meta.record; const t = r.total || {};
   const ll = (x) => x == null ? "—" : x.toFixed(3);
   $("#rec-sum").innerHTML = t.n ? `<div class="sb m"><div class="k">Model</div><div class="v num">${t.model_right}-${t.n - t.model_right}<small>${Math.round(t.model_right / t.n * 100)}%</small></div></div>
