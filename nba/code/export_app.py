@@ -27,6 +27,10 @@ import pandas as pd
 
 sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
 import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
+try:
+    import matchup
+except ImportError:   # older local copies without shared/matchup.py: no matchup section
+    matchup = None
 import pipeline as PL
 import ratings as R
 from features import FEATURE_LABELS
@@ -86,6 +90,45 @@ def records(df):
     return out
 
 
+NBA_STATS = [
+    {"key": "ppg", "label": "Points per game", "num": "pts", "den": "gp", "better": "high"},
+    {"key": "opp", "label": "Points allowed", "num": "opp_pts", "den": "gp", "better": "low"},
+    {"key": "net", "label": "Net rating (per 100)", "num": "diff", "den": "poss", "scale": 100, "fmt": "{:+.1f}", "better": "high"},
+    {"key": "pace", "label": "Pace (possessions)", "num": "poss", "den": "gp", "better": None},
+    {"key": "efg", "label": "Effective FG%", "num": "efg_m", "den": "fga", "scale": 100, "better": "high"},
+    {"key": "tp", "label": "3-point %", "num": "tpm", "den": "tpa", "scale": 100, "better": "high"},
+    {"key": "oefg", "label": "Opponents' effective FG%", "num": "opp_efg_m", "den": "opp_fga", "scale": 100, "better": "low"},
+    {"key": "reb", "label": "Rebounds", "num": "reb", "den": "gp", "better": "high"},
+    {"key": "ast", "label": "Assists", "num": "ast", "den": "gp", "better": "high"},
+    {"key": "tov", "label": "Turnovers", "num": "tov", "den": "gp", "better": "low"},
+]
+
+
+def build_matchups(E):
+    """Head-to-head, form, records and stat comparisons (shared/matchup.py)."""
+    if matchup is None:
+        return None
+    b = E.box
+    t = b.groupby(["game_id", "team"]).agg(pts=("pts", "sum"), fgm=("fgm", "sum"), fga=("fga", "sum"), tpm=("tpm", "sum"),
+                                           tpa=("tpa", "sum"), fta=("fta", "sum"), oreb=("oreb", "sum"), dreb=("dreb", "sum"),
+                                           ast=("ast", "sum"), tov=("tov", "sum"), mins=("min", "sum")).reset_index()
+    t["reb"] = t.oreb + t.dreb
+    t["efg_m"] = t.fgm + 0.5 * t.tpm
+    t["own_poss"] = t.fga - t.oreb + t.tov + 0.44 * t.fta
+    o = t[["game_id", "team", "pts", "efg_m", "fga", "own_poss"]].rename(
+        columns={"team": "opp_team", "pts": "opp_pts", "efg_m": "opp_efg_m", "fga": "opp_fga", "own_poss": "opp_poss"})
+    t = t.merge(o, on="game_id")
+    t = t[t.team != t.opp_team].copy()
+    t["poss"] = 0.5 * (t.own_poss + t.opp_poss)
+    t["diff"] = t.pts - t.opp_pts
+    ot = t.groupby("game_id").mins.max() > 245          # more than 48 minutes x 5 players
+    df = E.df
+    g = pd.DataFrame({"game_id": df.game_id, "date": df.date, "season": df.season, "home": df.home, "away": df.away,
+                      "home_score": df.home_score, "away_score": df.away_score, "played": df.played,
+                      "regular": df.season_type == 2, "extra": df.game_id.map(ot).map({True: "OT"})})
+    return matchup.Matchups(g, t, NBA_STATS, season_label)
+
+
 class Exporter:
     def __init__(self, E):
         self.E = E
@@ -93,6 +136,7 @@ class Exporter:
         self.rec = records(self.df[self.df.season == E.season])
         self.latest = E.fits[max(E.fits)].set_index("player_id") if E.fits else pd.DataFrame()
         self.names = E.box.drop_duplicates("player_id", keep="last").set_index("player_id")[["name", "pos", "team"]]
+        self.mu = build_matchups(E)
 
     def lineup(self, g, side):
         """Expected rotation (on) plus bench / injured players (off) for an upcoming game."""
@@ -142,6 +186,8 @@ class Exporter:
                 if outs:
                     label = "w/o " + ", ".join(last_name(p["name"]) for p in outs[:2]) + ("…" if len(outs) > 2 else "")
             out[f"{side}_starter"] = {"name": label, "rating": None, "new": False, "flag": None, "note": None}
+        if self.mu is not None:
+            out["matchup"] = self.mu.for_game(g.home, g.away, g.season, g.date)
         if g.played:
             hw = g.margin > 0
             out.update({"home_score": int(g.home_score), "away_score": int(g.away_score),

@@ -22,12 +22,83 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pandas as pd
+
 sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
 import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
+try:
+    import matchup
+except ImportError:   # older local copies without shared/matchup.py: no matchup section
+    matchup = None
 import hud_data as H
 from paths import ROOT
 
 PROD_GROUPS = {"QB", "RB", "WR", "TE"}
+
+NFL_STATS = [
+    {"key": "pf", "label": "Points per game", "num": "pts", "den": "gp", "better": "high"},
+    {"key": "pa", "label": "Points allowed", "num": "opp_pts", "den": "gp", "better": "low"},
+    {"key": "ypp", "label": "Yards per play", "num": "yds", "den": "plays", "better": "high"},
+    {"key": "oypp", "label": "Yards per play allowed", "num": "opp_yds", "den": "opp_plays", "better": "low"},
+    {"key": "oepa", "label": "Offense (EPA per play)", "num": "epa", "den": "plays", "fmt": "{:+.2f}", "better": "high"},
+    {"key": "depa", "label": "Defense (EPA per play allowed)", "num": "opp_epa", "den": "opp_plays", "fmt": "{:+.2f}", "better": "low"},
+    {"key": "pepa", "label": "Passing (EPA per dropback)", "num": "p_epa", "den": "drops", "fmt": "{:+.2f}", "better": "high"},
+    {"key": "repa", "label": "Rushing (EPA per carry)", "num": "r_epa", "den": "rushes", "fmt": "{:+.2f}", "better": "high"},
+    {"key": "to", "label": "Turnover margin per game", "num": "to_margin", "den": "gp", "fmt": "{:+.1f}", "better": "high"},
+    {"key": "third", "label": "3rd-down conversion %", "num": "third_conv", "den": "third_att", "scale": 100, "better": "high"},
+    {"key": "sacks", "label": "Sacks per game", "num": "sacks", "den": "gp", "better": "high"},
+]
+
+
+def build_matchups(E):
+    """Head-to-head, form, records and stat comparisons (shared/matchup.py)."""
+    if matchup is None:
+        return None
+    import features as F
+    games = F.load_games(H.DATA)
+    season = int(E.season)
+    pbp = F.load_pbp(H.DATA, [season - 1, season])
+    for c in ("posteam", "defteam"):
+        pbp[c] = pbp[c].replace(F.TEAM_FIX)
+    for c in ("interception", "fumble_lost", "third_down_converted", "third_down_failed", "sack"):
+        if c not in pbp:
+            pbp[c] = pd.NA
+        pbp[c] = pd.to_numeric(pbp[c], errors="coerce")
+    sc = pbp[pbp.play_type.isin(["pass", "run"]) & (pbp.qb_kneel.fillna(0) == 0) & (pbp.qb_spike.fillna(0) == 0)].copy()
+    sc["drop"] = (sc.qb_dropback.fillna(0) == 1).astype(float)
+    sc["rush1"] = 1.0 - sc["drop"]
+    sc["p_epa"] = sc.epa.where(sc["drop"] == 1, 0.0)
+    sc["r_epa"] = sc.epa.where(sc["rush1"] == 1, 0.0)
+    off = sc.groupby(["game_id", "posteam"]).agg(plays=("epa", "size"), yds=("yards_gained", "sum"), epa=("epa", "sum"),
+                                                 drops=("drop", "sum"), p_epa=("p_epa", "sum"), rushes=("rush1", "sum"),
+                                                 r_epa=("r_epa", "sum"))
+    off.index.names = ["game_id", "team"]
+    allp = pbp[pbp.posteam.notna()]
+    tov = allp.groupby(["game_id", "posteam"]).agg(give=("interception", "sum"), fum=("fumble_lost", "sum"),
+                                                   third_conv=("third_down_converted", "sum"), third_fail=("third_down_failed", "sum"))
+    tov.index.names = ["game_id", "team"]
+    dfn = allp.groupby(["game_id", "defteam"]).agg(sacks=("sack", "sum"))
+    dfn.index.names = ["game_id", "team"]
+    t = off.join(tov, how="left").join(dfn, how="left").fillna(0.0).reset_index()
+    t["giveaways"] = t.give + t.fum
+    t["third_att"] = t.third_conv + t.third_fail
+    o = t[["game_id", "team", "plays", "yds", "epa", "giveaways"]].rename(
+        columns={"team": "opp_team", "plays": "opp_plays", "yds": "opp_yds", "epa": "opp_epa", "giveaways": "takeaways"})
+    t = t.merge(o, on="game_id")
+    t = t[t.team != t.opp_team].copy()
+    t["to_margin"] = t.takeaways - t.giveaways
+    p = games[games.played & (games.season >= season - 1)]
+    pts = pd.concat([pd.DataFrame({"game_id": p.game_id, "team": p.home_team, "pts": p.home_score, "opp_pts": p.away_score}),
+                     pd.DataFrame({"game_id": p.game_id, "team": p.away_team, "pts": p.away_score, "opp_pts": p.home_score})])
+    t = pts.merge(t, on=["game_id", "team"], how="left").fillna(0.0)
+    g = pd.DataFrame({"game_id": games.game_id, "date": games.gameday, "season": games.season, "home": games.home_team,
+                      "away": games.away_team, "home_score": games.home_score, "away_score": games.away_score,
+                      "played": games.played, "regular": games.game_type.eq("REG"),
+                      "extra": games.overtime.map({1: "OT", 1.0: "OT"})})
+    return matchup.Matchups(g, t, NFL_STATS, str, ties=True)
+
+
+_MU = {}
 
 
 def spread_text(home, away, s):
@@ -75,6 +146,8 @@ def week_file(season, week):
                "home_injury": g["home_injury"], "away_injury": g["away_injury"],
                "home_abs": (g["home_lineup"] or {}).get("absences", []), "away_abs": (g["away_lineup"] or {}).get("absences", []),
                "home_badges": [], "away_badges": []}
+        if _MU.get("m") is not None:
+            out["matchup"] = _MU["m"].for_game(g["home"], g["away"], season, wk.loc[wk.game_id == g["game_id"], "gameday"].iloc[0])
         if g["played"]:
             out.update({"home_score": g.get("home_score"), "away_score": g.get("away_score"), "winner": g.get("winner"),
                         "model_correct": g.get("model_correct"), "vegas_correct": g.get("vegas_correct")})
@@ -150,6 +223,10 @@ def main():
     E.ensure()
     if E.error:
         raise SystemExit(E.error)
+    try:
+        _MU["m"] = build_matchups(E)
+    except Exception as e:  # noqa: BLE001  (the matchup section is extra; never let it stop the build)
+        print(f"[app] matchups skipped: {type(e).__name__}: {e}")
     season = E.season
     st = H.status({})
     periods = []

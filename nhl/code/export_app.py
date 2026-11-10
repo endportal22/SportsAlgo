@@ -26,8 +26,68 @@ import pandas as pd
 
 sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
 import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
+import features as F
 import hud_data as H
-from paths import ROOT, today
+from paths import DATA, ROOT, today
+
+try:
+    import matchup
+except ImportError:   # older local copies without shared/matchup.py: no matchup section
+    matchup = None
+
+NHL_STATS = [
+    {"key": "gf", "label": "Goals per game", "num": "gf", "den": "gp", "fmt": "{:.2f}", "better": "high"},
+    {"key": "ga", "label": "Goals against", "num": "ga", "den": "gp", "fmt": "{:.2f}", "better": "low"},
+    {"key": "xg", "label": "5-on-5 expected goals share", "num": "ev_xgf", "den": "ev_xgt", "scale": 100, "fmt": "{:.1f}%", "better": "high"},
+    {"key": "sf", "label": "Shots per game", "num": "sf", "den": "gp", "better": "high"},
+    {"key": "sa", "label": "Shots against", "num": "sa", "den": "gp", "better": "low"},
+    {"key": "pp", "label": "Power play (goals per 60 min)", "num": "ppg", "den": "pp_min", "scale": 60, "fmt": "{:.1f}", "better": "high"},
+    {"key": "pk", "label": "Penalty kill (goals against per 60)", "num": "pkga", "den": "pk_min", "scale": 60, "fmt": "{:.1f}", "better": "low"},
+    {"key": "sh", "label": "Shooting %", "num": "gf_sog", "den": "sf", "scale": 100, "better": "high"},
+    {"key": "sv", "label": "Save %", "num": "saves", "den": "sa_ing", "scale": 1000, "fmt": ".{:03.0f}", "better": "high"},
+]
+
+
+def build_matchups():
+    """Head-to-head, form, records and stat comparisons (shared/matchup.py)."""
+    if matchup is None:
+        return None
+    E = H.ENGINE
+    df = F.load_games(DATA)
+    season = int(E.season)
+    shots = F.load_kind(DATA, "shots", [season - 1, season])
+    states = F.load_kind(DATA, "states", [season - 1, season])
+    sog = shots[shots.ev.isin(["S", "G"])].assign(one=1.0, goal=lambda d: (d.ev == "G").astype(float))
+    by = lambda d, col, v: d.groupby(["game_id", col])[v].sum().rename_axis(["game_id", "team"])
+    ing = sog[sog.opp_g == 1]
+    pp = sog[(sog.strength == "PP")]
+    t = pd.concat({"sf": by(sog, "team", "one"), "sa": by(sog, "opp", "one"), "gf_sog": by(sog, "team", "goal"),
+                   "saves": by(ing.assign(sv=1.0 - ing.goal), "opp", "sv"), "sa_ing": by(ing, "opp", "one"),
+                   "ppg": by(pp, "team", "goal"), "pkga": by(pp, "opp", "goal")}, axis=1).fillna(0.0)
+    st = states.set_index(["game_id", "team"])
+    t = t.join((st[["toi_pp", "toi_pk"]] / 60.0).rename(columns={"toi_pp": "pp_min", "toi_pk": "pk_min"}), how="outer").fillna(0.0)
+    ts = E.pl.get("tstats")
+    if ts is not None:
+        x = ts.set_index(["game_id", "team"])[["ev_xgf", "ev_xga"]]
+        t = t.join(x, how="left")
+        t["ev_xgt"] = t.ev_xgf + t.ev_xga
+    else:
+        t["ev_xgf"], t["ev_xgt"] = 0.0, 0.0
+    # goals for/against from final scores, without the shootout's extra goal
+    p = df[df.played & (df.season >= season - 1)]
+    so = p.last_period.eq("SO")
+    hs = p.home_score - (so & (p.home_score > p.away_score)).astype(float)
+    as_ = p.away_score - (so & (p.away_score > p.home_score)).astype(float)
+    sc = pd.concat([pd.DataFrame({"game_id": p.game_id, "team": p.home_team, "gf": hs, "ga": as_}),
+                    pd.DataFrame({"game_id": p.game_id, "team": p.away_team, "gf": as_, "ga": hs})])
+    t = sc.merge(t.reset_index(), on=["game_id", "team"], how="left").fillna(0.0)
+    g = pd.DataFrame({"game_id": df.game_id, "date": df.gameday, "season": df.season, "home": df.home_team,
+                      "away": df.away_team, "home_score": df.home_score, "away_score": df.away_score, "played": df.played,
+                      "regular": df.game_type.eq("R"), "extra": df.last_period.where(df.last_period.isin(["OT", "SO"]))})
+    return matchup.Matchups(g, t, NHL_STATS, lambda s: f"{s}-{str(s + 1)[-2:]}", otl=True)
+
+
+_MU = {}
 
 
 def ml_text(home, away, hml, aml):
@@ -73,6 +133,8 @@ def day_file(day):
         for side in ("home", "away"):
             for a in out[f"{side}_abs"]:
                 a["why"] = a.get("why") or "out"
+        if _MU.get("m") is not None:
+            out["matchup"] = _MU["m"].for_game(g["home"], g["away"], H.ENGINE.season, pd.Timestamp(day))
         if g["played"]:
             out.update({"home_score": g.get("home_score"), "away_score": g.get("away_score"),
                         "score_note": g.get("last_period"), "winner": g.get("winner"),
@@ -143,6 +205,10 @@ def main():
     E.ensure()
     if getattr(E, "error", None):
         raise SystemExit(E.error)
+    try:
+        _MU["m"] = build_matchups()
+    except Exception as e:  # noqa: BLE001  (the matchup section is extra; never let it stop the build)
+        print(f"[app] matchups skipped: {type(e).__name__}: {e}")
     st = H.status({})
     last_day = pd.Timestamp(today()) + pd.Timedelta(days=args.ahead)
     periods = []

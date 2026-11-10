@@ -226,6 +226,35 @@ th:first-child, td:first-child { text-align: left; }
 .lock-in button { width: 100%; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 12px; padding: 13px; font: 700 18px var(--display); letter-spacing: .03em; cursor: pointer; }
 .install { display: flex; gap: 10px; align-items: flex-start; background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; }
 .install button { background: none; border: 0; color: var(--muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 0 2px; }
+
+/* matchup: records, stat comparison, head to head, recent form */
+.cmp { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.cmp-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr); gap: 8px; align-items: center;
+  padding: 7px 12px; border-bottom: 1px solid var(--line); font-size: 14px; }
+.cmp-row:last-child { border-bottom: 0; }
+.cmp-row .lab { text-align: center; color: var(--muted); font-size: 12.5px; line-height: 1.2; }
+.cmp-row .h { text-align: right; }
+.cmp-row b { font: 600 17px/1.1 var(--display); letter-spacing: .01em; }
+.cmp-row b.win { color: var(--accent); }
+.cmp-row .rnk { display: block; font-size: 11px; color: var(--dim); }
+.cmp-row.hd { background: var(--panel-2); padding: 8px 12px; }
+.cmp-row.hd .ab { font-size: 21px; color: var(--fg); }
+.cmp-row.sep { background: var(--panel-2); padding: 4px 12px; }
+.cmp-row.sep .lab { grid-column: 1 / -1; font-size: 11.5px; color: var(--dim); }
+.meet { list-style: none; margin: 0; padding: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.meet li { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: 14px; }
+.meet li:last-child { border-bottom: 0; }
+.meet .when { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+.meet .sc { text-align: right; }
+.meet .sc .w { color: var(--fg); font-weight: 600; } .meet .sc .l { color: var(--muted); }
+.form { display: grid; gap: 10px; }
+.form-row { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 8px; align-items: center; }
+.form-row .ab { font-size: 19px; }
+.pills { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+.pill { background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 4px 2px 5px; text-align: center; line-height: 1.15; min-width: 0; }
+.pill b { display: block; font: 700 16px/1.1 var(--display); }
+.pill span { display: block; font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pill.W b { color: var(--good); } .pill.L b { color: var(--bad); } .pill.OTL b { color: var(--warn); } .pill.T b { color: var(--muted); }
 </style>
 
 </head>
@@ -537,6 +566,33 @@ function openSheet(html, key) {
 function closeSheet() { $("#sheet").hidden = true; document.body.style.overflow = ""; }
 window.addEventListener("popstate", () => { if (!$("#sheet").hidden) { closeSheet(); const d = L() && L().periods[S.period]; if (S.view === "games" && d) renderGames(d); } });
 
+/* matchup section of the game screen (records, stats, head to head, recent form) */
+function matchupHtml(g) {
+  const mu = g.matchup; if (!mu) return "";
+  const rec = mu.records, st = mu.stats, h = mu.h2h, A = g.away, H = g.home;
+  const row = (a, label, b, win, ar, hr) => `<div class="cmp-row"><span><b class="num ${win === "away" ? "win" : ""}">${esc(a)}</b>${ar ? `<span class="rnk">${esc(ar)}</span>` : ""}</span>
+    <span class="lab">${esc(label)}</span><span class="h"><b class="num ${win === "home" ? "win" : ""}">${esc(b)}</b>${hr ? `<span class="rnk">${esc(hr)}</span>` : ""}</span></div>`;
+  let cmp = `<div class="cmp-row hd"><span class="ab">${esc(A)}</span><span class="lab"></span><span class="ab h">${esc(H)}</span></div>`;
+  cmp += row(rec.away.overall, "Record", rec.home.overall);
+  cmp += row(rec.away.away, "Road / home record", rec.home.home);
+  if (rec.away.last10 && rec.home.last10) cmp += row(rec.away.last10, "Last 10", rec.home.last10);
+  if (rec.away.streak || rec.home.streak) cmp += row(rec.away.streak || "—", "Streak", rec.home.streak || "—");
+  if (st && st.rows.length) {
+    cmp += `<div class="cmp-row sep"><span class="lab">${esc(st.basis)}, league rank of ${st.teams}</span></div>`;
+    for (const r of st.rows) cmp += row(r.away, r.label, r.home, r.better, r.away_rank, r.home_rank);
+  }
+  const meet = (h.games || []).slice(0, 8).map((x) => {
+    const aw = x.winner === x.away, hw = x.winner === x.home;
+    return `<li><span class="when">${esc(x.date)}${x.playoff ? " · playoffs" : ""}</span><span class="sc num"><span class="${aw ? "w" : "l"}">${esc(x.away)} ${x.away_score}</span> at <span class="${hw ? "w" : "l"}">${esc(x.home)} ${x.home_score}</span>${x.note ? ` (${esc(x.note)})` : ""}</span></li>`;
+  }).join("");
+  const pills = (side) => (mu.form[side] || []).map((f) => `<div class="pill ${esc(f.r)}" title="${esc(f.date)}"><b>${esc(f.r === "OTL" ? "OTL" : f.r)}</b><span class="num">${esc(f.score)}${f.note ? " " + esc(f.note) : ""}</span><span>${f.home ? "vs" : "@"} ${esc(f.opp)}</span></div>`).join("");
+  return `<div><div class="h3">Matchup</div><div class="cmp">${cmp}</div></div>
+    <div><div class="h3">Head to head<small>${esc(h.summary)}</small></div>${h.season ? `<div class="note" style="margin:-4px 0 8px">${esc(h.season)}</div>` : ""}${meet ? `<ul class="meet">${meet}</ul>` : ""}</div>
+    <div><div class="h3">Recent form<small>most recent first</small></div><div class="form">
+      <div class="form-row"><span class="ab">${esc(A)}</span><div class="pills">${pills("away")}</div></div>
+      <div class="form-row"><span class="ab">${esc(H)}</span><div class="pills">${pills("home")}</div></div></div></div>`;
+}
+
 function openGame(id) {
   const d = L().periods[S.period]; const g0 = d.games.find((x) => String(x.id) === String(id)); if (!g0) return;
   const g = view(g0, d.model), m = L().meta, u = m.units, dp = dec();
@@ -605,6 +661,7 @@ function openGame(id) {
     ${g.played ? `<div class="note">Final: ${esc(g.away)} ${g.away_score}, ${esc(g.home)} ${g.home_score}${g.score_note ? " (" + esc(g.score_note) + ")" : ""}. The model ${g.model_correct ? "called it" : "missed"}${g.vegas_correct == null ? "" : `, Vegas ${g.vegas_correct ? "called it" : "missed"}`}.</div>` : ""}
     ${warn.map((w) => `<div class="note warn">${esc(w)}</div>`).join("")}
     ${who}
+    ${matchupHtml(g0)}
     ${missing}
     <div><div class="h3">Where the margin comes from<small>${esc(u.margin)}</small></div><div class="wf">
       ${rows.map((r) => `<div class="wfr"><span class="lab">${esc(r.label)}</span>${bar(r.points)}<span class="pts num">${sgn(r.points, dp)}</span></div>`).join("")}

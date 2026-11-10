@@ -33,6 +33,8 @@ PBP_COLS = [
     "passer_player_id", "passer_player_name", "rusher_player_id", "rusher_player_name",
     "receiver_player_id", "receiver_player_name",
 ]
+# extra columns for the app's matchup stats; only needed for this season and last
+MATCHUP_COLS = ["interception", "fumble_lost", "third_down_converted", "third_down_failed", "sack"]
 REL = "https://github.com/nflverse/nflverse-data/releases/download/"
 SNAP_URL = REL + "snap_counts/snap_counts_{season}.csv"
 INJ_URL = REL + "injuries/injuries_{season}.csv"
@@ -93,10 +95,12 @@ def main():
     for season in range(args.start, current + 1):
         fresh = season == current or args.force
         out = data / f"pbp_{season}.csv.gz"
-        if fresh or not out.exists() or not _has_cols(out, PBP_COLS):
+        need = PBP_COLS + (MATCHUP_COLS if season >= current - 1 else [])
+        if fresh or not out.exists() or not _has_cols(out, need):
             print(f"[pbp] {season} ...", end=" ", flush=True)
             raw = fetch(PBP_URL.format(season=season))
-            pbp = pd.read_csv(io.BytesIO(raw), compression="gzip", usecols=lambda c: c in PBP_COLS, low_memory=False)
+            keep = set(PBP_COLS + MATCHUP_COLS)
+            pbp = pd.read_csv(io.BytesIO(raw), compression="gzip", usecols=lambda c: c in keep, low_memory=False)
             pbp.to_csv(out, index=False, compression="gzip")
             print(f"{len(pbp):,} plays, {pbp['game_id'].nunique()} games")
         for name, url, cols in (("snaps", SNAP_URL, SNAP_COLS), ("injuries", INJ_URL, INJ_COLS)):

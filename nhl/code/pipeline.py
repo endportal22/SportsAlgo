@@ -97,6 +97,7 @@ def build(data_dir=DATA, verbose=False, use_cache=True):
     df["market_logit"] = np.log(p / (1 - p))
     pl["xg_model"] = xg_model
     pl["shots_by_game"] = shots.groupby("game_id").size().to_dict()
+    pl["tstats"] = tstats          # per team-game xG and goals, for the app's matchup stats
     out = (df, league, pl)
     if verbose:
         print(f"[pipeline] built in {time.time() - t0:.1f}s", flush=True)
