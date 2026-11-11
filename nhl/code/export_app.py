@@ -31,9 +31,16 @@ import hud_data as H
 from paths import DATA, ROOT, today
 
 try:
+    import livelog
     import matchup
-except ImportError:   # older local copies without shared/matchup.py: no matchup section
-    matchup = None
+except ImportError:   # older local copies without shared/: no matchup section or live record
+    livelog = matchup = None
+_LOG = {}
+
+
+def track(out):
+    """Save upcoming predictions; show played games with the prediction saved before them."""
+    return livelog.track(_LOG.get("l"), out) if livelog is not None else out
 
 NHL_STATS = [
     {"key": "gf", "label": "Goals per game", "num": "gf", "den": "gp", "fmt": "{:.2f}", "better": "high"},
@@ -139,7 +146,7 @@ def day_file(day):
             out.update({"home_score": g.get("home_score"), "away_score": g.get("away_score"),
                         "score_note": g.get("last_period"), "winner": g.get("winner"),
                         "model_correct": g.get("model_correct"), "vegas_correct": g.get("market_correct")})
-        games.append(out)
+        games.append(track(out))
     return {"key": p["date"], "model": appdata.model_params(model, H.FEATURE_LABELS, "logistic", {"rating": "d_goalie"}),
             "games": games}
 
@@ -205,6 +212,8 @@ def main():
     E.ensure()
     if getattr(E, "error", None):
         raise SystemExit(E.error)
+    if livelog is not None:
+        _LOG["l"] = livelog.LiveLog(DATA, "nhl")
     try:
         _MU["m"] = build_matchups()
     except Exception as e:  # noqa: BLE001  (the matchup section is extra; never let it stop the build)
@@ -233,6 +242,10 @@ def main():
               "total": {"n": rec["total"].get("n", 0), "model_right": rec["total"].get("model_right", 0),
                         "vegas_n": rec["total"].get("n_line", 0), "vegas_right": rec["total"].get("vegas_right", 0),
                         "model_ll": rec["total"].get("model_ll")}}
+    if _LOG.get("l") is not None:
+        record["live"] = livelog.live_record(_LOG["l"])
+        W.write("live_log.json", _LOG["l"].payload())
+        _LOG["l"].save()
     pw = H.rankings()
     W.write("power.json", {"about": "Goals per game better than an average team, with each team's No. 1 goalie.",
                            "unit": "goals", "teams": [{"rank": t["rank"], "team": t["team"], "power": t["power"],

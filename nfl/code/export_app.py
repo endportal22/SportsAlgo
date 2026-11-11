@@ -27,9 +27,17 @@ import pandas as pd
 sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
 import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
 try:
+    import livelog
     import matchup
-except ImportError:   # older local copies without shared/matchup.py: no matchup section
-    matchup = None
+except ImportError:   # older local copies without shared/: no matchup section or live record
+    livelog = matchup = None
+_LOG = {}
+_START = {}   # game_id -> kickoff (UTC), for saving pre-game predictions
+
+
+def track(out):
+    """Save upcoming predictions; show played games with the prediction saved before them."""
+    return livelog.track(_LOG.get("l"), out) if livelog is not None else out
 import hud_data as H
 from paths import ROOT
 
@@ -151,7 +159,8 @@ def week_file(season, week):
         if g["played"]:
             out.update({"home_score": g.get("home_score"), "away_score": g.get("away_score"), "winner": g.get("winner"),
                         "model_correct": g.get("model_correct"), "vegas_correct": g.get("vegas_correct")})
-        games.append(out)
+        out["time"] = _START.get(g["game_id"])
+        games.append(track(out))
     return {"key": str(week), "model": appdata.model_params(
         model, H.FEATURE_LABELS, "normal",
         {"rating": "d_qb_rating", "new": "d_qb_new", "final_week": "fw_x_qb_rating"}), "games": games}
@@ -223,6 +232,14 @@ def main():
     E.ensure()
     if E.error:
         raise SystemExit(E.error)
+    if livelog is not None:
+        import features as F
+        _LOG["l"] = livelog.LiveLog(H.DATA, "nfl")
+        gm = F.load_games(H.DATA)
+        for r in gm.itertuples(index=False):
+            if isinstance(getattr(r, "gametime", None), str):
+                t = pd.Timestamp(f"{pd.Timestamp(r.gameday).date()} {r.gametime}").tz_localize("America/New_York")
+                _START[r.game_id] = t.tz_convert("UTC").strftime("%Y-%m-%dT%H:%MZ")
     try:
         _MU["m"] = build_matchups(E)
     except Exception as e:  # noqa: BLE001  (the matchup section is extra; never let it stop the build)
@@ -242,6 +259,10 @@ def main():
     record = {"rows": [{"label": f"Week {r['week']}", "n": r["n"], "model_right": r["model_right"],
                         "vegas_right": r["vegas_right"], "model_ll": r["model_ll"]} for r in rec["weeks"]],
               "total": rec["total"]}
+    if _LOG.get("l") is not None:
+        record["live"] = livelog.live_record(_LOG["l"])
+        W.write("live_log.json", _LOG["l"].payload())
+        _LOG["l"].save()
     pw = H.rankings()
     W.write("power.json", {"about": "Points better than an average team on a neutral field, with each team's projected QB.",
                            "unit": "pts", "teams": [{"rank": t["rank"], "team": t["team"], "power": t["power"],

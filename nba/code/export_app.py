@@ -28,9 +28,16 @@ import pandas as pd
 sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
 import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
 try:
+    import livelog
     import matchup
-except ImportError:   # older local copies without shared/matchup.py: no matchup section
-    matchup = None
+except ImportError:   # older local copies without shared/: no matchup section or live record
+    livelog = matchup = None
+_LOG = {}
+
+
+def track(out):
+    """Save upcoming predictions; show played games with the prediction saved before them."""
+    return livelog.track(_LOG.get("l"), out) if livelog is not None else out
 import pipeline as PL
 import ratings as R
 from features import FEATURE_LABELS
@@ -201,7 +208,7 @@ class Exporter:
             return None
         model = self.E.fit_before(pd.Timestamp(day))
         cw = impact_weights(model)
-        games = [self.game(g, model, cw) for g in sub.sort_values(["start_utc", "game_id"]).itertuples(index=False)]
+        games = [track(self.game(g, model, cw)) for g in sub.sort_values(["start_utc", "game_id"]).itertuples(index=False)]
         return {"key": day, "model": appdata.model_params(model, FEATURE_LABELS, "logistic", SWITCH), "games": games}
 
 
@@ -342,6 +349,8 @@ def main():
     t0 = time.time()
     W = appdata.Writer(args.out)
     E = PL.ENGINE.ensure()
+    if livelog is not None:
+        _LOG["l"] = livelog.LiveLog(PL.DATA, "nba")
     ex = Exporter(E)
     df = E.df
     tday = pd.Timestamp(today())
@@ -360,6 +369,11 @@ def main():
                         "bottom": _short(d), "played": played, "file": name})
     upcoming = [p for p in periods if pd.Timestamp(p["key"]) >= tday]
     default = upcoming[0]["key"] if upcoming else (periods[-1]["key"] if periods else None)
+    record = season_record(ex, E.season)
+    if _LOG.get("l") is not None:
+        record["live"] = livelog.live_record(_LOG["l"])
+        W.write("live_log.json", _LOG["l"].payload())
+        _LOG["l"].save()
     W.write("power.json", power(ex))
     players, hist = players_files(ex)
     W.write("players.json", players)
@@ -373,7 +387,7 @@ def main():
         "injury_period": None,
         "units": {"margin": "pts", "starter": "Lineup", "starter_plural": "Lineups", "rating_unit": "pts/48"},
         "starter_help": "Based on the latest injury report. Tap a player to mark him in or out; the prediction updates instantly.",
-        "injury_pending": None, "record": season_record(ex, E.season), "model": "v1",
+        "injury_pending": None, "record": record, "model": "v1",
     })
     W.finish()
     print(f"[app] NBA: wrote {W.summary()} to {W.out} in {time.time() - t0:.0f}s")

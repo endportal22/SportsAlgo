@@ -298,6 +298,8 @@ th:first-child, td:first-child { text-align: left; }
 
   <section id="v-record" hidden>
     <h2>Season record</h2>
+    <div id="rec-live"></div>
+    <div class="h3" style="margin-top:6px">Whole season, re-scored</div>
     <p class="sub">Each game predicted by a model trained only on earlier games. Not betting advice.</p>
     <div class="stats" id="rec-sum"></div>
     <div class="panel"><table id="rec-table"></table></div>
@@ -658,7 +660,7 @@ function openGame(id) {
       <div class="model"><div class="k">Model${anyOv ? ", your changes" : ""}</div><div class="v num">${esc(g.pick)} ${pct(pickP)}</div><div class="note">${esc(by(g.home, g.away, g.margin))} ${esc(u.margin)}</div></div>
       <div class="vegas"><div class="k">Vegas</div><div class="v num">${vPick ? esc(vPick) + " " + pct(vP) : "—"}</div><div class="note">${esc(g.vegas_text || "no line")}</div></div>
     </div>
-    ${g.played ? `<div class="note">Final: ${esc(g.away)} ${g.away_score}, ${esc(g.home)} ${g.home_score}${g.score_note ? " (" + esc(g.score_note) + ")" : ""}. The model ${g.model_correct ? "called it" : "missed"}${g.vegas_correct == null ? "" : `, Vegas ${g.vegas_correct ? "called it" : "missed"}`}.</div>` : ""}
+    ${g.played ? `<div class="note">Final: ${esc(g.away)} ${g.away_score}, ${esc(g.home)} ${g.home_score}${g.score_note ? " (" + esc(g.score_note) + ")" : ""}. The model ${g.model_correct ? "called it" : "missed"}${g.vegas_correct == null ? "" : `, Vegas ${g.vegas_correct ? "called it" : "missed"}`}.${g.live ? " The model's numbers here are the ones saved before the game." : ""}</div>` : ""}
     ${warn.map((w) => `<div class="note warn">${esc(w)}</div>`).join("")}
     ${who}
     ${matchupHtml(g0)}
@@ -793,6 +795,12 @@ async function openPlayer(pid) {
 function renderRecord() {
   const r = L().meta.record, t = r.total || {};
   const ll = (x) => x == null ? "—" : x.toFixed(3);
+  const lv = r.live;
+  $("#rec-live").innerHTML = lv && lv.n ? `<div class="h3">Live picks<small>saved before each game, since ${esc(lv.since)}</small></div>
+    <div class="stats"><div class="stat m"><div class="k">Model</div><div class="v num">${lv.model_right}-${lv.n - lv.model_right}<small>${Math.round(lv.model_right / lv.n * 100)}%</small></div></div>
+    <div class="stat"><div class="k">Vegas</div><div class="v num">${lv.vegas_n ? `${lv.vegas_right}-${lv.vegas_n - lv.vegas_right}<small>${Math.round(lv.vegas_right / lv.vegas_n * 100)}%</small>` : "—"}</div></div>
+    <div class="stat m"><div class="k">Model log loss</div><div class="v num">${ll(lv.model_ll)}</div></div><div class="stat"><div class="k">Vegas log loss</div><div class="v num">${ll(lv.vegas_ll)}</div></div></div>`
+    : `<p class="note" style="margin:0 0 14px">Live picks start counting once games finish: every prediction is now saved before the game starts, so this will show how the model really did, not just a re-score.</p>`;
   const vn = t.vegas_n ?? t.n;
   $("#rec-sum").innerHTML = t.n ? `<div class="stat m"><div class="k">Model</div><div class="v num">${t.model_right}-${t.n - t.model_right}<small>${Math.round(t.model_right / t.n * 100)}%</small></div></div>
     ${vn ? `<div class="stat"><div class="k">Vegas</div><div class="v num">${t.vegas_right}-${vn - t.vegas_right}<small>${Math.round(t.vegas_right / vn * 100)}%</small></div></div>` : `<div class="stat"><div class="k">Vegas</div><div class="v num">—</div></div>`}

@@ -1,14 +1,18 @@
 # Rebuilds every league's predictions and publishes the phone app to GitHub Pages.
-# Runs every morning, every afternoon (NHL goalies, NBA injury reports and lines), on Sunday
-# late morning (NFL inactives), when you press "Run workflow" on the Actions tab, and when
-# new code is pushed. A league that fails to update keeps its last published predictions.
+# Runs every morning, late afternoon and twice more before evening games (late scratches,
+# confirmed goalies), on Sundays before the NFL kickoffs (inactives), when you press
+# "Run workflow" on the Actions tab, and when new code is pushed. Each run also saves the
+# prediction for every game that hasn't started, so the app can show a true live record. A league that fails to update keeps its last published predictions.
 name: Update predictions
 
 on:
   schedule:
     - cron: "0 11 * * *"     # daily, ~6am Eastern
     - cron: "0 22 * * *"     # daily, ~5pm Eastern
-    - cron: "30 16 * * 0"    # Sunday, ~11:30am Eastern
+    - cron: "15 23 * * *"    # daily, ~6:15pm Eastern: late scratches and confirmed goalies before 7pm starts
+    - cron: "30 1 * * *"     # daily, ~8:30pm Eastern: the same for West Coast games
+    - cron: "30 16 * * 0"    # Sunday, ~11:30am Eastern (NFL inactives)
+    - cron: "0 19 * * 0"     # Sunday, ~2pm Eastern (inactives for the 4pm NFL games)
   workflow_dispatch:
   push:
     branches: [main]
