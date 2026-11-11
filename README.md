@@ -26,8 +26,10 @@ It opens in its own window and keeps the last predictions it loaded when you're 
 `.github/workflows/update.yml` runs:
 
 - every morning (about 6am Eastern);
-- every afternoon (about 5pm Eastern, for NHL goalies, the NBA injury report and the day's lines);
-- Sunday late morning (after the NFL inactives).
+- late afternoon (about 5pm Eastern), and again at about 6:15pm and 8:30pm Eastern, to catch late scratches and confirmed goalies before evening games;
+- Sunday late morning and early afternoon (after each wave of NFL inactives).
+
+Every run also saves the prediction for each game that hasn't started. The Record tab's "Live picks" use those saved predictions, so they show how the model really did; the whole-season re-score below them is the backtest-style number.
 
 Each run does this for every league (`.github/scripts/build_league.sh`):
 
@@ -61,7 +63,7 @@ Walk-forward backtests: every game is predicted by a model trained only on earli
 |---|---|---|---|
 | NFL | 2019–2025 | 0.621 | 0.608 |
 | NHL | 2020–2025 | 0.660 | 0.659 |
-| NBA | 2017–2026 (games with a line) | 0.610 | 0.606 |
+| NBA | 2017–2026 (games with a line) | 0.609 | 0.606 |
 
 ## Run a league locally
 

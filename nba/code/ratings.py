@@ -35,6 +35,9 @@ class Params:
     box_repl = -0.30         # bench level for the shrinkage, per minute, relative to average
     min_halflife = 4.0       # games, for projected minutes
     rookie_min = 12.0
+    rapm_alpha = 1000.0      # ridge penalty for the play-by-play plus-minus (in minutes of floor time)
+    rapm_halflife = 500.0    # days
+    rapm_prior = 0.3         # weight of the box-score rating as the plus-minus prior
 
 
 P = Params()
@@ -147,7 +150,38 @@ def fit_players(games, box, cutoff, p=P):
     return out
 
 
-def all_fits(games, box, p=P, start=None, end=None, verbose=False):
+def fit_rapm(games, stints, cutoff, box_prior=None, p=P):
+    """Plus-minus from who was actually on the floor together (play-by-play stints before `cutoff`):
+    each stint's margin per 48 minutes explained by the ten players on the floor, weighted by
+    minutes, shrunk toward 0 (or toward p.rapm_prior x the box-score rating)."""
+    lo = cutoff - pd.Timedelta(days=p.pm_window)
+    g = games[games.played & (games.date < cutoff) & (games.date >= lo)][["game_id", "date", "neutral"]]
+    s = stints.merge(g, on="game_id", how="inner")
+    s = s[s.secs >= 5]
+    if s.empty:
+        return pd.Series(dtype=float)
+    hcols, acols = [f"h{k}" for k in range(1, 6)], [f"a{k}" for k in range(1, 6)]
+    ids = s[hcols + acols].values
+    pids = np.unique(ids)
+    col = np.searchsorted(pids, ids)
+    n = len(s)
+    rows = np.repeat(np.arange(n), 10)
+    vals = np.tile(np.r_[np.ones(5), -np.ones(5)], n)
+    X = sparse.csr_matrix((vals, (rows, col.ravel())), shape=(n, len(pids)))
+    home = (~s.neutral.values).astype(float).reshape(-1, 1)
+    X = sparse.hstack([X, sparse.csr_matrix(home * 10.0)]).tocsr()
+    mins = s.secs.values / 60.0
+    y = (s.home_pts.values - s.away_pts.values) * 48.0 / mins
+    w = mins * 0.5 ** ((cutoff - s.date).dt.days.values / p.rapm_halflife)
+    prior = np.zeros(len(pids))
+    if box_prior is not None and p.rapm_prior:
+        prior = p.rapm_prior * box_prior.reindex(pids).fillna(0.0).values
+        y = y - X[:, :-1] @ prior
+    rg = Ridge(alpha=p.rapm_alpha, fit_intercept=False, solver="sparse_cg", tol=1e-5).fit(X, y, sample_weight=w)
+    return pd.Series(rg.coef_[:-1] + prior, index=pids)
+
+
+def all_fits(games, box, p=P, start=None, end=None, verbose=False, stints=None, rapm_cache=None):
     """{cutoff: ratings} for every weekly refit date from `start` through `end` (today);
     games after the last refit use the latest ratings."""
     fits = {}
@@ -159,6 +193,15 @@ def all_fits(games, box, p=P, start=None, end=None, verbose=False):
         if not (games.date >= c).any():
             continue
         fits[c] = fit_players(games, box, c, p)
+        if stints is not None and len(stints):
+            key = (c, p.rapm_alpha, p.rapm_halflife, p.rapm_prior, p.pm_window)
+            if rapm_cache is not None and key in rapm_cache:
+                r = rapm_cache[key]
+            else:
+                r = fit_rapm(games, stints, c, fits[c].set_index("player_id").box, p)
+                if rapm_cache is not None:
+                    rapm_cache[key] = r
+            fits[c]["rapm"] = r.reindex(fits[c].player_id).values
     if verbose:
         print(f"[ratings] {len(fits)} weekly player fits")
     return fits

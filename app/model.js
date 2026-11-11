@@ -17,9 +17,9 @@
   function lineupValue(players, on) {
     const act = players.filter((p) => on(p));
     const tot = act.reduce((s, p) => s + p.min, 0) || 1;
-    let pm = 0, box = 0;
-    for (const p of act) { const sh = 5 * p.min / tot; pm += sh * p.pm; box += sh * p.box; }
-    return { pm, box };
+    const v = { pm: 0, box: 0, rapm: 0 };
+    for (const p of act) { const sh = 5 * p.min / tot; for (const k in v) v[k] += sh * (p[k] || 0); }
+    return v;
   }
   const isOn = (side, ov) => (p) => { const o = ov && ov.lineup && ov.lineup[side]; return o && p.id in o ? o[p.id] : p.on; };
 
@@ -41,14 +41,19 @@
       if (sw.final_week) x[sw.final_week] = game.final_week ? x[sw.rating] : 0;
     }
     if (ov && ov.lineup && sw.lineup && game.home_lineup) {
-      const l = sw.lineup, v = {};
-      for (const side of ["home", "away"]) {
+      // each term: a lineup rating ({f, k}) or the change from the team's usual lineup ({f, delta: {k: weight}})
+      const terms = sw.lineup.terms || [{ f: sw.lineup.pm, k: "pm" }, { f: sw.lineup.box, k: "box" },
+        { f: sw.lineup.delta, delta: { pm: 1, box: sw.lineup.box_w } }];
+      const val = (side) => {
         const lv = lineupValue(game[side + "_lineup"], isOn(side, ov)), t = game[side + "_typ"] || {};
-        v[side] = { ...lv, delta: (lv.pm - (t.pm || 0)) + l.box_w * (lv.box - (t.box || 0)) };
-      }
-      x[l.pm] = v.home.pm - v.away.pm;
-      x[l.box] = v.home.box - v.away.box;
-      x[l.delta] = v.home.delta - v.away.delta;
+        const out = {};
+        for (const term of terms) {
+          out[term.f] = term.k ? lv[term.k] : Object.entries(term.delta).reduce((s, [k, w]) => s + w * (lv[k] - (t[k] || 0)), 0);
+        }
+        return out;
+      };
+      const h = val("home"), a = val("away");
+      for (const term of terms) x[term.f] = h[term.f] - a[term.f];
     }
     return x;
   }

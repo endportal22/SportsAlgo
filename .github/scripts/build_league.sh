@@ -11,12 +11,12 @@ site="${SITE:?}"
 needs_seed=false
 case "$lg" in
   nhl) [ -f nhl/data/games.csv ] || needs_seed=true ;;
-  nba) [ -f nba/data/odds.csv ] || needs_seed=true ;;
+  nba) { [ -f nba/data/odds.csv ] && [ -f nba/data/stints_2015.csv.gz ]; } || needs_seed=true ;;
 esac
 if $needs_seed; then
   if git fetch -q --depth 1 origin data-seed; then
     mkdir -p "$lg/data"
-    git archive FETCH_HEAD "$lg" | tar -x --strip-components=1 -C "$lg/data"
+    git archive FETCH_HEAD "$lg" | tar -x --skip-old-files --strip-components=1 -C "$lg/data"   # never overwrites newer files
     echo "$lg: seeded $(ls "$lg/data" | wc -l) files from data-seed"
   fi
 fi

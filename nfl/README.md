@@ -12,7 +12,7 @@ Predicts every NFL game: who wins, by how much, and how that changes with a diff
   - pass and run matchups
   - QB rating, plus a new-QB flag
   - roster strength from the players actually on the team
-  - injuries, compared with the team's own backups
+  - injuries, compared with the team's own backups. Players listed Questionable count by how often such players actually played (2018–2025), based on their last practice of the week: 45% if they didn't practice, 68% if limited, 78% if full.
   - rest
   - home field
   - division games

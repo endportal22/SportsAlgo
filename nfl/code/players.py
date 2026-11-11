@@ -28,7 +28,8 @@ weighted by their recent snap share, minus players who are out:
   * games already played: the players who actually suited up (inactives are announced
     90 minutes before kickoff, so this is pre-game information);
   * upcoming games: the weekly roster (active players only) minus anyone listed
-    Out or Doubtful on the injury report; Questionable counts at 75%.
+    Out or Doubtful on the injury report; Questionable counts by his last practice of the week
+    (didn't practice 45%, limited 68%, full 78%: how often such players played, 2018-2025).
 Lineup strength is the snap-weighted sum of impact ratings, and the injury cost is
 the gap between that and the same team at full strength.
 """
@@ -48,7 +49,12 @@ PLAYS_PER_GAME = 62.0          # converts EPA/play to points-per-game scale
 HALF_LIFE_DAYS = 400.0         # recency weighting for impact ratings
 WINDOW_DAYS = 3 * 365
 RIDGE_LAMBDA = 2500.0          # shrinkage toward average (tuned in tune_players.py)
-QUESTIONABLE_WEIGHT = 0.75
+QUESTIONABLE_WEIGHT = 0.70        # questionable, no practice listed
+# How often a player listed Questionable actually played (2018-2025), by his last practice of the week
+QUESTIONABLE_BY_PRACTICE = {"Did Not Participate In Practice": 0.45, "Limited Participation in Practice": 0.68,
+                            "Full Participation in Practice": 0.78}
+PRACTICE_WORDS = {"Did Not Participate In Practice": "didn't practice", "Limited Participation in Practice": "limited in practice",
+                  "Full Participation in Practice": "full practice"}
 RECENT_GAMES = 4               # snap-share memory for expected lineups
 
 
@@ -233,7 +239,8 @@ def availability_for_upcoming(data_dir, season, week, team_players):
         i = pd.read_csv(ip, low_memory=False)
         i = i[(i.week == week) & i.report_status.notna()]
         i["team"] = _fix(i["team"])
-        inj = {(t, g): (s, pi) for t, g, s, pi in zip(i.team, i.gsis_id, i.report_status, i.report_primary_injury)}
+        prac = i.practice_status if "practice_status" in i else pd.Series([None] * len(i), index=i.index)
+        inj = {(t, g): (s, pi, pr) for t, g, s, pi, pr in zip(i.team, i.gsis_id, i.report_status, i.report_primary_injury, prac)}
     for team, pids in team_players.items():
         for pid in pids:
             gs = pf2gs.get(pid)
@@ -246,12 +253,13 @@ def availability_for_upcoming(data_dir, season, week, team_players):
                     w, why = 0.0, {"RES": "injured reserve", "DEV": "practice squad", "INA": "inactive",
                                    "CUT": "released", "RET": "retired"}.get(st[0], st[0].lower())
             if w > 0 and gs is not None and (team, gs) in inj:
-                s, part = inj[(team, gs)]
+                s, part, prac = inj[(team, gs)]
                 part = part if isinstance(part, str) else ""
                 if s in ("Out", "Doubtful"):
                     w, why = 0.0, f"{s.lower()}" + (f" ({part.lower()})" if part else "")
                 elif s == "Questionable":
-                    w, why = QUESTIONABLE_WEIGHT, "questionable" + (f" ({part.lower()})" if part else "")
+                    w = QUESTIONABLE_BY_PRACTICE.get(prac, QUESTIONABLE_WEIGHT)
+                    why = "questionable" + (f" ({part.lower()})" if part else "") + (f", {PRACTICE_WORDS[prac]}" if prac in PRACTICE_WORDS else "")
             out[(team, pid)] = (w, why)
     return out
 

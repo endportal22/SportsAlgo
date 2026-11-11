@@ -7,6 +7,7 @@ Download NBA data into nba/data:
   odds.csv                 betting lines (only shown next to the model, never used by it)
   injuries.csv             today's injury report
   rosters.csv              current rosters (catches trades and signings)
+  stints_<season>.csv.gz   who was on the floor together, from the play-by-play (see stints.py)
 
 Finished seasons come from sportsdataverse (ESPN's data, rebuilt daily as CSV files on GitHub);
 the last few days and upcoming games come straight from ESPN, so the newest games are there
@@ -348,6 +349,38 @@ def update_recent(data, cur, back=5, ahead=14):
         print(f"[odds] {len(new)} games updated, {int(out.market_home_prob.notna().sum()):,} with a line")
 
 
+def update_stints(data, seasons, cur):
+    """Play-by-play -> on-floor stints, for seasons that don't have them yet and for new games this
+    season (sportsdataverse's play-by-play files are large, so the current one is re-read at most
+    every 6 hours)."""
+    import stints as ST
+    for s in seasons:
+        fst, fb = data / f"stints_{s}.csv.gz", data / f"box_{s}.csv.gz"
+        fs = data / f"schedule_{s}.csv"
+        if not fb.exists() or not fs.exists():
+            continue
+        stamp = data / f".stints_{s}.fetched"
+        if fst.exists():
+            if s < cur:
+                continue
+            have = set(pd.read_csv(fst, usecols=["game_id"]).game_id)
+            need = set(pd.read_csv(fb, usecols=["game_id"]).game_id) - have
+            if not need or (stamp.exists() and time.time() - stamp.stat().st_mtime < 6 * 3600):
+                continue
+        try:
+            raw = fetch(f"{SDV}/espn_nba_pbp/play_by_play_{s + 1}.csv", timeout=600)
+            pbp = pd.read_csv(io.BytesIO(raw), usecols=lambda c: c in ST.PBP_COLS, low_memory=False)
+        except Exception as e:  # noqa: BLE001
+            print(f"[stints] {s}: play-by-play unavailable ({type(e).__name__}: {e})")
+            continue
+        sched = pd.read_csv(fs)
+        box = pd.read_csv(fb, dtype={"pm": str})
+        st = ST.build_season(pbp, box, sched)
+        st.to_csv(fst, index=False, compression="gzip")
+        stamp.touch()
+        print(f"[stints] {s}-{str(s + 1)[-2:]}: {len(st):,} stints from {st.game_id.nunique()} games")
+
+
 def update_injuries(data):
     try:
         js = get_json(f"{ESPN_SITE}/injuries", timeout=30)
@@ -418,6 +451,7 @@ def main():
     data.mkdir(parents=True, exist_ok=True)
     cur = current_season()
     update_seasons(data, range(args.start, cur + 1), cur, args.force)
+    update_stints(data, range(args.start, cur + 1), cur)
     if not args.no_espn:
         try:
             update_recent(data, cur)

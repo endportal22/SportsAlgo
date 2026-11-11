@@ -43,7 +43,11 @@ import ratings as R
 from features import FEATURE_LABELS
 from paths import ROOT, season_label, today
 
-SWITCH = {"lineup": {"pm": "d_pm", "box": "d_box", "delta": "d_lineup_delta", "box_w": 0.5}}
+# How the phone recomputes the lineup features when you mark players in or out (see app/model.js):
+# "k" terms are the lineup's minutes-weighted rating, "delta" terms compare it with the team's usual lineup.
+SWITCH = {"lineup": {"terms": [{"f": "d_rapm", "k": "rapm"}, {"f": "d_box", "k": "box"},
+                               {"f": "d_rapm_delta", "delta": {"rapm": 1.0}},
+                               {"f": "d_lineup_delta", "delta": {"pm": 1.0, "box": 0.5}}]}}
 
 
 def _short(d):
@@ -76,9 +80,20 @@ def impact_weights(model):
     """Points per 48 minutes a player adds, from the model's lineup coefficients."""
     sc, rg = model.pipe.named_steps["standardscaler"], model.pipe.named_steps["ridge"]
     c = dict(zip(model.feats, rg.coef_ / sc.scale_))
-    w_pm = c["d_pm"] + c["d_lineup_delta"]
-    w_box = c["d_box"] + SWITCH["lineup"]["box_w"] * c["d_lineup_delta"]
-    return w_pm, w_box     # a player on the floor all 48 minutes has a share of 1 (a team's shares add up to 5)
+    w = {"rapm": 0.0, "box": 0.0, "pm": 0.0}
+    for t in SWITCH["lineup"]["terms"]:
+        if t["f"] not in c:
+            continue
+        if "k" in t:
+            w[t["k"]] += c[t["f"]]
+        for k, v in t.get("delta", {}).items():
+            w[k] += v * c[t["f"]]
+    return w     # per rating point, for a player on the floor all 48 minutes (share 1; a team's shares add up to 5)
+
+
+def impact(w, rapm, box, pm):
+    z = lambda v: 0.0 if v is None or pd.isna(v) else float(v)
+    return w["rapm"] * z(rapm) + w["box"] * z(box) + w["pm"] * z(pm)
 
 
 def records(df):
@@ -157,8 +172,9 @@ class Exporter:
                 continue
             pm = rat.pm.get(r.player_id, 0.0) if len(rat) else 0.0
             bx = rat.box.get(r.player_id, np.nan) if len(rat) else np.nan
+            rp = rat.rapm.get(r.player_id, 0.0) if len(rat) and "rapm" in rat else 0.0
             out.append({"id": str(r.player_id), "name": r.name, "pos": r.pos, "min": round(max(float(r.proj), 1.0), 2),
-                        "pm": round(float(0.0 if pd.isna(pm) else pm), 4),
+                        "pm": round(float(0.0 if pd.isna(pm) else pm), 4), "rapm": round(float(0.0 if pd.isna(rp) else rp), 4),
                         "box": round(float(R.P.box_repl * 36.0 * 0.8 if pd.isna(bx) else bx), 4),
                         "on": bool(r.in_rot), "status": r.status if isinstance(r.status, str) else None,
                         "note": r.note if isinstance(r.note, str) else None})
@@ -188,7 +204,7 @@ class Exporter:
             if not g.played:
                 lu = self.lineup(g, side)
                 out[f"{side}_lineup"] = lu
-                out[f"{side}_typ"] = {"pm": _f(getattr(g, f"pm_typ_{side[0]}"), 4), "box": _f(getattr(g, f"box_typ_{side[0]}"), 4)}
+                out[f"{side}_typ"] = {k: _f(getattr(g, f"{k}_typ_{side[0]}", None), 4) for k in ("pm", "box", "rapm")}
                 outs = [p for p in lu if not p["on"] and p["status"] and p["min"] >= 18]
                 if outs:
                     label = "w/o " + ", ".join(last_name(p["name"]) for p in outs[:2]) + ("…" if len(outs) > 2 else "")
@@ -246,10 +262,12 @@ def power(ex):
         team = up.home if side == "h" else up.away
         rows.append(pd.DataFrame({"team": team.values, "date": up.date.values, "elo": up[f"elo_{side}"].values,
                                   "net": up[f"net_{side}"].values, "pm": up[f"pm_{side}"].values, "box": up[f"box_{side}"].values,
-                                  "pm_typ": up[f"pm_typ_{side}"].values, "box_typ": up[f"box_typ_{side}"].values}))
+                                  "rapm": up[f"rapm_{side}"].values, "pm_typ": up[f"pm_typ_{side}"].values,
+                                  "box_typ": up[f"box_typ_{side}"].values, "rapm_typ": up[f"rapm_typ_{side}"].values}))
     t = pd.concat(rows).sort_values("date").drop_duplicates("team").set_index("team")
-    avg = t[["elo", "net", "pm", "box"]].mean()
+    avg = t[["elo", "net", "pm", "box", "rapm"]].mean()
     X = pd.DataFrame({"d_elo": t.elo - avg.elo, "d_net": t.net - avg.net, "d_pm": t.pm - avg.pm, "d_box": t.box - avg.box,
+                      "d_rapm": t.rapm - avg.rapm, "d_rapm_delta": t.rapm - t.rapm_typ,
                       "d_lineup_delta": (t.pm - t.pm_typ) + 0.5 * (t.box - t.box_typ), "d_b2b": 0.0, "rest_diff": 0.0,
                       "home_field": 0.0}, index=t.index)
     base = float(model.predict_margin(X.iloc[[0]].assign(**{c: 0.0 for c in X.columns}))[0])
@@ -283,13 +301,15 @@ def power(ex):
 def players_files(ex):
     E = ex.E
     model = E.fit_before(pd.Timestamp(today()) + pd.Timedelta(days=1))
-    wpm, wbox = impact_weights(model)
+    w = impact_weights(model)
     cuts = sorted(E.fits)
     recent_cuts = [c for c in cuts if c >= cuts[-1] - pd.Timedelta(days=2 * 365)]
     series = []
     for c in recent_cuts:
         f = E.fits[c]
-        series.append(pd.DataFrame({"player_id": f.player_id, "cut": c, "imp": wpm * f.pm + wbox * f.box.fillna(0), "box": f.box}))
+        rp = f.rapm.fillna(0) if "rapm" in f else 0.0
+        series.append(pd.DataFrame({"player_id": f.player_id, "cut": c,
+                                    "imp": w["rapm"] * rp + w["box"] * f.box.fillna(0) + w["pm"] * f.pm.fillna(0), "box": f.box}))
     s = pd.concat(series, ignore_index=True)
     cur = E.fits[cuts[-1]].set_index("player_id")
     box = E.box
@@ -303,7 +323,7 @@ def players_files(ex):
         if pid not in cur.index or pid not in ex.names.index:
             continue
         nm = ex.names.loc[pid]
-        imp = float(wpm * cur.pm.get(pid, 0) + wbox * (cur.box.get(pid, 0) if pd.notna(cur.box.get(pid, np.nan)) else 0))
+        imp = impact(w, cur.rapm.get(pid) if "rapm" in cur else None, cur.box.get(pid), cur.pm.get(pid))
         sp = piv.loc[pid].dropna().values[-12:] if pid in piv.index else []
         tr = float(sp[-1] - sp[-6]) if len(sp) >= 6 else None
         pos = nm.pos if isinstance(nm.pos, str) else "F"
@@ -336,7 +356,7 @@ def players_files(ex):
                        {"key": "C", "label": "Centers"}],
             "default_group": "ALL", "prod_groups": ["G", "F", "C", "ALL"],
             "labels": {"imp": "Impact", "prod": "Box score"}, "unit": "pts/48",
-            "about": "Impact: points per 48 minutes a player adds vs. an average player, from plus-minus and box score, refit weekly. "
+            "about": "Impact: points per 48 minutes a player adds vs. an average player, from play-by-play plus-minus (who was on the floor) and box score, refit weekly. "
                      "Box score: his game score per 36 minutes vs. average.",
             "detail_note": "Plus-minus is noisy: teammates who always share the floor split credit. Read the trend more than the decimals."}, hist
 

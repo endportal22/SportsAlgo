@@ -8,7 +8,7 @@ import ratings as R
 
 FEATURE_LABELS = {
     "d_elo": "Elo", "d_net": "Recent form (net rating)", "d_pm": "Lineup plus-minus", "d_box": "Lineup box score",
-    "d_lineup_delta": "Who's in / out", "d_b2b": "Back-to-back", "rest_diff": "Rest", "home_field": "Home court",
+    "d_lineup_delta": "Who's in / out", "d_rapm": "Lineup plus-minus (play-by-play)", "d_b2b": "Back-to-back", "rest_diff": "Rest", "home_field": "Home court",
 }
 
 
@@ -39,16 +39,20 @@ def team_game_lineups(games, box, fits, proj, upcoming=None):
     # attach each player's ratings from the latest weekly fit before the game
     cut = sorted(fits)
     b["cut"] = pd.Series(pd.cut(b.date, bins=cut + [pd.Timestamp.max], right=False, labels=cut).astype("datetime64[ns]"))
+    keys = ["pm", "box"] + (["rapm"] if fits and "rapm" in next(iter(fits.values())) else [])
     frames = []
     for c, fr in fits.items():
-        frames.append(fr[["player_id", "pm", "box"]].assign(cut=c))
-    rat = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=["player_id", "pm", "box", "cut"])
+        frames.append(fr[["player_id"] + keys].assign(cut=c))
+    rat = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=["player_id", "cut"] + keys)
     b = b.merge(rat, on=["cut", "player_id"], how="left")
     b["pm"] = b.pm.fillna(0.0)
     b["box"] = b.box.fillna(R.P.box_repl * 36.0 * 0.8)
+    if "rapm" in keys:
+        b["rapm"] = b.rapm.fillna(0.0)
     b["share"] = 5.0 * b.proj / b.groupby(["game_id", "team"]).proj.transform("sum")
-    b["v_pm"], b["v_box"] = b.share * b.pm, b.share * b.box
-    t = b.groupby(["game_id", "team"]).agg(pm=("v_pm", "sum"), box=("v_box", "sum")).reset_index()
+    for k in keys:
+        b[f"v_{k}"] = b.share * b[k]
+    t = b.groupby(["game_id", "team"]).agg(**{k: (f"v_{k}", "sum") for k in keys}).reset_index()
     return t, b
 
 
@@ -61,7 +65,8 @@ def build(games, box, fits, upcoming=None):
     t, players = team_game_lineups(g, box, fits, proj, upcoming)
     # a team's usual lineup strength (EW over its previous games) to measure who's missing
     t = t.merge(g[["game_id", "date", "played"]], on="game_id").sort_values(["team", "date", "game_id"])
-    for k in ("pm", "box"):
+    keys = [k for k in ("pm", "box", "rapm") if k in t]
+    for k in keys:
         # EW over the team's *played* games: before each played game (shifted), and through the
         # last played game for upcoming ones
         v = t[k].where(t.played)
@@ -72,13 +77,16 @@ def build(games, box, fits, upcoming=None):
     ti = t.set_index(["game_id", "team"])
     H = pd.MultiIndex.from_arrays([g.game_id, g.home])
     A = pd.MultiIndex.from_arrays([g.game_id, g.away])
-    for k in ("pm", "box", "pm_typ", "box_typ"):
+    for k in keys + [f"{k}_typ" for k in keys]:
         g[f"{k}_h"] = ti[k].reindex(H).values
         g[f"{k}_a"] = ti[k].reindex(A).values
     g["d_elo"] = g.elo_h - g.elo_a
     g["d_net"] = g.net_h - g.net_a
     g["d_pm"] = g.pm_h - g.pm_a
     g["d_box"] = g.box_h - g.box_a
+    if "rapm" in keys:
+        g["d_rapm"] = g.rapm_h - g.rapm_a
+        g["d_rapm_delta"] = (g.rapm_h - g.rapm_typ_h).fillna(0) - (g.rapm_a - g.rapm_typ_a).fillna(0)
     lh = (g.pm_h - g.pm_typ_h).fillna(0) + 0.5 * (g.box_h - g.box_typ_h).fillna(0)
     la = (g.pm_a - g.pm_typ_a).fillna(0) + 0.5 * (g.box_a - g.box_typ_a).fillna(0)
     g["d_lineup_delta"] = lh - la

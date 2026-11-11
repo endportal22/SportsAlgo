@@ -7,7 +7,9 @@ from sklearn.linear_model import LogisticRegression, Ridge
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-STAT_FEATS = ["d_elo", "d_net", "d_pm", "d_box", "d_lineup_delta", "d_b2b", "rest_diff", "home_field"]
+# v2 (Nov 10, 2026): play-by-play plus-minus (d_rapm, d_rapm_delta) replaces the game-level one (d_pm)
+STAT_FEATS = ["d_elo", "d_net", "d_rapm", "d_box", "d_rapm_delta", "d_lineup_delta", "d_b2b", "rest_diff", "home_field"]
+V1_FEATS = ["d_elo", "d_net", "d_pm", "d_box", "d_lineup_delta", "d_b2b", "rest_diff", "home_field"]
 TEAM_FEATS = ["d_elo", "d_net", "d_b2b", "rest_diff", "home_field"]
 ELO_FEATS = ["d_elo", "home_field"]
 

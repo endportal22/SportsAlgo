@@ -18,6 +18,7 @@ import data as D
 import features as F
 import model as M
 import ratings as R
+import stints as ST
 from paths import CACHE, CODE, DATA, current_season, today
 
 TRAIN_START = pd.Timestamp("2016-11-01")    # first game the model trains on (ratings need a season to warm up)
@@ -121,7 +122,16 @@ class Engine:
         games = D.load_games(self.data_dir)
         box = D.load_box(self.data_dir, games)
         tday = pd.Timestamp(today())
-        fits = R.all_fits(games, box, start=pd.Timestamp("2016-10-01"), end=tday)
+        st = ST.load(self.data_dir)
+        rc_file = CACHE / "rapm_fits.pkl"      # past weeks' play-by-play fits never change: keep them
+        try:
+            rapm_cache = pickle.load(open(rc_file, "rb")) if rc_file.exists() else {}
+        except Exception:  # noqa: BLE001
+            rapm_cache = {}
+        last_cut = max([c for c in R._cutoffs(games) if c <= tday], default=None)
+        rapm_cache = {k: v for k, v in rapm_cache.items() if k[0] != last_cut}   # this week's refit uses new games
+        fits = R.all_fits(games, box, start=pd.Timestamp("2016-10-01"), end=tday, stints=st if len(st) else None,
+                          rapm_cache=rapm_cache)
         proj, last = R.projected_minutes(box)
         used, pool = upcoming_lineups(games, box, last, self.data_dir, tday)
         df, players, _ = F.build(games, box, fits, upcoming=used)
@@ -133,6 +143,8 @@ class Engine:
         self.ready = True
         try:
             CACHE.mkdir(parents=True, exist_ok=True)
+            with open(rc_file, "wb") as fh:
+                pickle.dump(rapm_cache, fh, protocol=pickle.HIGHEST_PROTOCOL)
             for old in CACHE.glob("build_*.pkl"):
                 old.unlink()
             with open(cf, "wb") as fh:
