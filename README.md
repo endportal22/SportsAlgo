@@ -65,6 +65,8 @@ Walk-forward backtests: every game is predicted by a model trained only on earli
 | NHL | 2020–2025 | 0.660 | 0.659 |
 | NBA | 2017–2026 (games with a line) | 0.609 | 0.606 |
 
+What didn't help (tested Nov 2026 on every league): head-to-head records, whether measured as raw margins or as how far a team beat the model's expectation in past meetings. Over about 20,000 games, a team's over- or under-performance in past meetings has no relationship with its next result against the same opponent (correlation within ±0.007). Also no help: last-5 form, weighting recent seasons more, capping blowouts, other regularisation strengths, and blending in a gradient-boosting model, which made all three worse. Head-to-head is shown in the app for reading only.
+
 ## Run a league locally
 
 ```

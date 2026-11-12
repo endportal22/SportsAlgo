@@ -36,7 +36,15 @@ Walk-forward, 2018-19 through this season (10,377 games). Each month is predicte
 
 On the 7,460 games with a closing line (2017-18 to 2022-23, 2025-26 and this season), the model's log loss is 0.609 (v1: 0.610) and Vegas's is 0.606.
 
-Tested with no gain (Nov 2026): head-to-head record, last-5 form, travel/time zones, 3 games in 4 nights, altitude, playoff home court, weighting recent seasons more.
+Tested with no gain (Nov 2026), each within ±0.0003 log loss of the current model:
+
+- **Head-to-head:** raw average margin in recent meetings, and how far each team beat or fell short of the model's expectation in past meetings (shrunk). Over 10,377 games, a team's over- or under-performance in past meetings has no relationship with its result in the next one (correlation −0.005).
+- **Recent form:** last-5 form, plus short (6-game) and long (40-game) form windows.
+- **Schedule:** travel and time zones, 3 games in 4 nights, altitude, playoff home court.
+- **Weighting:** counting recent seasons more, and how much of last season carries over.
+- **Margins:** capping blowouts in the margin being predicted.
+- **Model settings:** stronger or weaker regularisation.
+- **Gradient boosting:** blending in a gradient-boosting model made it worse, +0.0003 to +0.0007.
 
 The backtest knows which players actually played. Real predictions only know the injury report, so expect them to be slightly less accurate than the backtest.
 
