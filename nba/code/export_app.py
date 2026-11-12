@@ -173,7 +173,10 @@ class Exporter:
             pm = rat.pm.get(r.player_id, 0.0) if len(rat) else 0.0
             bx = rat.box.get(r.player_id, np.nan) if len(rat) else np.nan
             rp = rat.rapm.get(r.player_id, 0.0) if len(rat) and "rapm" in rat else 0.0
-            out.append({"id": str(r.player_id), "name": r.name, "pos": r.pos, "min": round(max(float(r.proj), 1.0), 2),
+            pp = float(getattr(r, "p_play", 1.0) or 1.0)
+            mins = max(float(r.proj) * (pp if r.in_rot else 1.0), 1.0)   # expected minutes when he might sit
+            out.append({"id": str(r.player_id), "name": r.name, "pos": r.pos, "min": round(mins, 2),
+                        "p_play": None if pp >= 0.999 else round(pp, 2),
                         "pm": round(float(0.0 if pd.isna(pm) else pm), 4), "rapm": round(float(0.0 if pd.isna(rp) else rp), 4),
                         "box": round(float(R.P.box_repl * 36.0 * 0.8 if pd.isna(bx) else bx), 4),
                         "on": bool(r.in_rot), "status": r.status if isinstance(r.status, str) else None,
@@ -394,6 +397,9 @@ def main():
         record["live"] = livelog.live_record(_LOG["l"])
         W.write("live_log.json", _LOG["l"].payload())
         _LOG["l"].save()
+    inj_log = PL.DATA / "injury_log.csv"
+    if inj_log.exists():   # encrypted copy, so the log survives losing the build cache
+        W.write("injury_log.json", {"rows": pd.read_csv(inj_log).to_dict("records")})
     W.write("power.json", power(ex))
     players, hist = players_files(ex)
     W.write("players.json", players)

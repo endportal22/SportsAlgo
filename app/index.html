@@ -629,7 +629,7 @@ function openGame(id) {
         const changed = p.id in over;
         return `<button class="pl-row ${on(p) ? "on" : ""}" data-pid="${esc(p.id)}" data-side="${side}" aria-pressed="${on(p)}">
           <span class="sw" aria-hidden="true"></span>
-          <span class="nm">${esc(p.name)}${p.status ? `<span class="tag ${st}" title="${esc(p.note || "")}">${esc(p.status)}</span>` : ""}${changed ? `<span class="tag ch">you</span>` : ""}</span>
+          <span class="nm">${esc(p.name)}${p.status ? `<span class="tag ${st}" title="${esc(p.note || "")}">${esc(p.status)}${p.p_play != null && p.on ? ` · plays ${Math.round(p.p_play * 100)}%` : ""}</span>` : ""}${changed ? `<span class="tag ch">you</span>` : ""}</span>
           <span class="meta num">${esc(p.pos || "")} · ${Math.round(p.min)} min</span></button>`;
       }).join("")}</div>`;
   };

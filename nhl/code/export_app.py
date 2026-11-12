@@ -242,6 +242,9 @@ def main():
               "total": {"n": rec["total"].get("n", 0), "model_right": rec["total"].get("model_right", 0),
                         "vegas_n": rec["total"].get("n_line", 0), "vegas_right": rec["total"].get("vegas_right", 0),
                         "model_ll": rec["total"].get("model_ll")}}
+    inj_log = DATA / "injury_log.csv"
+    if inj_log.exists():   # encrypted copy, so the log survives losing the build cache
+        W.write("injury_log.json", {"rows": pd.read_csv(inj_log).to_dict("records")})
     if _LOG.get("l") is not None:
         record["live"] = livelog.live_record(_LOG["l"])
         W.write("live_log.json", _LOG["l"].payload())

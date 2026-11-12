@@ -10,10 +10,7 @@ live site (SITE + APP_PASSWORD environment variables).
 """
 from __future__ import annotations
 
-import base64
-import json
 import os
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -31,24 +28,18 @@ def _utc(x):
 
 def _fetch_published(league):
     """The last published log, decrypted (None if unavailable)."""
-    site, pw = os.environ.get("SITE"), os.environ.get("APP_PASSWORD")
-    if not site or not pw:
-        return None
     try:
-        get = lambda n: json.loads(urllib.request.urlopen(f"{site}/data/{league}/{n}", timeout=30).read())
-        lock, blob = get("lock.json"), get("live_log.json")
-        from cryptography.hazmat.primitives import hashes
-        from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-        from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-        key = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=base64.b64decode(lock["salt"]),
-                         iterations=int(lock["iter"])).derive(pw.encode())
-        raw = AESGCM(key).decrypt(base64.b64decode(blob["iv"]), base64.b64decode(blob["ct"]), None)
-        rows = json.loads(raw)["games"]
-        print(f"[live] recovered {len(rows)} saved predictions from the published app")
-        return pd.DataFrame(rows, columns=COLS)
-    except Exception as e:  # noqa: BLE001
-        print(f"[live] no published log to recover ({type(e).__name__})")
+        import appdata
+        js = appdata.fetch_published(league, "live_log.json")
+    except ImportError:
+        js = None
+    if not js:
+        if os.environ.get("SITE"):
+            print("[live] no published log to recover")
         return None
+    rows = js["games"]
+    print(f"[live] recovered {len(rows)} saved predictions from the published app")
+    return pd.DataFrame(rows, columns=COLS)
 
 
 class LiveLog:

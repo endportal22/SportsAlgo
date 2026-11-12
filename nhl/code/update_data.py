@@ -47,6 +47,12 @@ import pandas as pd
 
 from paths import DATA, now_utc, today
 
+sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))   # repo layout; a copy next to this file wins
+try:
+    import statuslog
+except ImportError:
+    statuslog = None
+
 NHL = os.environ.get("NHL_API", "https://api-web.nhle.com/v1")
 ESPN_SITE = os.environ.get("ESPN_SITE", "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl")
 ESPN_CORE = os.environ.get("ESPN_CORE", "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl")
@@ -630,6 +636,9 @@ def update_injuries(data: Path, teams: pd.DataFrame):
     df["fetched"] = today().isoformat()
     df.to_csv(data / "injuries.csv", index=False)
     print(f"[injuries] {len(df)} players listed")
+    if statuslog is not None and len(df):
+        statuslog.update(data / "injury_log.csv", df.assign(player_id=None)[["team", "player_id", "name", "status", "detail"]],
+                         league="nhl")
 
 
 def update_rosters(data: Path, team_abbrs):

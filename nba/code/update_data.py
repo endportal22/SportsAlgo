@@ -7,6 +7,7 @@ Download NBA data into nba/data:
   odds.csv                 betting lines (only shown next to the model, never used by it)
   injuries.csv             today's injury report
   rosters.csv              current rosters (catches trades and signings)
+  injury_log.csv           every change in a player's injury status, with when it was seen
   stints_<season>.csv.gz   who was on the floor together, from the play-by-play (see stints.py)
 
 Finished seasons come from sportsdataverse (ESPN's data, rebuilt daily as CSV files on GitHub);
@@ -23,6 +24,7 @@ import json
 import math
 import os
 import ssl
+import sys
 import threading
 import time
 import urllib.error
@@ -35,6 +37,12 @@ import numpy as np
 import pandas as pd
 
 from paths import DATA, current_season, now_utc, today
+
+sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))   # repo layout; a copy next to this file wins
+try:
+    import statuslog
+except ImportError:
+    statuslog = None
 
 SDV = os.environ.get("SDV_RELEASES", "https://github.com/sportsdataverse/sportsdataverse-data/releases/download")
 ESPN_SITE = os.environ.get("ESPN_SITE", "https://site.api.espn.com/apis/site/v2/sports/basketball/nba")
@@ -408,6 +416,8 @@ def update_injuries(data):
     df["fetched"] = today().isoformat()
     df.to_csv(data / "injuries.csv", index=False)
     print(f"[injuries] {len(df)} players listed")
+    if statuslog is not None and len(df):
+        statuslog.update(data / "injury_log.csv", df[["team", "player_id", "name", "status", "detail"]], league="nba")
 
 
 def update_rosters(data, teams):

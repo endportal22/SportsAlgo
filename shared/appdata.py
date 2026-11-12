@@ -82,6 +82,26 @@ class Writer:
         return f"{len(self.sizes)} files, {total / 1e6:.1f} MB" + (" (encrypted)" if self.key is not None else "")
 
 
+def fetch_published(league, name):
+    """A file from the last published app, decrypted (None if unavailable). Needs the SITE and
+    APP_PASSWORD environment variables (set in the hosted build)."""
+    site, pw = os.environ.get("SITE"), os.environ.get("APP_PASSWORD")
+    if not site or not pw:
+        return None
+    import urllib.request
+    try:
+        get = lambda n: json.loads(urllib.request.urlopen(f"{site}/data/{league}/{n}", timeout=30).read())
+        lock, blob = get("lock.json"), get(name)
+        from cryptography.hazmat.primitives import hashes
+        from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+        from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+        key = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=base64.b64decode(lock["salt"]),
+                         iterations=int(lock["iter"])).derive(pw.encode())
+        return json.loads(AESGCM(key).decrypt(base64.b64decode(blob["iv"]), base64.b64decode(blob["ct"]), None))
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def model_params(model, labels, link, switch):
     """The model's formula, so the phone can recompute a game when a starter is switched."""
     sc, rg = model.pipe.named_steps["standardscaler"], model.pipe.named_steps["ridge"]
