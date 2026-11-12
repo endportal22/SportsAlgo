@@ -28,10 +28,11 @@ import pandas as pd
 sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
 import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
 try:
+    import evaluate
     import livelog
     import matchup
-except ImportError:   # older local copies without shared/: no matchup section or live record
-    livelog = matchup = None
+except ImportError:   # older local copies without shared/: no matchup section, live record or scorecard
+    evaluate = livelog = matchup = None
 _LOG = {}
 
 
@@ -231,6 +232,17 @@ class Exporter:
         return {"key": day, "model": appdata.model_params(model, FEATURE_LABELS, "logistic", SWITCH), "games": games}
 
 
+def long_run(E):
+    """Walk-forward predictions for every game since 2018-19, scored against Vegas (shared/evaluate.py)."""
+    d = E.df[E.df.played & (E.df.season >= 2018)]
+    parts = []
+    for per, sub in d.groupby(d.date.dt.to_period("M")):
+        m = E.fit_before(sub.date.min())
+        parts.append(pd.DataFrame({"p": m.predict_proba(sub), "y": (sub.margin > 0).astype(float).values,
+                                   "p_mkt": sub.market_home_prob.values, "block": str(per)}))
+    return evaluate.scorecard(pd.concat(parts, ignore_index=True), "2018-19")
+
+
 def season_record(ex, season):
     d = ex.df[(ex.df.season == season) & ex.df.played].copy()
     if d.empty:
@@ -393,6 +405,11 @@ def main():
     upcoming = [p for p in periods if pd.Timestamp(p["key"]) >= tday]
     default = upcoming[0]["key"] if upcoming else (periods[-1]["key"] if periods else None)
     record = season_record(ex, E.season)
+    if evaluate is not None:
+        try:
+            record["scorecard"] = evaluate.cached(PL.CACHE, "nba", lambda: long_run(E), f"_{len(E.fit_before(tday).feats)}")
+        except Exception as e:  # noqa: BLE001
+            print(f"[app] scorecard skipped: {type(e).__name__}: {e}")
     if _LOG.get("l") is not None:
         record["live"] = livelog.live_record(_LOG["l"])
         W.write("live_log.json", _LOG["l"].payload())

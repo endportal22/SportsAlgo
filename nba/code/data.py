@@ -60,4 +60,12 @@ def load_odds(data: Path) -> pd.DataFrame:
         if c not in o:
             o[c] = np.nan
     o["game_id"] = o.game_id.astype("int64")
+    # Vegas's probability from the main book's moneylines with the margin removed proportionally:
+    # slightly more accurate than the median across books (log loss 0.6033 vs 0.6039, 2017-2026)
+    h, a = (pd.to_numeric(o[c], errors="coerce") for c in ("home_ml", "away_ml"))
+    ih = np.where(h < 0, -h / (-h + 100.0), 100.0 / (h + 100.0))
+    ia = np.where(a < 0, -a / (-a + 100.0), 100.0 / (a + 100.0))
+    s = ih + ia
+    p = np.where((s > 1.0) & (s < 1.15), ih / s, np.nan)
+    o["market_home_prob"] = np.where(np.isfinite(p), p, o.market_home_prob)
     return o[ODDS_COLS].drop_duplicates("game_id", keep="last")

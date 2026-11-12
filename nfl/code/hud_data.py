@@ -83,6 +83,13 @@ class Engine:
                 self._fits, self._players = {}, None
                 g = pd.read_csv(DATA / "games.csv", usecols=["game_id", "home_score", "away_score"]).dropna()
                 self._scores = {r.game_id: (int(r.home_score), int(r.away_score)) for r in g.itertuples(index=False)}
+                # Vegas win probability from the moneylines (vig removed) when there are any
+                gm = pd.read_csv(DATA / "games.csv")
+                if {"home_moneyline", "away_moneyline"} <= set(gm.columns):
+                    ml = dict(zip(gm.game_id, _devig(gm.home_moneyline, gm.away_moneyline)))
+                    self.df["ml_home_prob"] = self.df.game_id.map(ml)
+                else:
+                    self.df["ml_home_prob"] = np.nan
                 self.error = None
                 self.built_at = datetime.now()
                 print(f"[engine] built in {time.time() - t:.1f}s")
@@ -190,7 +197,7 @@ def week_payload(season, week, overrides=None):
         p = float(norm.cdf(m / model.sigma))
         base, parts = contributions(model, r)
         spread = _num(r.spread_line, 1)
-        vegas_p = _num(norm.cdf(r.spread_line / model.sigma)) if spread is not None else None
+        vegas_p = vegas_prob(r, model.sigma)
         g = {
             "game_id": r.game_id, "gameday": r.gameday.strftime("%a %b ") + str(r.gameday.day),
             "date": r.gameday.strftime("%Y-%m-%d"), "away": r.away_team, "home": r.home_team,
@@ -229,6 +236,29 @@ def week_payload(season, week, overrides=None):
             "trained_through": str(tr.gameday.max().date()), "n_train": int(len(tr)), "games": games}
 
 
+def _devig(hml, aml):
+    """Home win probability from American moneylines, with the bookmaker's margin removed."""
+    def imp(x):
+        x = pd.to_numeric(x, errors="coerce")
+        return np.where(x < 0, -x / (-x + 100.0), 100.0 / (x + 100.0))
+    ph, pa = imp(hml), imp(aml)
+    s = ph + pa
+    return np.where((s > 0.98) & (s < 1.15), ph / s, np.nan)
+
+
+def vegas_prob(r, sigma):
+    """Vegas's home win probability: from the moneylines when posted (more accurate: in 2019-2026
+    games their log loss is 0.6098 vs 0.6105-0.6121 for the spread converted with a normal curve),
+    else from the spread."""
+    ml = getattr(r, "ml_home_prob", None)
+    if ml is not None and not pd.isna(ml):
+        return float(ml)
+    sp = getattr(r, "spread_line", None)
+    if sp is None or pd.isna(sp):
+        return None
+    return float(norm.cdf(sp / sigma))
+
+
 def season_record(season):
     ENGINE.ensure()
     df = ENGINE.df
@@ -239,7 +269,8 @@ def season_record(season):
             continue
         m = ENGINE.fit_before(df[(df.season == season) & (df.week == w)].gameday.min())
         p = np.clip(m.predict_proba(wk), 1e-6, 1 - 1e-6)
-        vp = np.clip(norm.cdf(wk.spread_line.fillna(0) / m.sigma), 1e-6, 1 - 1e-6)
+        vp = np.clip([vegas_prob(r, m.sigma) if vegas_prob(r, m.sigma) is not None else 0.5 for r in wk.itertuples(index=False)],
+                     1e-6, 1 - 1e-6)
         y = wk.home_win.values
         rows.append({"week": int(w), "n": int(len(wk)),
                      "model_right": int(((p > 0.5) == (y == 1)).sum()), "vegas_right": int(((vp > 0.5) == (y == 1)).sum()),

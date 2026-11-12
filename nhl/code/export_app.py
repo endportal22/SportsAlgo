@@ -31,10 +31,11 @@ import hud_data as H
 from paths import DATA, ROOT, today
 
 try:
+    import evaluate
     import livelog
     import matchup
-except ImportError:   # older local copies without shared/: no matchup section or live record
-    livelog = matchup = None
+except ImportError:   # older local copies without shared/: no matchup section, live record or scorecard
+    evaluate = livelog = matchup = None
 _LOG = {}
 
 
@@ -53,6 +54,18 @@ NHL_STATS = [
     {"key": "sh", "label": "Shooting %", "num": "gf_sog", "den": "sf", "scale": 100, "better": "high"},
     {"key": "sv", "label": "Save %", "num": "saves", "den": "sa_ing", "scale": 1000, "fmt": ".{:03.0f}", "better": "high"},
 ]
+
+
+def long_run():
+    """Walk-forward predictions for every game since 2020-21, scored against Vegas (shared/evaluate.py)."""
+    E = H.ENGINE
+    d = E.df[E.df.played & (E.df.season >= 2020) & E.df.home_win.isin([0, 1])]
+    parts = []
+    for per, sub in d.groupby(pd.to_datetime(d.gameday).dt.to_period("M")):
+        m = E.fit_before(pd.Timestamp(sub.gameday.min()))
+        parts.append(pd.DataFrame({"p": m.predict_proba(sub), "y": sub.home_win.astype(float).values,
+                                   "p_mkt": sub.market_home_prob.values, "block": str(per)}))
+    return evaluate.scorecard(pd.concat(parts, ignore_index=True), "2020-21")
 
 
 def build_matchups():
@@ -245,6 +258,11 @@ def main():
     inj_log = DATA / "injury_log.csv"
     if inj_log.exists():   # encrypted copy, so the log survives losing the build cache
         W.write("injury_log.json", {"rows": pd.read_csv(inj_log).to_dict("records")})
+    if evaluate is not None:
+        try:
+            record["scorecard"] = evaluate.cached(DATA / "cache", "nhl", long_run)
+        except Exception as e:  # noqa: BLE001
+            print(f"[app] scorecard skipped: {type(e).__name__}: {e}")
     if _LOG.get("l") is not None:
         record["live"] = livelog.live_record(_LOG["l"])
         W.write("live_log.json", _LOG["l"].payload())

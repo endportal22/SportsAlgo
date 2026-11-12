@@ -303,6 +303,7 @@ th:first-child, td:first-child { text-align: left; }
     <p class="sub">Each game predicted by a model trained only on earlier games. Not betting advice.</p>
     <div class="stats" id="rec-sum"></div>
     <div class="panel"><table id="rec-table"></table></div>
+    <div id="rec-long"></div>
     <div class="signout" id="signout" hidden><span></span><button id="forget">Forget password</button></div>
     <p class="note" style="margin-top:12px">Log loss scores the probabilities themselves: lower is better, and a coin flip scores 0.693. The model never sees the Vegas line; it's shown only for comparison.</p>
   </section>
@@ -807,9 +808,40 @@ function renderRecord() {
     <div class="stat m"><div class="k">Model log loss</div><div class="v num">${ll(t.model_ll)}</div></div>${t.vegas_ll != null ? `<div class="stat"><div class="k">Vegas log loss</div><div class="v num">${ll(t.vegas_ll)}</div></div>` : ""}` : `<div class="note">No games played yet.</div>`;
   $("#rec-table").innerHTML = `<thead><tr><th></th><th>Model</th><th>Vegas</th><th>Model LL</th></tr></thead><tbody>` +
     r.rows.map((w) => { const v = w.vegas_n ?? w.n; return `<tr><td>${esc(w.label)}</td><td>${w.model_right}-${w.n - w.model_right}</td><td>${v ? `${w.vegas_right}-${v - w.vegas_right}` : "—"}</td><td>${ll(w.model_ll)}</td></tr>`; }).join("") + `</tbody>`;
+  $("#rec-long").innerHTML = scorecardHtml(r.scorecard);
   const so = $("#signout"); so.hidden = !KEYS[S.lg];
   so.querySelector("span").textContent = store.get("pw", null) ? "Password saved on this device." : "Unlocked for this session only.";
   $("#forget").onclick = () => { store.set("pw", null); try { sessionStorage.removeItem("sportsalgo.pw"); } catch (e) {} location.reload(); };
+}
+
+/* long-run scorecard: every past season, model vs Vegas, three ways, plus calibration */
+function scorecardHtml(sc) {
+  if (!sc) return "";
+  const pc = (x) => x == null ? "—" : `${(x * 100).toFixed(1)}%`;
+  const f3 = (x) => x == null ? "—" : x.toFixed(3);
+  const win = (a, b, low) => a == null || b == null || a === b ? "" : ((a < b) === low ? "m" : "v");
+  const row = (label, a, b, fmt, low) => { const w = win(a, b, low); return `<div class="cmp-row"><span><b class="num ${w === "m" ? "win" : ""}">${fmt(a)}</b></span><span class="lab">${label}</span><span class="h"><b class="num ${w === "v" ? "win" : ""}">${fmt(b)}</b></span></div>`; };
+  const m = sc.model_vs || sc.model, v = sc.vegas || {};
+  let h = `<div class="h3" style="margin-top:22px">Every season since ${esc(sc.since)}<small>${(sc.n_vegas || sc.n).toLocaleString()} games${sc.n_vegas ? " with a Vegas line" : ""}</small></div>
+    <div class="cmp"><div class="cmp-row hd"><span class="ab">Model</span><span class="lab"></span><span class="ab h">Vegas</span></div>
+    ${row("Log loss (lower is better)", m.ll, v.ll, f3, true)}${row("Brier score (lower is better)", m.brier, v.brier, f3, true)}${row("Winners picked", m.winners, v.winners, pc, false)}</div>`;
+  if (sc.gap) {
+    const g = sc.gap, real = g.lo > 0 || g.hi < 0;
+    h += `<p class="note" style="margin-top:8px">${g.mean > 0 ? "Vegas" : "The model"} is ahead by ${Math.abs(g.mean).toFixed(4)} log loss; ${real ? "that's bigger than chance would explain" : "that's within what chance alone could explain, so call it even"} (95% range ${g.lo >= 0 ? "+" : ""}${g.lo.toFixed(4)} to ${g.hi >= 0 ? "+" : ""}${g.hi.toFixed(4)}). Log loss and Brier score judge the percentages themselves; winners picked only counts who was favoured.</p>`;
+  }
+  const cal = sc.calibration || [], vc = Object.fromEntries((sc.vegas_calibration || []).map((c) => [c.label, c]));
+  if (cal.length) {
+    h += `<div class="h3" style="margin-top:18px">How reliable are the percentages?</div>
+      <p class="sub" style="margin-top:-2px">When the favourite was given this chance, how often it actually won.</p>
+      <div class="panel"><table><thead><tr><th>Favourite given</th><th>Model games</th><th>Won</th><th>Vegas games</th><th>Won</th></tr></thead><tbody>
+      ${cal.map((c) => { const x = vc[c.label]; return `<tr><td>${esc(c.label)}</td><td>${c.n.toLocaleString()}</td><td>${pc(c.won)}</td><td>${x ? x.n.toLocaleString() : "—"}</td><td>${x ? pc(x.won) : "—"}</td></tr>`; }).join("")}
+      </tbody></table></div>`;
+  }
+  const notes = [];
+  if (sc.disagree) notes.push(`When the model and Vegas picked different winners (${sc.disagree.n.toLocaleString()} games), the model was right ${pc(sc.disagree.model_right)} of the time.`);
+  if (sc.big_gap) notes.push(`When their percentages were 10+ points apart (${sc.big_gap.n.toLocaleString()} games), the side Vegas leaned toward won ${pc(sc.big_gap.vegas_side_won)}. ${sc.big_gap.vegas_side_won > 0.5 ? "Big gaps usually mean the model is missing news (injuries, rest), so treat a big edge with caution." : "In this league the model has been worth listening to when it disagrees strongly."}`);
+  if (notes.length) h += notes.map((n) => `<p class="note" style="margin-top:8px">${n}</p>`).join("");
+  return h;
 }
 
 /* ---------------- tabs, install hint, boot ---------------- */

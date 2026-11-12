@@ -27,10 +27,11 @@ import pandas as pd
 sys.path.append(str(Path(__file__).resolve().parents[2] / "shared"))
 import appdata  # shared/appdata.py in the repo (a copy next to this file takes precedence)
 try:
+    import evaluate
     import livelog
     import matchup
-except ImportError:   # older local copies without shared/: no matchup section or live record
-    livelog = matchup = None
+except ImportError:   # older local copies without shared/: no matchup section, live record or scorecard
+    evaluate = livelog = matchup = None
 _LOG = {}
 _START = {}   # game_id -> kickoff (UTC), for saving pre-game predictions
 
@@ -56,6 +57,18 @@ NFL_STATS = [
     {"key": "third", "label": "3rd-down conversion %", "num": "third_conv", "den": "third_att", "scale": 100, "better": "high"},
     {"key": "sacks", "label": "Sacks per game", "num": "sacks", "den": "gp", "better": "high"},
 ]
+
+
+def long_run(E):
+    """Walk-forward predictions for every game since 2019, scored against Vegas (shared/evaluate.py)."""
+    d = E.df[E.df.played & (E.df.season >= 2019) & E.df.home_win.isin([0, 1])]
+    parts = []
+    for (s, w), sub in d.groupby(["season", "week"]):
+        m = E.fit_before(sub.gameday.min())
+        vp = [H.vegas_prob(r, m.sigma) for r in sub.itertuples(index=False)]
+        parts.append(pd.DataFrame({"p": m.predict_proba(sub), "y": sub.home_win.astype(float).values,
+                                   "p_mkt": pd.to_numeric(pd.Series(vp), errors="coerce").values, "block": f"{s}-{w:02d}"}))
+    return evaluate.scorecard(pd.concat(parts, ignore_index=True), "2019")
 
 
 def build_matchups(E):
@@ -259,6 +272,11 @@ def main():
     record = {"rows": [{"label": f"Week {r['week']}", "n": r["n"], "model_right": r["model_right"],
                         "vegas_right": r["vegas_right"], "model_ll": r["model_ll"]} for r in rec["weeks"]],
               "total": rec["total"]}
+    if evaluate is not None:
+        try:
+            record["scorecard"] = evaluate.cached(H.DATA / "cache", "nfl", lambda: long_run(E))
+        except Exception as e:  # noqa: BLE001
+            print(f"[app] scorecard skipped: {type(e).__name__}: {e}")
     if _LOG.get("l") is not None:
         record["live"] = livelog.live_record(_LOG["l"])
         W.write("live_log.json", _LOG["l"].payload())
